@@ -43,8 +43,11 @@ Agriculture is the backbone of Cameroon’s economy, yet many farmers still rely
 
 **Franck Assontia (Assontia Franck Junior)**
 🎓 Software Engineering Student
-💻 Passionate about web development, AI, and real‑world problem solving
+💻 Passionate about web development, AI, and real-world problem solving
 🌍 Focused on building technology that creates impact in Africa
+
+📧 **Email:** [franckassontia6@gmail.com](mailto:franckassontia6@gmail.com)
+📞 **Phone:** +237 652 352 815
 
 I enjoy working on projects that combine **software engineering and social impact**, especially in areas like **agriculture, education, and enterprise solutions**.
 
