@@ -15,20 +15,33 @@ from datetime import datetime
 
 from .models import User, FarmDetails, MaizeVariety
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
 def login_view(request):
-    """Handle user login"""
+   
+    
+    # Redirect already logged-in users to dashboard
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
+
+        # Authenticate user
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request, f'Welcome back, {user.username}!')
             return redirect('dashboard')
         else:
-            messages.error(request, 'Invalid email or password.')
-    
+            messages.error(request, 'Invalid username or password.')
+
+    # Render the login page on GET request or failed login
     return render(request, 'auth/login.html')
+
 
 def validate_registration_data(request):
     """
