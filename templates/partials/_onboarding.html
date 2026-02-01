@@ -1,0 +1,1426 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to SmartFarm - Onboarding{% endblock title %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center px-4 py-8">
+    <div class="w-full max-w-2xl">
+        <!-- Onboarding Container -->
+        <div x-data="onboardingWizard()" class="relative">
+            <!-- Progress Bar -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm text-mint-light/70">Step <span x-text="currentStep + 1">1</span> of 8</span>
+                    <span class="text-sm text-mint-light/70"><span x-text="Math.round(((currentStep + 1) / 8) * 100)">12</span>%</span>
+                </div>
+                <div class="w-full bg-black/30 rounded-full h-2 backdrop-blur-sm border border-white/10">
+                    <div class="bg-gradient-to-r from-mint to-forest-light h-2 rounded-full transition-all duration-500" :style="`width: ${((currentStep + 1) / 8) * 100}%`"></div>
+                </div>
+            </div>
+            
+            <!-- Sliding Container -->
+            <div class="relative h-[700px] overflow-hidden">
+                <div class="flex transition-transform duration-500 ease-in-out h-full" :style="`transform: translateX(-${currentStep * 100}%)`">
+                    
+                    <!-- Step 1: Welcome -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-3xl shadow-2xl p-10 h-full flex flex-col">
+                            <!-- Welcome Content -->
+                            <div class="text-center mb-8">
+                                <!-- Animated Leaf Icon -->
+                                <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-mint to-forest-light rounded-full flex items-center justify-center animate-float">
+                                    <i data-lucide="leaf" class="w-10 h-10 text-white"></i>
+                                </div>
+                                
+                                <h1 class="text-3xl font-bold text-white mb-4">Welcome to SmartFarm</h1>
+                                <p class="text-mint-light/80 text-lg leading-relaxed">
+                                    Your premium maize farming companion for Cameroon's agricultural success
+                                </p>
+                            </div>
+                            
+                            <!-- Features Preview -->
+                            <div class="space-y-8 mb-8">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-forest-mid/50 rounded-lg flex items-center justify-center">
+                                        <i data-lucide="cloud-sun" class="w-5 h-5 text-mint"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-white">Smart Weather Insights</h3>
+                                        <p class="text-sm text-mint-light/70">Real-time forecasts for optimal planting</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-forest-mid/50 rounded-lg flex items-center justify-center">
+                                        <i data-lucide="map-pin" class="w-5 h-5 text-mint"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-white">Location Intelligence</h3>
+                                        <p class="text-sm text-mint-light/70">Tailored advice for Cameroon regions</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-forest-mid/50 rounded-lg flex items-center justify-center">
+                                        <i data-lucide="trending-up" class="w-5 h-5 text-mint"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-white">Yield Optimization</h3>
+                                        <p class="text-sm text-mint-light/70">Data-driven recommendations</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation -->
+                            <div class="flex space-x-4 mt-auto">
+                                <button @click="skipOnboarding()" class="flex-1 bg-black/20 border border-white/10 text-white/70 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-black/30">
+                                    Skip Tour
+                                </button>
+                                <button @click="nextStep()" class="flex-1 bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep">
+                                    Get Started
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Basic Farm Information -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-3xl shadow-2xl p-8 h-full flex flex-col overflow-y-auto">
+                            <div class="text-center mb-8">
+                                <h1 class="text-3xl font-bold text-white mb-4">Basic Farm Information</h1>
+                                <p class="text-mint-light/80 text-lg">
+                                    Tell us about your farm
+                                </p>
+                            </div>
+                            
+                            <form class="space-y-8" @submit.prevent="nextStep()">
+                                <!-- Farm Name -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Farm Name</label>
+                                    <input 
+                                        type="text" 
+                                        x-model="onboardingData.farmName"
+                                        placeholder="e.g., Green Valley Farm"
+                                        required
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                </div>
+                                
+                                <!-- Farm Type -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Farm Type</label>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <label class="relative">
+                                            <input type="radio" x-model="onboardingData.farmType" value="smallholder" class="peer sr-only">
+                                            <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:border-mint/50">
+                                                <div class="text-center">
+                                                    <i data-lucide="home" class="w-6 h-6 mx-auto mb-2 text-mint"></i>
+                                                    <span class="text-sm font-medium">Smallholder</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="relative">
+                                            <input type="radio" x-model="onboardingData.farmType" value="commercial" class="peer sr-only">
+                                            <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:border-mint/50">
+                                                <div class="text-center">
+                                                    <i data-lucide="building" class="w-6 h-6 mx-auto mb-2 text-mint"></i>
+                                                    <span class="text-sm font-medium">Commercial</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="relative">
+                                            <input type="radio" x-model="onboardingData.farmType" value="subsistence" class="peer sr-only">
+                                            <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:border-mint/50">
+                                                <div class="text-center">
+                                                    <i data-lucide="users" class="w-6 h-6 mx-auto mb-2 text-mint"></i>
+                                                    <span class="text-sm font-medium">Subsistence</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="relative">
+                                            <input type="radio" x-model="onboardingData.farmType" value="mixed" class="peer sr-only">
+                                            <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:border-mint/50">
+                                                <div class="text-center">
+                                                    <i data-lucide="layers" class="w-6 h-6 mx-auto mb-2 text-mint"></i>
+                                                    <span class="text-sm font-medium">Mixed</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Farm Size Category -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Farm Size Category</label>
+                                    <select 
+                                        x-model="onboardingData.farmSizeCategory"
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        <option value="less_than_1">Less than 1 hectare</option>
+                                        <option value="1_to_5">1-5 hectares</option>
+                                        <option value="5_to_10">5-10 hectares</option>
+                                        <option value="10_to_50">10-50 hectares</option>
+                                        <option value="more_than_50">More than 50 hectares</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Primary Crop -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Primary Crop</label>
+                                    <select 
+                                        x-model="onboardingData.primaryCrop"
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        <option value="maize">Maize</option>
+                                        <option value="cassava">Cassava</option>
+                                        <option value="beans">Beans</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="vegetables">Vegetables</option>
+                                        <option value="mixed">Mixed Crops</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Farming Years -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Years of Farming Experience</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="onboardingData.farmingYears"
+                                        placeholder="e.g., 5"
+                                        min="0"
+                                        max="50"
+                                        required
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                </div>
+                                
+                                <!-- Maize Variety Selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Maize Variety (Optional)</label>
+                                    <select 
+                                        x-model="selectedMaizeVariety"
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        <option value="">Select a variety...</option>
+                                        {% for variety in maize_varieties %}
+                                        <option value="{{ variety.id }}">{{ variety.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </form>
+                            
+                            <!-- Navigation -->
+                            <div class="flex space-x-4 mt-auto pt-4">
+                                <button @click="previousStep()" class="flex-1 bg-black/20 border border-white/10 text-white/70 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-black/30">
+                                    Back
+                                </button>
+                                <button @click="nextStep()" class="flex-1 bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Location Information -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-3xl shadow-2xl p-8 h-full flex flex-col overflow-y-auto">
+                            <div class="text-center mb-8">
+                                <h1 class="text-3xl font-bold text-white mb-4">Farm Location</h1>
+                                <p class="text-mint-light/80 text-lg">
+                                    Let us pinpoint your farm for accurate weather data
+                                </p>
+                            </div>
+                        
+                                
+                            <!-- Location Detection -->
+                            <div class="space-y-8">
+                                <!-- Detect Location Button -->
+                                <button 
+                                    @click="detectLocation()"
+                                    :disabled="detecting"
+                                    class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl px-6 py-4 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep flex items-center justify-center space-x-3">
+                                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                    <span x-show="!detecting">Detect My Current Location</span>
+                                    <span x-show="detecting" class="flex items-center space-x-2">
+                                        <span>Detecting</span>
+                                        <span x-show="attempts > 0" class="text-xs">(<span x-text="attempts"></span>/<span x-text="maxAttempts"></span>)</span>
+                                        <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                    </span>
+                                </button>
+                                
+                                <!-- Location Status -->
+                                <div x-show="location || error" x-transition class="space-y-4">
+                                    <!-- Success State -->
+                                    <div x-show="location" class="bg-forest-mid/20 border border-mint/30 rounded-xl p-4">
+                                        <div class="flex items-center space-x-3 mb-3">
+                                            <div class="w-8 h-8 bg-mint rounded-full flex items-center justify-center">
+                                                <i data-lucide="check" class="w-4 h-4 text-forest-deep"></i>
+                                            </div>
+                                            <span class="text-white font-medium">Location Detected!</span>
+                                            <div x-show="attempts > 1" class="text-xs text-mint-light/60">
+                                                (Attempt <span x-text="attempts"></span>)
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="space-y-2 text-sm mb-3">
+                                            <div class="flex justify-between">
+                                                <span class="text-mint-light/70">Latitude:</span>
+                                                <span class="text-white font-mono" x-text="location?.lat.toFixed(6)"></span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="text-mint-light/70">Longitude:</span>
+                                                <span class="text-white font-mono" x-text="location?.lng.toFixed(6)"></span>
+                                            </div>
+                                            <div x-show="address" class="pt-2 border-t border-white/10">
+                                                <span class="text-mint-light/70 block mb-1">Address:</span>
+                                                <span class="text-white text-xs" x-text="address"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Error State -->
+                                    <div x-show="error" class="bg-red-500/20 border border-red-400/30 rounded-xl p-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-8 h-8 bg-red-400 rounded-full flex items-center justify-center">
+                                                <i data-lucide="alert-circle" class="w-4 h-4 text-white"></i>
+                                            </div>
+                                            <div>
+                                                <span class="text-white font-medium">Location Error</span>
+                                                <p class="text-sm text-red-200" x-text="error"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Manual Location Entry -->
+                                <div class="border-t border-white/10 pt-6 space-y-6">
+                                    <p class="text-center text-mint-light/70 mb-4">Or enter your location manually:</p>
+                                    
+                                    <!-- Region Selection -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-mint-light/80 mb-2">Region</label>
+                                        <select 
+                                            x-model="onboardingData.region"
+                                            class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                            <option value="">Select your region...</option>
+                                            <option value="northwest">Northwest</option>
+                                            <option value="southwest">Southwest</option>
+                                            <option value="west">West</option>
+                                            <option value="littoral">Littoral</option>
+                                            <option value="center">Center</option>
+                                            <option value="east">East</option>
+                                            <option value="adamawa">Adamawa</option>
+                                            <option value="far_north">Far North</option>
+                                            <option value="north">North</option>
+                                            <option value="south">South</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- Division and Subdivision -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-mint-light/80 mb-2">Division/Department</label>
+                                            <input 
+                                                type="text" 
+                                                x-model="onboardingData.division"
+                                                placeholder="e.g., Mezam"
+                                                class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-mint-light/80 mb-2">Subdivision/District</label>
+                                            <input 
+                                                type="text" 
+                                                x-model="onboardingData.subdivision"
+                                                placeholder="e.g., Bamenda"
+                                                class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Village/Town -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-mint-light/80 mb-2">Village or Town</label>
+                                        <input 
+                                            type="text" 
+                                            x-model="onboardingData.villageTown"
+                                            placeholder="e.g., Bamenda City"
+                                            required
+                                            class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                    </div>
+                                    
+                                    <!-- GPS Coordinates -->
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm text-mint-light/70 mb-2">Latitude (Optional)</label>
+                                            <input 
+                                                type="number" 
+                                                step="0.000001"
+                                                x-model="onboardingData.gpsCoordinates.lat"
+                                                @change="handleCoordinateChange()"
+                                                @blur="handleCoordinateChange()"
+                                                placeholder="4.0483"
+                                                class="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-mint-light/70 mb-2">Longitude (Optional)</label>
+                                            <input 
+                                                type="number" 
+                                                step="0.000001"
+                                                x-model="onboardingData.gpsCoordinates.lng"
+                                                @change="handleCoordinateChange()"
+                                                @blur="handleCoordinateChange()"
+                                                placeholder="9.7043"
+                                                class="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation -->
+                            <div class="flex space-x-4 mt-auto pt-4">
+                                <button @click="previousStep()" class="flex-1 bg-black/20 border border-white/10 text-white/70 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-black/30">
+                                    Back
+                                </button>
+                                <button @click="nextStep()" class="flex-1 bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+               
+                    
+                 
+                    
+                    <!-- Step 5: Soil Information -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-3xl shadow-2xl p-8 h-full flex flex-col overflow-y-auto">
+                            <div class="text-center mb-8">
+                                <h1 class="text-3xl font-bold text-white mb-4">Soil Information</h1>
+                                <p class="text-mint-light/80 text-lg">
+                                    Help us understand your soil conditions
+                                </p>
+                            </div>
+                            
+                            <form class="space-y-8" @submit.prevent="nextStep()">
+                                <!-- Soil Type Selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-4">Select Your Soil Type</label>
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                        <label class="relative cursor-pointer">
+                                            <input type="radio" x-model="onboardingData.soilType" value="sandy" class="peer sr-only">
+                                            <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 transition-all duration-300 hover:border-mint/50">
+                                                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=150&h=100&fit=crop&crop=center" alt="Sandy Soil" class="w-full h-20 object-cover rounded-lg mb-3">
+                                                <div class="text-center">
+                                                    <h3 class="text-sm font-medium text-white">Sandy</h3>
+                                                    <p class="text-xs text-mint-light/60">Well-drained</p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        
+                                        <label class="relative cursor-pointer">
+                                            <input type="radio" x-model="onboardingData.soilType" value="clay" class="peer sr-only">
+                                            <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 transition-all duration-300 hover:border-mint/50">
+                                                <img src="https://images.unsplash.com/photo-1580924939039-074aae75e2b9?w=150&h=100&fit=crop&crop=center" alt="Clay Soil" class="w-full h-20 object-cover rounded-lg mb-3">
+                                                <div class="text-center">
+                                                    <h3 class="text-sm font-medium text-white">Clay</h3>
+                                                    <p class="text-xs text-mint-light/60">Water-retentive</p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        
+                                        <label class="relative cursor-pointer">
+                                            <input type="radio" x-model="onboardingData.soilType" value="loamy" class="peer sr-only">
+                                            <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 transition-all duration-300 hover:border-mint/50">
+                                                <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=150&h=100&fit=crop&crop=center" alt="Loamy Soil" class="w-full h-20 object-cover rounded-lg mb-3">
+                                                <div class="text-center">
+                                                    <h3 class="text-sm font-medium text-white">Loamy</h3>
+                                                    <p class="text-xs text-mint-light/60">Ideal balance</p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- pH Level -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">
+                                        Soil pH Level: <span class="text-mint font-semibold" x-text="onboardingData.soilPh || 6.5"></span>
+                                        <span class="text-xs text-mint-light/60 ml-1" x-text="getPhDescription(onboardingData.soilPh || 6.5)"></span>
+                                    </label>
+                                    <input 
+                                        type="range" 
+                                        x-model="onboardingData.soilPh"
+                                        min="4" 
+                                        max="9" 
+                                        step="0.1"
+                                        value="6.5"
+                                        class="w-full h-2 bg-black/30 rounded-lg appearance-none cursor-pointer accent-mint">
+                                    <div class="flex justify-between text-xs text-mint-light/60 mt-2">
+                                        <span>4.0</span>
+                                        <span>5.5</span>
+                                        <span>6.5</span>
+                                        <span>7.5</span>
+                                        <span>9.0</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Soil Fertility -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Soil Fertility</label>
+                                    <select 
+                                        x-model="onboardingData.soilFertility"
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        <option value="high">High - Rich in nutrients</option>
+                                        <option value="medium" selected>Medium - Moderate nutrients</option>
+                                        <option value="low">Low - Needs fertilization</option>
+                                        <option value="unknown">Unknown - Need soil test</option>
+                                    </select>
+                                </div>
+                            </form>
+                            
+                            <!-- Navigation -->
+                            <div class="flex space-x-4 mt-auto pt-4">
+                                <button @click="previousStep()" class="flex-1 bg-black/20 border border-white/10 text-white/70 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-black/30">
+                                    Back
+                                </button>
+                                <button @click="nextStep()" class="flex-1 bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 6: Farming Practices and Experience -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-3xl shadow-2xl p-8 h-full flex flex-col overflow-y-auto">
+                            <div class="text-center mb-8">
+                                <h1 class="text-3xl font-bold text-white mb-4">Farming Practices & Experience</h1>
+                                <p class="text-mint-light/80 text-lg">
+                                    Tell us about your farming methods and resources
+                                </p>
+                            </div>
+                            
+                            <form class="space-y-8" @submit.prevent="nextStep()">
+                                <!-- Experience Level -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Farming Experience Level</label>
+                                    <select 
+                                        x-model="onboardingData.experienceLevel"
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        <option value="">Select your experience level...</option>
+                                        <option value="beginner">Beginner - Less than 2 years</option>
+                                        <option value="intermediate">Intermediate - 2-5 years</option>
+                                        <option value="advanced">Advanced - 5-10 years</option>
+                                        <option value="expert">Expert - More than 10 years</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Farming Methods -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Describe Your Farming Methods</label>
+                                    <textarea 
+                                        x-model="onboardingData.farmingMethods"
+                                        placeholder="e.g., Traditional farming, organic practices, use of modern equipment, etc."
+                                        rows="4"
+                                        required
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"></textarea>
+                                </div>
+                                
+                                <!-- Labor Source -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Labor Source</label>
+                                    <select 
+                                        x-model="onboardingData.laborSource"
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                        <option value="">Select labor source...</option>
+                                        <option value="family">Family labor only</option>
+                                        <option value="hired">Hired workers only</option>
+                                        <option value="mixed">Mixed family and hired</option>
+                                        <option value="community">Community labor sharing</option>
+                                        <option value="mechanized">Mostly mechanized</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Labor Count -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Number of Regular Workers (Optional)</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="onboardingData.laborCount"
+                                        placeholder="e.g., 5"
+                                        min="0"
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                                </div>
+                                
+                                <!-- Equipment -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Available Equipment</label>
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="checkbox" x-model="onboardingData.availableEquipment" value="tractor" class="w-4 h-4 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                            <span class="text-white text-sm">Tractor</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="checkbox" x-model="onboardingData.availableEquipment" value="plow" class="w-4 h-4 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                            <span class="text-white text-sm">Plow</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="checkbox" x-model="onboardingData.availableEquipment" value="harrow" class="w-4 h-4 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                            <span class="text-white text-sm">Harrow</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="checkbox" x-model="onboardingData.availableEquipment" value="planter" class="w-4 h-4 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                            <span class="text-white text-sm">Planter</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="checkbox" x-model="onboardingData.availableEquipment" value="sprayer" class="w-4 h-4 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                            <span class="text-white text-sm">Sprayer</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="checkbox" x-model="onboardingData.availableEquipment" value="irrigation_pump" class="w-4 h-4 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                            <span class="text-white text-sm">Irrigation Pump</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="checkbox" x-model="onboardingData.availableEquipment" value="thresher" class="w-4 h-4 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                            <span class="text-white text-sm">Thresher</span>
+                                        </label>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="checkbox" x-model="onboardingData.availableEquipment" value="none" class="w-4 h-4 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                            <span class="text-white text-sm">No equipment</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Equipment Details -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Equipment Details (Optional)</label>
+                                    <textarea 
+                                        x-model="onboardingData.equipmentDetails"
+                                        placeholder="Describe any additional equipment or machinery..."
+                                        rows="3"
+                                        class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"></textarea>
+                                </div>
+                                
+                                <!-- Farming Practices -->
+                                <div>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-4">Farming Practices</label>
+                                    <div class="space-y-3">
+                                        <label class="flex items-center justify-between cursor-pointer">
+                                            <span class="text-white">Use fertilizers</span>
+                                            <input type="checkbox" x-model="onboardingData.fertilizerUsage" class="w-5 h-5 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                        </label>
+                                        <label class="flex items-center justify-between cursor-pointer">
+                                            <span class="text-white">Use pesticides</span>
+                                            <input type="checkbox" x-model="onboardingData.pesticideUsage" class="w-5 h-5 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                        </label>
+                                        <label class="flex items-center justify-between cursor-pointer">
+                                            <span class="text-white">Organic farming practices</span>
+                                            <input type="checkbox" x-model="onboardingData.organicFarming" class="w-5 h-5 text-mint bg-black/20 border-white/10 focus:ring-mint">
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            <!-- Navigation -->
+                            <div class="flex space-x-4 mt-auto pt-4">
+                                <button @click="previousStep()" class="flex-1 bg-black/20 border border-white/10 text-white/70 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-black/30">
+                                    Back
+                                </button>
+                                <button @click="nextStep()" class="flex-1 bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 7: Setup Complete -->
+                    <div class="w-full flex-shrink-0 h-full">
+                        <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-3xl shadow-2xl p-8 h-full flex flex-col overflow-y-auto">
+                            <!-- Success Animation -->
+                            <div class="text-center mb-8">
+                                <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-mint to-forest-light rounded-full flex items-center justify-center animate-pulse-slow">
+                                    <i data-lucide="check-circle" class="w-12 h-12 text-white"></i>
+                                </div>
+                                
+                                <h1 class="text-3xl font-bold text-white mb-4">Welcome to SmartFarm!</h1>
+                                <p class="text-mint-light/80 text-lg">
+                                    Your farm is all set up and ready to go
+                                </p>
+                            </div>
+                            
+                            <!-- Summary Card -->
+                            <div class="bg-forest-mid/20 border border-mint/30 rounded-xl p-6 mb-8">
+                                <h2 class="text-lg font-semibold text-white mb-4 flex items-center">
+                                    <i data-lucide="file-text" class="w-5 h-5 mr-2 text-mint"></i>
+                                    Farm Summary
+                                </h2>
+                                
+                                <div class="space-y-3 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-mint-light/70">Farm Name:</span>
+                                        <span class="text-white font-medium" x-text="onboardingData.farmName || 'Not specified'"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-mint-light/70">Farm Type:</span>
+                                        <span class="text-white font-medium" x-text="onboardingData.farmType || 'Not specified'"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-mint-light/70">Farm Size:</span>
+                                        <span class="text-white font-medium" x-text="onboardingData.farmSizeCategory?.replace('_', ' ')?.replace(/\b\w/g, l => l.toUpperCase()) || 'Not specified'"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-mint-light/70">Primary Crop:</span>
+                                        <span class="text-white font-medium" x-text="onboardingData.primaryCrop || 'Not specified'"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-mint-light/70">Location:</span>
+                                        <span class="text-white font-medium" x-text="onboardingData.villageTown ? (onboardingData.villageTown + ', ' + (onboardingData.region || 'Cameroon')) : 'Not specified'"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-mint-light/70">Soil Type:</span>
+                                        <span class="text-white font-medium" x-text="onboardingData.soilType || 'Not specified'"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-mint-light/70">Experience:</span>
+                                        <span class="text-white font-medium" x-text="onboardingData.experienceLevel || 'Not specified'"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-mint-light/70">Labor Source:</span>
+                                        <span class="text-white font-medium" x-text="onboardingData.laborSource || 'Not specified'"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-mint-light/70">Equipment:</span>
+                                        <span class="text-white font-medium" x-text="onboardingData.availableEquipment?.length > 0 ? onboardingData.availableEquipment.join(', ') : 'No equipment'"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation -->
+                            <div class="space-y-3 mt-auto">
+                                <button @click="cancelOnboarding()" class="w-full bg-red-500/20 border border-red-400/30 text-red-400 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-red-500/30">
+                                    Cancel & Start Over
+                                </button>
+                                
+                                <button @click="completeOnboarding()" class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-4 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep flex items-center justify-center space-x-2">
+                                    <span>Go to Dashboard</span>
+                                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </button>
+                                
+                                <button @click="previousStep()" class="w-full bg-black/20 border border-white/10 text-white/70 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-black/30">
+                                    Review Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <!-- Trust Indicators -->
+        <div class="mt-8 text-center">
+            <p class="text-sm text-mint-light/60 mb-4">Trusted by farmers across Cameroon</p>
+            <div class="flex items-center justify-center space-x-6">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-mint">500+</div>
+                    <div class="text-xs text-mint-light/60">Active Farms</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-mint">15%</div>
+                    <div class="text-xs text-mint-light/60">Yield Increase</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-mint">98%</div>
+                    <div class="text-xs text-mint-light/60">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% csrf_token %}
+
+<script>
+document.addEventListener('alpine:init', () => {
+    Alpine.data('onboardingWizard', () => ({
+        currentStep: 0,
+        showGrid: false,
+        selectedMaizeVariety: '',
+        searchQuery: '',
+        
+        // Location detection properties
+        location: null,
+        accuracy: null,
+        address: '',
+        error: '',
+        detecting: false,
+        attempts: 0,
+        maxAttempts: 3,
+        
+        // Console logging method
+        logCurrentState() {
+            console.log(`=== Onboarding Step ${this.currentStep} ===`);
+            console.log('Current Step:', this.currentStep);
+            console.log('Data Collected So Far:', {
+                ...this.onboardingData,
+                selectedMaizeVariety: this.selectedMaizeVariety,
+                location: this.location,
+                accuracy: this.accuracy,
+                address: this.address
+            });
+            console.log('========================');
+        },
+        
+        // Save progress to localStorage
+        saveProgress() {
+            const progressData = {
+                currentStep: this.currentStep,
+                onboardingData: this.onboardingData,
+                selectedMaizeVariety: this.selectedMaizeVariety,
+                location: this.location,
+                accuracy: this.accuracy,
+                address: this.address
+            };
+            localStorage.setItem('onboardingProgress', JSON.stringify(progressData));
+        },
+        
+        // Load progress from localStorage
+        loadProgress() {
+            const savedProgress = localStorage.getItem('onboardingProgress');
+            if (savedProgress) {
+                try {
+                    const progressData = JSON.parse(savedProgress);
+                    this.currentStep = progressData.currentStep || 0;
+                    this.onboardingData = { ...this.onboardingData, ...progressData.onboardingData };
+                    this.selectedMaizeVariety = progressData.selectedMaizeVariety || '';
+                    this.location = progressData.location || null;
+                    this.accuracy = progressData.accuracy || null;
+                    this.address = progressData.address || '';
+                    
+                    console.log('Progress restored from localStorage');
+                    this.logCurrentState();
+                    return true;
+                } catch (error) {
+                    console.error('Error loading progress:', error);
+                    return false;
+                }
+            }
+            return false;
+        },
+        
+        // Clear progress from localStorage
+        clearProgress() {
+            localStorage.removeItem('onboardingProgress');
+        },
+        
+        // Initialize component and load saved progress
+        init() {
+            this.loadProgress();
+        },
+        
+        onboardingData: {
+            // Step 1: Basic Farm Information
+            farmName: '',
+            farmType: 'smallholder',
+            farmSizeCategory: '1_to_5',
+            primaryCrop: 'maize',
+            farmingYears: '',
+            selectedMaizeVariety: '',
+
+            // Step 2: Location Information
+            region: '',
+            division: '',
+            subdivision: '',
+            villageTown: '',
+            gpsCoordinates: { lat: '', lng: '' },
+            
+            // Step 3: Soil Information
+            soilType: '',
+            soilFertility: 'medium',
+            phLevel: 6.5,
+            soilTestDone: false,
+            lastSoilTestDate: '',
+            
+            // Step 4: Water and Irrigation
+            waterSource: 'rain_fed',
+            irrigationMethod: 'none',
+            waterAvailability: '',
+            irrigationEquipment: '',
+            
+            // Step 5: Farm Equipment and Resources
+            availableEquipment: [],
+            equipmentDetails: '',
+            laborSource: '',
+            laborCount: '',
+            
+            // Step 6: Farming Practices and Experience
+            experienceLevel: 'beginner',
+            farmingMethods: '',
+            fertilizerUsage: true,
+            pesticideUsage: true,
+            organicFarming: false,
+            
+            // Step 7: Goals and Challenges
+            farmingGoals: '',
+            mainChallenges: '',
+            expectedYield: '',
+            marketAccess: '',
+            
+            // Additional Information
+            additionalNotes: '',
+            phoneNumber: ''
+        },
+        
+        maizeVarieties: [
+            {% for variety in maize_varieties %}
+            {
+                id: '{{ variety.id }}',
+                name: '{{ variety.name }}',
+                code: '{{ variety.code }}',
+                description: '{{ variety.description|escapejs }}',
+                maturity_period: '{{ variety.maturity_period }}',
+                expected_yield: {{ variety.expected_yield }},
+                drought_tolerance: {{ variety.drought_tolerance|yesno:"true,false" }},
+                disease_resistance: {{ variety.disease_resistance|yesno:"true,false" }}
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ],
+        
+        nextStep() {
+            // Log current state before changing step
+            this.logCurrentState();
+            
+            // Validate current step before proceeding
+            if (!this.validateCurrentStep()) {
+                return;
+            }
+            
+            if (this.currentStep < 7) {
+                // Save current step data and wait for completion
+                this.saveStepData().then(success => {
+                    if (success) {
+                        this.currentStep++;
+                        // Save progress after successful step change
+                        this.saveProgress();
+                        // Log new state after step change
+                        this.logCurrentState();
+                    }
+                });
+            } else {
+                this.completeOnboarding();
+            }
+        },
+        
+        previousStep() {
+            // Log current state before changing step
+            this.logCurrentState();
+            
+            if (this.currentStep > 0) {
+                this.currentStep--;
+                // Save progress after step change
+                this.saveProgress();
+                // Log new state after step change
+                this.logCurrentState();
+            }
+        },
+        
+        validateCurrentStep() {
+            // Skip validation for welcome screen (step 0)
+            if (this.currentStep === 0) {
+                return true;
+            }
+            
+            // Step 1: Basic Farm Information
+            if (this.currentStep === 1) {
+                if (!this.onboardingData.farmName.trim()) {
+                    this.showError('Please enter your farm name');
+                    return false;
+                }
+                if (!this.onboardingData.farmType) {
+                    this.showError('Please select your farm type');
+                    return false;
+                }
+                if (!this.onboardingData.farmSizeCategory) {
+                    this.showError('Please select your farm size category');
+                    return false;
+                }
+                if (!this.onboardingData.primaryCrop) {
+                    this.showError('Please select your primary crop');
+                    return false;
+                }
+                if (!this.onboardingData.farmingYears || this.onboardingData.farmingYears <= 0) {
+                    this.showError('Please enter valid farming years');
+                    return false;
+                }
+            }
+            
+            // Step 2: Location Information
+            if (this.currentStep === 2) {
+                if (!this.onboardingData.region) {
+                    this.showError('Please select your region');
+                    return false;
+                }
+                if (!this.onboardingData.villageTown.trim()) {
+                    this.showError('Please enter your village/town');
+                    return false;
+                }
+            }
+            
+            // Step 3: Soil Information
+            if (this.currentStep === 3) {
+                if (!this.onboardingData.soilType) {
+                    this.showError('Please select soil type');
+                    return false;
+                }
+                if (!this.onboardingData.soilFertility) {
+                    this.showError('Please select soil fertility level');
+                    return false;
+                }
+            }
+            
+            // Step 4: Water and Irrigation
+            if (this.currentStep === 4) {
+                if (!this.onboardingData.waterSource) {
+                    this.showError('Please select water source');
+                    return false;
+                }
+                if (!this.onboardingData.irrigationMethod) {
+                    this.showError('Please select irrigation method');
+                    return false;
+                }
+            }
+            
+            // Step 5: Farm Equipment and Resources
+            if (this.currentStep === 5) {
+                // No required validation for step 5 (equipment is optional)
+            }
+            
+            // Step 6: Farming Practices and Experience
+            if (this.currentStep === 6) {
+                if (!this.onboardingData.laborSource) {
+                    this.showError('Please select labor source');
+                    return false;
+                }
+                if (!this.onboardingData.experienceLevel) {
+                    this.showError('Please select your experience level');
+                    return false;
+                }
+                if (!this.onboardingData.farmingMethods.trim()) {
+                    this.showError('Please describe your farming methods');
+                    return false;
+                }
+            }
+            
+            // Step 7: Goals and Challenges
+            if (this.currentStep === 7) {
+                if (!this.onboardingData.farmingGoals.trim()) {
+                    this.showError('Please enter your farming goals');
+                    return false;
+                }
+                if (!this.onboardingData.mainChallenges.trim()) {
+                    this.showError('Please enter your main challenges');
+                    return false;
+                }
+                if (!this.onboardingData.marketAccess.trim()) {
+                    this.showError('Please describe your market access');
+                    return false;
+                }
+            }
+            
+            return true;
+        },
+        
+        showError(message) {
+            // Show error using SweetAlert2
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: message,
+                showConfirmButton: true,
+                confirmButtonColor: '#10b981',
+                confirmButtonText: 'OK',
+                backdrop: `rgba(0, 0, 0, 0.8)`,
+                background: '#1a1a1a',
+                color: '#ffffff',
+                customClass: {
+                    popup: 'glassmorphic-alert',
+                    title: 'alert-title',
+                    content: 'alert-content',
+                    confirmButton: 'alert-confirm-btn'
+                }
+            });
+        },
+        
+        previousStep() {
+            if (this.currentStep > 1) {
+                this.currentStep--;
+            }
+        },
+        
+        saveStepData() {
+            // Map frontend data to backend format
+            const stepData = {
+                step: this.currentStep,
+                farmName: this.onboardingData.farmName,
+                farmType: this.onboardingData.farmType,
+                farmSizeCategory: this.onboardingData.farmSizeCategory,
+                primaryCrop: this.onboardingData.primaryCrop,
+                farmingYears: this.onboardingData.farmingYears,
+                selectedMaizeVariety: this.onboardingData.selectedMaizeVariety,
+                region: this.onboardingData.region,
+                division: this.onboardingData.division,
+                subdivision: this.onboardingData.subdivision,
+                villageTown: this.onboardingData.villageTown,
+                gpsCoordinates: this.onboardingData.gpsCoordinates,
+                soilType: this.onboardingData.soilType,
+                soilFertility: this.onboardingData.soilFertility,
+                soilPh: this.onboardingData.phLevel,
+                soilTestDone: this.onboardingData.soilTestDone,
+                lastSoilTestDate: this.onboardingData.lastSoilTestDate,
+                waterSource: this.onboardingData.waterSource,
+                irrigationMethod: this.onboardingData.irrigationMethod,
+                waterAvailability: this.onboardingData.waterAvailability,
+                irrigationEquipment: this.onboardingData.irrigationEquipment,
+                availableEquipment: this.onboardingData.availableEquipment,
+                equipmentDetails: this.onboardingData.equipmentDetails,
+                laborSource: this.onboardingData.laborSource,
+                laborCount: this.onboardingData.laborCount,
+                experienceLevel: this.onboardingData.experienceLevel,
+                farmingMethods: this.onboardingData.farmingMethods,
+                fertilizerUsage: this.onboardingData.fertilizerUsage,
+                pesticideUsage: this.onboardingData.pesticideUsage,
+                organicFarming: this.onboardingData.organicFarming,
+                farmingGoals: this.onboardingData.farmingGoals,
+                mainChallenges: this.onboardingData.mainChallenges,
+                expectedYield: this.onboardingData.expectedYield,
+                marketAccess: this.onboardingData.marketAccess,
+                additionalNotes: this.onboardingData.additionalNotes,
+                phoneNumber: this.onboardingData.phoneNumber
+            };
+            
+            // Return a Promise for async handling
+            return fetch('/onboarding/save-step/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(stepData)
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Step data saved successfully');
+                    return true;
+                } else {
+                    console.error('Failed to save step data:', data.error);
+                    this.showError('Failed to save data: ' + data.error);
+                    return false;
+                }
+            })
+            .catch(error => {
+                console.error('Error saving step data:', error);
+                this.showError('Network error: Failed to save data');
+                return false;
+            });
+        },
+        
+        getPhDescription(value) {
+            if (value < 5.5) return '(Too acidic)';
+            if (value < 6.0) return '(Slightly acidic)';
+            if (value <= 7.0) return '(Optimal for maize)';
+            if (value <= 7.5) return '(Slightly alkaline)';
+            return '(Too alkaline)';
+        },
+        
+        skipOnboarding() {
+            this.completeOnboarding();
+        },
+        
+        completeOnboarding() {
+            // Map all data to backend format
+            const allData = {
+                farmName: this.onboardingData.farmName,
+                farmType: this.onboardingData.farmType,
+                farmSize: this.onboardingData.farmSizeCategory,
+                primaryCrop: this.onboardingData.primaryCrop,
+                farmingYears: this.onboardingData.farmingYears,
+                maizeVariety: this.onboardingData.selectedMaizeVariety,
+                region: this.onboardingData.region,
+                division: this.onboardingData.division,
+                subdivision: this.onboardingData.subdivision,
+                villageTown: this.onboardingData.villageTown,
+                gpsCoordinates: this.onboardingData.gpsCoordinates,
+                soilType: this.onboardingData.soilType,
+                soilFertility: this.onboardingData.soilFertility,
+                soilPh: this.onboardingData.phLevel,
+                soilTestDone: this.onboardingData.soilTestDone,
+                lastSoilTestDate: this.onboardingData.lastSoilTestDate,
+                waterSource: this.onboardingData.waterSource,
+                irrigationMethod: this.onboardingData.irrigationMethod,
+                waterAvailability: this.onboardingData.waterAvailability,
+                irrigationEquipment: this.onboardingData.irrigationEquipment,
+                availableEquipment: this.onboardingData.availableEquipment,
+                equipmentDetails: this.onboardingData.equipmentDetails,
+                laborSource: this.onboardingData.laborSource,
+                laborCount: this.onboardingData.laborCount,
+                experienceLevel: this.onboardingData.experienceLevel,
+                farmingMethods: this.onboardingData.farmingMethods,
+                fertilizerUsage: this.onboardingData.fertilizerUsage,
+                pesticideUsage: this.onboardingData.pesticideUsage,
+                organicFarming: this.onboardingData.organicFarming,
+                farmingGoals: this.onboardingData.farmingGoals,
+                mainChallenges: this.onboardingData.mainChallenges,
+                expectedYield: this.onboardingData.expectedYield,
+                marketAccess: this.onboardingData.marketAccess,
+                additionalNotes: this.onboardingData.additionalNotes,
+                phoneNumber: this.onboardingData.phoneNumber
+            };
+            
+            // Save all onboarding data and redirect to dashboard
+            fetch('/onboarding/complete/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(allData)
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Clear progress from localStorage after successful completion
+                    this.clearProgress();
+                    window.location.href = '/dashboard/';
+                } else {
+                    console.error('Onboarding completion failed:', data.error);
+                    alert('Failed to complete onboarding. Please try again.');
+                }
+            }).catch(error => {
+                console.error('Failed to complete onboarding:', error);
+                alert('Failed to complete onboarding. Please try again.');
+            });
+        },
+        
+        // Location detection methods
+        detectLocation() {
+            if (this.detecting) return;
+            
+            this.detecting = true;
+            this.error = '';
+            this.attempts++;
+            
+            if (!navigator.geolocation) {
+                this.error = 'Geolocation is not supported by your browser';
+                this.detecting = false;
+                return;
+            }
+            
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    this.location = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    this.accuracy = position.coords.accuracy;
+                    this.detecting = false;
+                    
+                    // Get address using reverse geocoding
+                    this.reverseGeocode(this.location.lat, this.location.lng);
+                },
+                (error) => {
+                    this.detecting = false;
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            this.error = "Location access denied. Please enable location permissions.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            this.error = "Location information is unavailable.";
+                            break;
+                        case error.TIMEOUT:
+                            this.error = "Location request timed out.";
+                            break;
+                        default:
+                            this.error = "An unknown error occurred.";
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        },
+        
+        reverseGeocode(lat, lng) {
+            // Clear existing location fields first
+            this.onboardingData.villageTown = '';
+            this.onboardingData.division = '';
+            this.onboardingData.subdivision = '';
+            this.onboardingData.region = '';
+            this.onboardingData.gpsCoordinates.lat = '';
+            this.onboardingData.gpsCoordinates.lng = '';
+            
+            // Clear form inputs
+            const villageInput = document.querySelector('input[x-model="onboardingData.villageTown"]');
+            const divisionInput = document.querySelector('input[x-model="onboardingData.division"]');
+            const subdivisionInput = document.querySelector('input[x-model="onboardingData.subdivision"]');
+            const regionSelect = document.querySelector('select[x-model="onboardingData.region"]');
+            const latInput = document.querySelector('input[x-model="onboardingData.gpsCoordinates.lat"]');
+            const lngInput = document.querySelector('input[x-model="onboardingData.gpsCoordinates.lng"]');
+            
+            console.log('Region select element found:', !!regionSelect);
+            if (regionSelect) {
+                console.log('Region select current value:', regionSelect.value);
+                console.log('Region select options:', Array.from(regionSelect.options).map(opt => `${opt.value}: ${opt.text}`));
+            }
+            
+            if (villageInput) villageInput.value = '';
+            if (divisionInput) divisionInput.value = '';
+            if (subdivisionInput) subdivisionInput.value = '';
+            if (regionSelect) regionSelect.value = '';
+            if (latInput) latInput.value = '';
+            if (lngInput) lngInput.value = '';
+            
+            fetch(`/api/geocode/reverse/?lat=${lat}&lng=${lng}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.address = data.data.display_name;
+                        
+                        // Populate GPS coordinates first
+                        this.onboardingData.gpsCoordinates.lat = lat.toFixed(6);
+                        this.onboardingData.gpsCoordinates.lng = lng.toFixed(6);
+                        if (latInput) latInput.value = lat.toFixed(6);
+                        if (lngInput) lngInput.value = lng.toFixed(6);
+                        
+                        // Populate form fields with geocoded data
+                        if (data.data.village_town) {
+                            this.onboardingData.villageTown = data.data.village_town;
+                            if (villageInput) villageInput.value = data.data.village_town;
+                        }
+                        
+                        if (data.data.division) {
+                            this.onboardingData.division = data.data.division;
+                            if (divisionInput) divisionInput.value = data.data.division;
+                        }
+                        
+                        if (data.data.subdivision) {
+                            this.onboardingData.subdivision = data.data.subdivision;
+                            if (subdivisionInput) subdivisionInput.value = data.data.subdivision;
+                        }
+                        
+                        if (data.data.region) {
+                            console.log('Setting region to:', data.data.region);
+                            this.onboardingData.region = data.data.region;
+                            
+                            // Force Alpine.js reactivity update
+                            this.$nextTick(() => {
+                                console.log('Region after nextTick:', this.onboardingData.region);
+                            });
+                        }
+                        
+                        console.log('Location fields cleared and populated:', data.data);
+                    } else {
+                        this.address = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                        console.warn('Reverse geocoding failed:', data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Reverse geocoding failed:', error);
+                    this.address = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                });
+        },
+        
+        // Function to handle manual GPS coordinate entry
+        handleCoordinateChange() {
+            const lat = parseFloat(this.onboardingData.gpsCoordinates.lat);
+            const lng = parseFloat(this.onboardingData.gpsCoordinates.lng);
+            
+            if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                // Show loading feedback
+                this.address = 'Getting location information...';
+                
+                // Coordinates are valid, perform reverse geocoding
+                this.reverseGeocode(lat, lng);
+            }
+        },
+        
+        // Cancel onboarding and reset all data
+        cancelOnboarding() {
+            if (confirm('Are you sure you want to cancel? All your progress will be lost and you will start over from the beginning.')) {
+                // Reset all onboarding data
+                this.onboardingData = {
+                    // Step 1: Basic Farm Information
+                    farmName: '',
+                    farmType: 'smallholder',
+                    farmSizeCategory: '1_to_5',
+                    primaryCrop: 'maize',
+                    farmingYears: '',
+                    selectedMaizeVariety: '',
+
+                    // Step 2: Location Information
+                    region: '',
+                    division: '',
+                    subdivision: '',
+                    villageTown: '',
+                    gpsCoordinates: {
+                        lat: '',
+                        lng: ''
+                    },
+
+                    // Step 3: Soil Information
+                    soilType: '',
+                    soilFertility: '',
+                    soilPh: '',
+                    soilTestDone: false,
+                    lastSoilTestDate: '',
+
+                    // Step 4: Water and irrigation
+                    waterSource: '',
+                    irrigationMethod: '',
+                    waterAvailability: '',
+                    irrigationEquipment: '',
+
+                    // Step 5: Equipment and resources
+                    availableEquipment: [],
+                    equipmentDetails: '',
+                    laborSource: '',
+                    laborCount: '',
+
+                    // Step 6: Farming practices
+                    experienceLevel: '',
+                    farmingMethods: '',
+                    fertilizerUsage: true,
+                    pesticideUsage: true,
+                    organicFarming: false,
+
+                    // Step 7: Goals and challenges
+                    farmingGoals: '',
+                    mainChallenges: '',
+                    expectedYield: '',
+                    marketAccess: '',
+
+                    // Additional info
+                    phoneNumber: '',
+                    additionalNotes: ''
+                };
+                
+                // Reset location detection
+                this.location = null;
+                this.address = '';
+                this.accuracy = null;
+                this.detecting = false;
+                this.error = '';
+                this.attempts = 0;
+                
+                // Reset to first step
+                this.currentStep = 0;
+                
+                // Clear localStorage
+                localStorage.removeItem('onboardingProgress');
+                localStorage.removeItem('onboardingData');
+                
+                console.log('Onboarding cancelled and reset to beginning');
+            }
+        }
+    }));
+    
+    // Remove the separate locationDetector component since it's now integrated
+});
+</script>
+{% endblock %}

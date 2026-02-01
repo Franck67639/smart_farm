@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ page_title|default:"SmartFarm" }} - Dashboard{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-forest-deep to-forest-dark flex">
+    <!-- Sidebar Component -->
+    {% include "partials/_sidebar.html" %}
+    
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col">
+        <!-- Top Navigation Component -->
+        {% include "partials/_topnav.html" %}
+        
+        <!-- Main Content -->
+        <main class="flex-1 max-w-full px-4 sm:px-6 lg:px-8 py-8 overflow-y-auto">
+            {% block app_content %}
+            <!-- Page content goes here -->
+            {% endblock %}
+        </main>
+        
+        <!-- Mobile Bottom Navigation -->
+        {% if show_mobile_nav|default:True %}
+        <nav class="lg:hidden fixed bottom-0 left-0 right-0 backdrop-blur-xl bg-black/40 border-t border-white/10 z-50">
+            <div class="grid grid-cols-5 gap-1">
+                <a href="{% url 'dashboard' %}" class="flex flex-col items-center justify-center py-3 {% if request.resolver_match.url_name == 'dashboard' %}text-mint{% else %}text-mint-light/60 hover:text-mint{% endif %} transition-colors">
+                    <i data-lucide="home" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Dashboard</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center justify-center py-3 {% if request.resolver_match.url_name == 'weather_forecast' %}text-mint{% else %}text-mint-light/60 hover:text-mint{% endif %} transition-colors">
+                    <i data-lucide="cloud-sun" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Weather</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center justify-center py-3 {% if request.resolver_match.url_name == 'activity_log' %}text-mint{% else %}text-mint-light/60 hover:text-mint{% endif %} transition-colors">
+                    <i data-lucide="activity" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Actions</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center justify-center py-3 {% if request.resolver_match.url_name == 'farming_guide' %}text-mint{% else %}text-mint-light/60 hover:text-mint{% endif %} transition-colors">
+                    <i data-lucide="book-open" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Guide</span>
+                </a>
+                
+                <a href="#" class="flex flex-col items-center justify-center py-3 {% if request.resolver_match.url_name == 'profile' %}text-mint{% else %}text-mint-light/60 hover:text-mint{% endif %} transition-colors">
+                    <i data-lucide="user" class="w-5 h-5 mb-1"></i>
+                    <span class="text-xs">Profile</span>
+                </a>
+            </div>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Mobile Sidebar Overlay -->
+<div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 lg:hidden hidden" onclick="toggleMobileSidebar()"></div>
+<div id="mobile-sidebar" class="fixed left-0 top-0 h-full w-64 backdrop-blur-xl bg-black/40 border-r border-white/10 z-50 transform -translate-x-full transition-transform duration-300 lg:hidden">
+    <!-- Mobile sidebar content -->
+    <div class="p-6 border-b border-white/10">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-mint to-forest-light rounded-lg flex items-center justify-center">
+                    <i data-lucide="leaf" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white">SmartFarm</h1>
+                    <p class="text-xs text-mint-light/70">Cameroon Maize Farming</p>
+                </div>
+            </div>
+            <button onclick="toggleMobileSidebar()" class="text-mint-light/60 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Mobile navigation items -->
+    <nav class="p-4 space-y-2 overflow-y-auto">
+        <a href="{% url 'dashboard' %}" class="flex items-center space-x-3 bg-forest-mid/20 border border-mint/30 rounded-lg px-4 py-3 text-white">
+            <i data-lucide="home" class="w-5 h-5 text-mint"></i>
+            <span class="text-sm font-medium">Dashboard</span>
+        </a>
+        
+        <div class="space-y-1">
+            <p class="text-xs text-mint-light/60 font-semibold uppercase tracking-wider px-4 py-2">Quick Access</p>
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors">
+                <i data-lucide="wheat" class="w-5 h-5"></i>
+                <span class="text-sm">Crops</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors">
+                <i data-lucide="cloud-sun" class="w-5 h-5"></i>
+                <span class="text-sm">Weather</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors">
+                <i data-lucide="activity" class="w-5 h-5"></i>
+                <span class="text-sm">Activities</span>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<!-- Add padding for mobile bottom nav -->
+{% if show_mobile_nav|default:True %}
+<div class="h-20 lg:hidden"></div>
+{% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+});
+
+function toggleMobileSidebar() {
+    const sidebar = document.getElementById('mobile-sidebar');
+    const overlay = document.getElementById('mobile-sidebar-overlay');
+    
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+}
+</script>
+
+{% block extra_scripts %}
+{% endblock %}
+{% endblock %}

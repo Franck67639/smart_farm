@@ -1,0 +1,135 @@
+<!-- Weather Widget Component -->
+<div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-xl p-6" x-data="weatherWidget()">
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-white">Weather</h3>
+        <div class="flex items-center space-x-2">
+            {% if alerts_count > 0 %}
+            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ alerts_count }} alerts</span>
+            {% endif %}
+            <button @click="refreshWeather()" class="text-mint hover:text-mint-light transition-colors">
+                <svg class="w-4 h-4" :class="{'animate-spin': loading}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    {% if weather %}
+    <div class="space-y-4">
+        <!-- Current Weather -->
+        <div class="flex items-center justify-between">
+            <div>
+                <div class="text-3xl font-bold text-white">{{ weather.temperature_avg|floatformat:1 }}°C</div>
+                <div class="text-sm text-mint-light/80">{{ weather.weather_condition }}</div>
+                <div class="text-xs text-mint-light/60 mt-1">
+                    {{ weather.farm.farm_name }} • {{ weather.date|date:"M d" }}
+                </div>
+            </div>
+            <div class="text-right space-y-1">
+                <div class="flex items-center justify-end space-x-2 text-sm text-mint-light/80">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                    </svg>
+                    <span>{{ weather.humidity|floatformat:0 }}%</span>
+                </div>
+                <div class="flex items-center justify-end space-x-2 text-sm text-mint-light/80">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                    <span>{{ weather.wind_speed|floatformat:1 }} km/h</span>
+                </div>
+                {% if weather.rainfall > 0 %}
+                <div class="flex items-center justify-end space-x-2 text-sm text-blue-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                    </svg>
+                    <span>{{ weather.rainfall|floatformat:1 }} mm</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Weather Alerts -->
+        {% if alerts_count > 0 %}
+        <div class="bg-red-500/20 border border-red-400/30 rounded-lg p-3">
+            <div class="flex items-center space-x-2">
+                <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+                <span class="text-sm text-red-300">Weather alerts active</span>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Quick Forecast -->
+        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-white/10">
+            {% for forecast in forecasts|slice:":3" %}
+            <div class="text-center">
+                <div class="text-xs text-mint-light/60">{{ forecast.forecast_date|date:"D" }}</div>
+                <div class="text-sm font-medium text-white">{{ forecast.max_temp_c|floatformat:0 }}°</div>
+                <div class="text-xs text-mint-light/40">{{ forecast.min_temp_c|floatformat:0 }}°</div>
+                {% if forecast.daily_chance_of_rain > 30 %}
+                <svg class="w-3 h-3 text-blue-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                </svg>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <!-- No Weather Data -->
+    <div class="text-center py-8">
+        <svg class="w-12 h-12 text-mint-light/40 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <p class="text-sm text-mint-light/60 mb-4">No weather data available</p>
+        <button @click="refreshWeather()" class="bg-mint/20 border border-mint/30 text-mint px-4 py-2 rounded-lg hover:bg-mint/30 transition-colors text-sm">
+            Get Weather Data
+        </button>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function weatherWidget() {
+    return {
+        loading: false,
+        fieldId: {% if field.id %}'{{ field.id }}'{% else %}null{% endif %},
+        
+        init() {
+            // Auto-refresh every 10 minutes
+            setInterval(() => {
+                if (!this.loading && this.fieldId) {
+                    this.refreshWeather();
+                }
+            }, 600000);
+        },
+        
+        async refreshWeather() {
+            if (!this.fieldId) {
+                console.error('No field ID available');
+                return;
+            }
+            
+            this.loading = true;
+            
+            try {
+                const response = await fetch(`/weather/api/update/${this.fieldId}/`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Refresh the page to show updated data
+                    window.location.reload();
+                } else {
+                    console.error('Failed to update weather:', data.message);
+                }
+            } catch (error) {
+                console.error('Error updating weather:', error);
+            } finally {
+                this.loading = false;
+            }
+        }
+    }
+}
+</script>

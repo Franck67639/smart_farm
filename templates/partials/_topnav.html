@@ -1,0 +1,175 @@
+<!-- Top Navigation Bar Component -->
+<header class="backdrop-blur-xl bg-black/30 border-b border-white/10 sticky top-0 z-50">
+    <div class="max-w-full px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <!-- Mobile Menu Toggle -->
+            <button class="lg:hidden bg-black/20 border border-white/10 rounded-lg p-2 hover:bg-black/30 transition-colors duration-300" onclick="toggleMobileSidebar()">
+                <i data-lucide="menu" class="w-5 h-5 text-mint"></i>
+            </button>
+            
+            <!-- Page Title (Mobile) -->
+            <div class="lg:hidden">
+                <h1 class="text-lg font-semibold text-white">{{ page_title|default:"Dashboard" }}</h1>
+            </div>
+            
+            <!-- User Actions -->
+            <div class="flex items-center space-x-4 ml-auto">
+                <!-- Farm Selector -->
+                {% if user_farms %}
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" class="bg-black/20 border border-white/10 rounded-lg px-3 py-2 hover:bg-black/30 transition-colors duration-300 flex items-center space-x-2">
+                        <i data-lucide="home" class="w-4 h-4 text-mint"></i>
+                        <span class="text-sm text-white hidden md:block">{{ current_farm.farm_name|default:"Select Farm" }}</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-mint-light/60"></i>
+                    </button>
+                    
+                    <!-- Farm Dropdown -->
+                    <div 
+                        x-show="open" 
+                        x-transition
+                        @click.away="open = false"
+                        class="absolute right-0 mt-2 w-72 backdrop-blur-xl bg-black/90 border border-white/20 rounded-xl shadow-2xl py-2"
+                        x-cloak>
+                        <div class="px-4 py-3 border-b border-white/10">
+                            <h3 class="text-sm font-semibold text-white">My Farms</h3>
+                            <p class="text-xs text-mint-light/60">{{ user_farms.count }} farm{{ user_farms.count|pluralize }}</p>
+                        </div>
+                        
+                        <div class="max-h-64 overflow-y-auto">
+                            {% for farm in user_farms %}
+                            <a href="{% url 'switch_farm' farm.id %}" class="flex items-center space-x-3 px-4 py-3 hover:bg-black/20 transition-colors duration-300 {% if current_farm.id == farm.id %}bg-forest-mid/20 border-l-2 border-mint{% endif %}">
+                                <div class="w-8 h-8 bg-forest-mid rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="home" class="w-4 h-4 text-mint"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-white font-medium truncate">{{ farm.farm_name }}</p>
+                                    <p class="text-xs text-mint-light/60 truncate">{{ farm.village_town|default:"Location not set" }}, {{ farm.get_region_display|default:"Cameroon" }}</p>
+                                </div>
+                                {% if current_farm.id == farm.id %}
+                                <i data-lucide="check" class="w-4 h-4 text-mint"></i>
+                                {% endif %}
+                            </a>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="border-t border-white/10 py-2">
+                            <a href="{% url 'add_new_farm' %}" class="flex items-center space-x-3 px-4 py-2 hover:bg-green-500/20 transition-colors duration-300">
+                                <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+                                    <i data-lucide="plus" class="w-4 h-4 text-green-400"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-green-400 font-medium">Add New Farm</p>
+                                    <p class="text-xs text-mint-light/60">Create a new farm profile</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <!-- Weather Alert -->
+                {% if weather_alert %}
+                <div class="bg-yellow-500/20 border border-yellow-400/30 rounded-lg px-3 py-2">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="cloud-sun" class="w-4 h-4 text-yellow-400"></i>
+                        <span class="text-xs text-yellow-300">{{ weather_alert }}</span>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Notifications -->
+                <div class="relative mar" x-data="{ open: false }">
+                    <button @click="open = !open" class="bg-black/20 border border-white/10 rounded-lg p-2 hover:bg-black/30 transition-colors duration-300 relative">
+                        <i data-lucide="bell" class="w-5 h-5 text-mint"></i>
+                        {% if notification_count > 0 %}
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                        {% endif %}
+                    </button>
+                    
+                    <!-- Notifications Dropdown -->
+                    <div 
+                        x-show="open" 
+                        x-transition
+                        @click.away="open = false"
+                        class="absolute right-0 mt-2 w-80 backdrop-blur-xl bg-black/90 border border-white/20 rounded-xl shadow-2xl py-2"
+                        x-cloak>
+                        <div class="px-4 py-3 border-b border-white/10">
+                            <h3 class="text-sm font-semibold text-white">Notifications</h3>
+                        </div>
+                        
+                        <div class="max-h-96 overflow-y-auto">
+                            {% if notifications %}
+                                {% for notification in notifications %}
+                                <div class="px-4 py-3 hover:bg-black/20 transition-colors duration-300 cursor-pointer">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-8 h-8 bg-forest-mid rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="{{ notification.icon|default:'info' }}" class="w-4 h-4 text-mint"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-white">{{ notification.message }}</p>
+                                            <p class="text-xs text-mint-light/60">{{ notification.time|default:"Just now" }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="px-4 py-6 text-center">
+                                    <p class="text-sm text-mint-light/60">No new notifications</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="px-4 py-3 border-t border-white/10">
+                            <a href="#" class="w-full text-center text-sm text-mint hover:text-mint-light transition-colors duration-300 block">
+                                View All Notifications
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User Menu -->
+                <div class="relative float-end" x-data="{ open: false }">
+                    <button @click="open = !open" class="bg-black/20 border border-white/10 rounded-lg p-2 hover:bg-black/30 transition-colors duration-300">
+                        <i data-lucide="user" class="w-5 h-5 text-mint"></i>
+                    </button>
+                    
+                    <!-- User Dropdown -->
+                    <div 
+                        x-show="open" 
+                        x-transition
+                        @click.away="open = false"
+                        class="absolute right-0 mt-2 w-56 backdrop-blur-xl bg-black/90 border border-white/20 rounded-xl shadow-2xl py-2"
+                        x-cloak>
+                        <div class="px-4 py-3 border-b border-white/10">
+                            <p class="text-sm font-medium text-white">{{ user.full_name|default:user.username }}</p>
+                            <p class="text-xs text-mint-light/60">{{ user.email }}</p>
+                        </div>
+                        
+                        <div class="py-2">
+                            <a href="#" class="flex items-center space-x-3 px-4 py-2 hover:bg-black/20 transition-colors duration-300">
+                                <i data-lucide="user" class="w-4 h-4 text-mint-light/60"></i>
+                                <span class="text-sm text-mint-light/80">Profile</span>
+                            </a>
+                            
+                            <a href="#" class="flex items-center space-x-3 px-4 py-2 hover:bg-black/20 transition-colors duration-300">
+                                <i data-lucide="settings" class="w-4 h-4 text-mint-light/60"></i>
+                                <span class="text-sm text-mint-light/80">Settings</span>
+                            </a>
+                            
+                            <a href="#" class="flex items-center space-x-3 px-4 py-2 hover:bg-black/20 transition-colors duration-300">
+                                <i data-lucide="help-circle" class="w-4 h-4 text-mint-light/60"></i>
+                                <span class="text-sm text-mint-light/80">Help & Support</span>
+                            </a>
+                        </div>
+                        
+                        <div class="border-t border-white/10 py-2">
+                            <a href="{% url 'logout' %}" class="flex items-center space-x-3 px-4 py-2 hover:bg-red-500/20 transition-colors duration-300">
+                                <i data-lucide="log-out" class="w-4 h-4 text-red-400"></i>
+                                <span class="text-sm text-red-400">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

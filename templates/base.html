@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}SmartFarm - Premium Maize Farming{% endblock title %}
+    </title>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS Play CDN (v4.x – latest stable in 2025) – for development & prototyping -->
+    <!-- Note: In production, install Tailwind as PostCSS plugin per https://tailwindcss.com/docs/installation -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Customize Tailwind -->
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "forest-deep": "#051F20",
+              "forest-dark": "#0B2B26",
+              "forest-mid": "#163832",
+              "forest-light": "#235347",
+              mint: "#8EB69B",
+              "mint-light": "#DAF1DE",
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+            borderRadius: {
+              "2xl": "16px",
+              "3xl": "24px",
+            },
+            animation: {
+              float: "float 3s ease-in-out infinite",
+              "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- HTMX latest stable (v2.x branch) -->
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
+
+    <!-- Alpine.js v3 latest stable -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- Lucide icons (lightweight SVG icons via CDN) -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- SweetAlert2 for beautiful alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Leaflet.js for mapping -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#051F20" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    {% block extra_head %}{% endblock extra_head %}
+  </head>
+  <body
+    class="bg-gradient-to-br from-forest-deep to-forest-dark min-h-screen text-white/90 font-sans antialiased"
+  >
+    <!-- Blurred Nature Background for Auth Pages -->
+    {% if request.resolver_match.url_name == 'login' or request.resolver_match.url_name == 'register' or 'onboarding' in request.resolver_match.url_name %}
+    <div class="fixed inset-0 z-0">
+      <div
+        class="absolute inset-0 bg-cover bg-center opacity-70 backdrop-blur-sm"
+        style="
+          background-image: url(&quot;https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80&quot;);
+        "
+      ></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-forest-deep/50 to-forest-dark/50"
+      ></div>
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="relative z-10">{% block content %}{% endblock content %}</main>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+
+        // Re-initialize icons after HTMX swaps
+        document.body.addEventListener("htmx:afterSwap", function () {
+          lucide.createIcons();
+        });
+      });
+    </script>
+
+    {% block extra_js %}{% endblock extra_js %}
+  </body>
+</html>

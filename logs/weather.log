@@ -1,0 +1,5 @@
+WeatherAPI key not found. Weather functionality will be disabled.
+Error updating weather data for farm 4b801919-eebf-42de-a57c-384fa8d0763e: WeatherData() got unexpected keyword arguments: 'last_updated', 'location_name', 'location_region', 'location_country', 'temperature_c', 'temperature_f', 'condition', 'wind_kph', 'wind_direction', 'pressure_mb', 'precipitation_mm', 'visibility_km', 'uv_index', 'gust_kph', 'air_quality_data', 'raw_data'
+Error updating weather data for farm 4b801919-eebf-42de-a57c-384fa8d0763e: UNIQUE constraint failed: smart_farm_weatherdata.farm_id, smart_farm_weatherdata.date
+Error updating weather data for farm 4b801919-eebf-42de-a57c-384fa8d0763e: UNIQUE constraint failed: smart_farm_weatherdata.farm_id, smart_farm_weatherdata.date
+Error updating weather data for farm 4b801919-eebf-42de-a57c-384fa8d0763e: UNIQUE constraint failed: smart_farm_weatherdata.farm_id, smart_farm_weatherdata.date

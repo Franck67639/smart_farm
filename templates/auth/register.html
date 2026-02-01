@@ -1,0 +1,448 @@
+{% extends "base.html" %} {% block title %}Register - SmartFarm{% endblock %} 
+{%block content %}
+<div class="min-h-screen flex items-center justify-center px-4 py-8">
+  <div class="w-full max-w-2xl">
+    <!-- Glass Card -->
+    <div
+      class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-3xl shadow-2xl p-10"
+    >
+      <!-- Logo and Welcome -->
+      <div class="text-center mb-8">
+        <!-- White Leaf Logo -->
+        <div
+          class="w-20 h-20 mx-auto mb-6 bg-white rounded-full flex items-center justify-center"
+        >
+          <i data-lucide="leaf" class="w-10 h-10 text-forest-deep"></i>
+        </div>
+
+        <h2 class="text-2xl font-bold text-white mb-2">Create Account</h2>
+        <p class="text-mint-light/80 mb-6">
+          Join SmartFarm and start your journey to better farming
+        </p>
+      </div>
+
+      <!-- Registration Form -->
+      <form class="space-y-8" method="post" action="{% url 'register' %}" id="registration-form">
+        {% csrf_token %}
+
+        <!-- Two Column Layout for Basic Info -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Full Name -->
+          <div>
+            <label
+              for="full_name"
+              class="block text-sm font-medium text-mint-light/80 mb-2"
+            >
+              Full Name
+            </label>
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i data-lucide="user" class="w-5 h-5 text-mint-light/50"></i>
+              </div>
+              <input
+                type="text"
+                id="full_name"
+                name="full_name"
+                placeholder="Your name"
+                required
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+              />
+            </div>
+          </div>
+
+          <!-- Username -->
+          <div>
+            <label
+              for="username"
+              class="block text-sm font-medium text-mint-light/80 mb-2"
+            >
+              Username
+            </label>
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i data-lucide="at-sign" class="w-5 h-5 text-mint-light/50"></i>
+              </div>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Choose username"
+                required
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Email and Phone in Two Columns -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Email -->
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-medium text-mint-light/80 mb-2"
+            >
+              Email Address
+            </label>
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i data-lucide="mail" class="w-5 h-5 text-mint-light/50"></i>
+              </div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="your@email.com"
+                required
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+              />
+            </div>
+          </div>
+
+          <!-- Phone Number -->
+          <div>
+            <label
+              for="phone"
+              class="block text-sm font-medium text-mint-light/80 mb-2"
+            >
+              Phone Number
+            </label>
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i data-lucide="phone" class="w-5 h-5 text-mint-light/50"></i>
+              </div>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="+237 XXX XXX XXX"
+                required
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Password Fields in Two Columns -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Password -->
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-mint-light/80 mb-2"
+            >
+              Password
+            </label>
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i data-lucide="lock" class="w-5 h-5 text-mint-light/50"></i>
+              </div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create password"
+                required
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+              />
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div>
+            <label
+              for="confirm_password"
+              class="block text-sm font-medium text-mint-light/80 mb-2"
+            >
+              Confirm Password
+            </label>
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i data-lucide="lock" class="w-5 h-5 text-mint-light/50"></i>
+              </div>
+              <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+                placeholder="Confirm password"
+                required
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="flex items-start">
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            required
+            class="w-4 h-4 text-mint bg-black/20 border-white/10 rounded focus:ring-mint mt-1"
+          />
+          <label for="terms" class="ml-3 text-sm text-mint-light/80">
+            I agree to the
+            <a
+              href="#"
+              class="text-mint hover:text-mint-light transition-colors duration-300"
+              >Terms of Service</a
+            >
+            and
+            <a
+              href="#"
+              class="text-mint hover:text-mint-light transition-colors duration-300"
+              >Privacy Policy</a
+            >
+          </label>
+        </div>
+
+        <!-- Error Messages -->
+        {% if messages %}
+        <div class="space-y-3 mb-6">
+          {% for message in messages %}
+            {% if message.tags == 'error' %}
+            <div class="bg-red-500/20 border border-red-400/30 rounded-xl p-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-red-400 rounded-full flex items-center justify-center">
+                  <i data-lucide="alert-circle" class="w-4 h-4 text-white"></i>
+                </div>
+                <div>
+                  <span class="text-white font-medium">Registration Issue</span>
+                  <p class="text-sm text-red-200">{{ message }}</p>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Field-specific error display -->
+        <div id="field-errors" class="hidden space-y-2 mb-6">
+          <div class="bg-yellow-500/20 border border-yellow-400/30 rounded-xl p-4">
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
+                <i data-lucide="alert-triangle" class="w-4 h-4 text-white"></i>
+              </div>
+              <div>
+                <span class="text-white font-medium">Please fix the following:</span>
+                <ul id="error-list" class="text-sm text-yellow-200 mt-2 space-y-1">
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep"
+        >
+          Create Account
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="relative my-8">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-white/10"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-4 bg-transparent text-mint-light/60"
+            >Or register with</span
+          >
+        </div>
+      </div>
+
+      <!-- Social Registration Options -->
+      <div class="grid grid-cols-2 gap-4">
+        <button
+          class="flex items-center justify-center space-x-2 bg-black/20 border border-white/10 hover:bg-black/30 rounded-xl px-4 py-3 transition-all duration-300"
+        >
+          <i data-lucide="phone" class="w-5 h-5 text-mint"></i>
+          <span class="text-white text-sm font-medium">Phone</span>
+        </button>
+
+        <button
+          class="flex items-center justify-center space-x-2 bg-black/20 border border-white/10 hover:bg-black/30 rounded-xl px-4 py-3 transition-all duration-300"
+        >
+          <i data-lucide="message-circle" class="w-5 h-5 text-mint"></i>
+          <span class="text-white text-sm font-medium">WhatsApp</span>
+        </button>
+      </div>
+
+      <!-- Login Link -->
+      <div class="text-center mt-8">
+        <p class="text-mint-light/80">
+          Already have an account?
+          <a
+            href="{% url 'login' %}"
+            class="text-mint hover:text-mint-light font-medium transition-colors duration-300"
+          >
+            Sign in here
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Trust Indicators -->
+    <div class="mt-8 text-center">
+      <p class="text-sm text-mint-light/60 mb-4">
+        Join 500+ farmers in Cameroon
+      </p>
+      <div class="flex items-center justify-center space-x-6">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-mint">500+</div>
+          <div class="text-xs text-mint-light/60">Active Farms</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-mint">15%</div>
+          <div class="text-xs text-mint-light/60">Yield Increase</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-mint">98%</div>
+          <div class="text-xs text-mint-light/60">Success Rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('registration-form');
+  const fieldErrors = document.getElementById('field-errors');
+  const errorList = document.getElementById('error-list');
+  
+  // Real-time validation
+  const validators = {
+    username: (value) => {
+      if (!value.trim()) return 'Username is required';
+      if (value.length < 3) return 'Username must be at least 3 characters long';
+      if (!/^[a-zA-Z0-9_]+$/.test(value)) return 'Username can only contain letters, numbers, and underscores';
+      return null;
+    },
+    email: (value) => {
+      if (!value.trim()) return 'Email is required';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid email address';
+      return null;
+    },
+    full_name: (value) => {
+      if (!value.trim()) return 'Full name is required';
+      if (value.length < 2) return 'Full name must be at least 2 characters long';
+      return null;
+    },
+    phone: (value) => {
+      if (!value.trim()) return 'Phone number is required';
+      if (!/^\+?[\d\s\-\(\)]{10,20}$/.test(value)) return 'Please enter a valid phone number';
+      return null;
+    },
+    password: (value) => {
+      if (!value) return 'Password is required';
+      if (value.length < 8) return 'Password must be at least 8 characters long';
+      if (!/[A-Z]/.test(value)) return 'Password must contain at least one uppercase letter';
+      if (!/[a-z]/.test(value)) return 'Password must contain at least one lowercase letter';
+      if (!/\d/.test(value)) return 'Password must contain at least one number';
+      return null;
+    },
+    confirm_password: (value) => {
+      const password = document.getElementById('password').value;
+      if (value !== password) return 'Passwords do not match';
+      return null;
+    }
+  };
+  
+  // Add validation feedback to fields
+  Object.keys(validators).forEach(fieldName => {
+    const field = document.getElementById(fieldName);
+    if (field) {
+      field.addEventListener('blur', function() {
+        validateField(fieldName, this.value);
+      });
+      
+      field.addEventListener('input', function() {
+        // Clear error on input
+        clearFieldError(fieldName);
+      });
+    }
+  });
+  
+  function validateField(fieldName, value) {
+    const error = validators[fieldName](value);
+    if (error) {
+      showFieldError(fieldName, error);
+      return false;
+    } else {
+      clearFieldError(fieldName);
+      return true;
+    }
+  }
+  
+  function showFieldError(fieldName, error) {
+    const field = document.getElementById(fieldName);
+    if (field) {
+      field.classList.add('border-red-400');
+      field.classList.remove('border-white/10');
+    }
+  }
+  
+  function clearFieldError(fieldName) {
+    const field = document.getElementById(fieldName);
+    if (field) {
+      field.classList.remove('border-red-400');
+      field.classList.add('border-white/10');
+    }
+  }
+  
+  // Form submission validation
+  form.addEventListener('submit', function(e) {
+    const errors = [];
+    
+    // Validate all fields
+    Object.keys(validators).forEach(fieldName => {
+      const field = document.getElementById(fieldName);
+      if (field) {
+        const error = validators[fieldName](field.value);
+        if (error) {
+          errors.push(error);
+          showFieldError(fieldName, error);
+        }
+      }
+    });
+    
+    // Check terms
+    const terms = document.getElementById('terms');
+    if (!terms.checked) {
+      errors.push('You must agree to the terms and conditions');
+    }
+    
+    if (errors.length > 0) {
+      e.preventDefault();
+      
+      // Show errors
+      errorList.innerHTML = errors.map(error => `<li>• ${error}</li>`).join('');
+      fieldErrors.classList.remove('hidden');
+      
+      // Scroll to errors
+      fieldErrors.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      fieldErrors.classList.add('hidden');
+    }
+  });
+});
+</script>
+
+{% endblock content %}

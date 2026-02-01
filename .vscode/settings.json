@@ -1,0 +1,17 @@
+{
+    "emmet.includeLanguages": {
+        "django-html": "html",
+        "html": "html"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "files.associations": {
+        "*.html": "html",
+        "**/templates/**/*.html": "django-html"
+    },
+    "emmet.preferences": {
+        "django.variableStart": "{{",
+        "django.variableEnd": "}}",
+        "django.tagStart": "{%",
+        "django.tagEnd": "%}"
+    }
+}

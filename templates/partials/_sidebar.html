@@ -1,0 +1,145 @@
+<!-- Sidebar Navigation Component -->
+<aside class="w-64 backdrop-blur-xl bg-black/40 border-r border-white/10 hidden lg:flex flex-col">
+    <!-- Logo Section -->
+    <div class="p-6 border-b border-white/10">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-mint to-forest-light rounded-lg flex items-center justify-center">
+                <i data-lucide="leaf" class="w-6 h-6 text-white"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-white">SmartFarm</h1>
+                <p class="text-xs text-mint-light/70">Cameroon Maize Farming</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- User Info -->
+    <div class="p-6 border-b border-white/10">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-forest-mid rounded-full flex items-center justify-center">
+                <i data-lucide="user" class="w-5 h-5 text-mint"></i>
+            </div>
+            <div>
+                <p class="text-sm font-medium text-white">{{ user.full_name|default:user.username }}</p>
+                <p class="text-xs text-mint-light/70">{{ farm_details.farm_name|default:"Farm Owner" }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation Menu -->
+    <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+        <!-- Dashboard -->
+        <a href="{% url 'dashboard' %}" class="flex items-center space-x-3 {% if request.resolver_match.url_name == 'dashboard' %}bg-forest-mid/20 border border-mint/30{% endif %} rounded-lg px-4 py-3 {% if request.resolver_match.url_name == 'dashboard' %}text-white{% else %}text-mint-light/80 hover:text-white hover:bg-black/20{% endif %} transition-colors duration-200">
+            <i data-lucide="home" class="w-5 h-5 {% if request.resolver_match.url_name == 'dashboard' %}text-mint{% endif %}"></i>
+            <span class="text-sm font-medium">Dashboard</span>
+        </a>
+        
+        <!-- Farm Management -->
+        <div class="space-y-1">
+            <p class="text-xs text-mint-light/60 font-semibold uppercase tracking-wider px-4 py-2">Farm Management</p>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="map" class="w-5 h-5"></i>
+                <span class="text-sm">Farm Overview</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="wheat" class="w-5 h-5"></i>
+                <span class="text-sm">Crop Management</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="mountain" class="w-5 h-5"></i>
+                <span class="text-sm">Soil Analysis</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="droplets" class="w-5 h-5"></i>
+                <span class="text-sm">Irrigation Control</span>
+            </a>
+        </div>
+        
+        <!-- Farming Activities -->
+        <div class="space-y-1">
+            <p class="text-xs text-mint-light/60 font-semibold uppercase tracking-wider px-4 py-2">Farming Activities</p>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="calendar-plus" class="w-5 h-5"></i>
+                <span class="text-sm">Planting Schedule</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="flask-conical" class="w-5 h-5"></i>
+                <span class="text-sm">Fertilizer Planning</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="bug" class="w-5 h-5"></i>
+                <span class="text-sm">Pest Management</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="scissors" class="w-5 h-5"></i>
+                <span class="text-sm">Harvest Planning</span>
+            </a>
+        </div>
+        
+        <!-- Monitoring & Data -->
+        <div class="space-y-1">
+            <p class="text-xs text-mint-light/60 font-semibold uppercase tracking-wider px-4 py-2">Monitoring & Data</p>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="cloud-sun" class="w-5 h-5"></i>
+                <span class="text-sm">Weather Forecast</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="activity" class="w-5 h-5"></i>
+                <span class="text-sm">Activity Log</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="camera" class="w-5 h-5"></i>
+                <span class="text-sm">Photo Gallery</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                <span class="text-sm">Reports & Analytics</span>
+            </a>
+        </div>
+        
+        <!-- Resources -->
+        <div class="space-y-1">
+            <p class="text-xs text-mint-light/60 font-semibold uppercase tracking-wider px-4 py-2">Resources</p>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="book-open" class="w-5 h-5"></i>
+                <span class="text-sm">Farming Guide</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="users" class="w-5 h-5"></i>
+                <span class="text-sm">Community Forum</span>
+            </a>
+            
+            <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+                <span class="text-sm">Expert Support</span>
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Bottom Actions -->
+    <div class="p-4 border-t border-white/10 space-y-2">
+        <a href="#" class="flex items-center space-x-3 hover:bg-black/20 rounded-lg px-4 py-3 text-mint-light/80 hover:text-white transition-colors duration-200">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+            <span class="text-sm">Settings</span>
+        </a>
+        
+        <a href="{% url 'logout' %}" class="flex items-center space-x-3 hover:bg-red-500/20 rounded-lg px-4 py-3 text-red-400 hover:text-red-300 transition-colors duration-200">
+            <i data-lucide="log-out" class="w-5 h-5"></i>
+            <span class="text-sm">Logout</span>
+        </a>
+    </div>
+</aside>

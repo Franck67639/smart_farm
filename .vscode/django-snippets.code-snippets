@@ -1,0 +1,44 @@
+{
+    "Django For Loop": {
+        "prefix": "dfor",
+        "body": [
+            "{% for $1 in $2 %}",
+            "\t$3",
+            "{% endfor %}"
+        ],
+        "description": "Django for loop"
+    },
+    "Django If": {
+        "prefix": "dif",
+        "body": [
+            "{% if $1 %}",
+            "\t$2",
+            "{% endif %}"
+        ],
+        "description": "Django if statement"
+    },
+    "Django Variable": {
+        "prefix": "dvar",
+        "body": "{{ $1 }}",
+        "description": "Django variable"
+    },
+    "Django URL": {
+        "prefix": "durl",
+        "body": "{% url '$1' $2 %}",
+        "description": "Django URL tag"
+    },
+    "Django Load Static": {
+        "prefix": "dstatic",
+        "body": "{% load static %}",
+        "description": "Load static files"
+    },
+    "Django Block": {
+        "prefix": "dblock",
+        "body": [
+            "{% block $1 %}",
+            "\t$2",
+            "{% endblock %}"
+        ],
+        "description": "Django block"
+    }
+}

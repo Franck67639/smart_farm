@@ -1,0 +1,281 @@
+{% extends "layouts/app_layout.html" %}
+
+{% block app_content %}
+<!-- Farm Overview Header -->
+<div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6 mb-8">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+        <div>
+            <h2 class="text-2xl font-bold text-white mb-2">{{ farm_details.farm_name|default:"Your Farm" }}</h2>
+            <div class="flex flex-wrap gap-4 text-sm">
+                <span class="text-mint-light/70">
+                    <i data-lucide="map-pin" class="w-4 h-4 inline mr-1"></i>
+                    {{ farm_details.village_town|default:"Location not set" }}, {{ farm_details.region|default:"Cameroon" }}
+                </span>
+                <span class="text-mint-light/70">
+                    <i data-lucide="sprout" class="w-4 h-4 inline mr-1"></i>
+                    {{ farm_details.primary_crop|title|default:"Maize" }} Farming
+                </span>
+                <span class="text-mint-light/70">
+                    <i data-lucide="users" class="w-4 h-4 inline mr-1"></i>
+                    {{ farm_details.farm_type|title|default:"Smallholder" }}
+                </span>
+            </div>
+        </div>
+        <div class="mt-4 lg:mt-0">
+            <div class="text-right">
+                <p class="text-sm text-mint-light/70">Farm Size</p>
+                <p class="text-xl font-bold text-white">{{ farm_details.get_farm_size_category_display|default:"Not specified" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Key Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Current Season -->
+    <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                <i data-lucide="calendar" class="w-6 h-6 text-green-400"></i>
+            </div>
+            <span class="text-xs text-green-400 bg-green-500/20 px-2 py-1 rounded">Active</span>
+        </div>
+        <h3 class="text-white font-semibold mb-1">Current Season</h3>
+        <p class="text-2xl font-bold text-white">Early Season</p>
+        <p class="text-xs text-mint-light/60">March - May 2025</p>
+    </div>
+    
+    <!-- Maize Variety -->
+    <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                <i data-lucide="wheat" class="w-6 h-6 text-yellow-400"></i>
+            </div>
+            <span class="text-xs text-yellow-400 bg-yellow-500/20 px-2 py-1 rounded">Selected</span>
+        </div>
+        <h3 class="text-white font-semibold mb-1">Maize Variety</h3>
+        <p class="text-2xl font-bold text-white">{{ farm_details.selected_maize_variety.name|default:"Not selected" }}</p>
+        <p class="text-xs text-mint-light/60">{{ farm_details.selected_maize_variety.maturity_period|default:"" }}</p>
+    </div>
+    
+    <!-- Experience Level -->
+    <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                <i data-lucide="award" class="w-6 h-6 text-blue-400"></i>
+            </div>
+            <span class="text-xs text-blue-400 bg-blue-500/20 px-2 py-1 rounded">{{ farm_details.get_experience_level_display|default:"Beginner" }}</span>
+        </div>
+        <h3 class="text-white font-semibold mb-1">Experience</h3>
+        <p class="text-2xl font-bold text-white">{{ farm_details.farming_years|default:"0" }} years</p>
+        <p class="text-xs text-mint-light/60">Farming experience</p>
+    </div>
+    
+    <!-- Soil Status -->
+    <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                <i data-lucide="mountain" class="w-6 h-6 text-orange-400"></i>
+            </div>
+            <span class="text-xs text-orange-400 bg-orange-500/20 px-2 py-1 rounded">{{ farm_details.get_soil_fertility_display|default:"Medium" }}</span>
+        </div>
+        <h3 class="text-white font-semibold mb-1">Soil Type</h3>
+        <p class="text-2xl font-bold text-white">{{ farm_details.get_soil_type_display|default:"Not tested" }}</p>
+        <p class="text-xs text-mint-light/60">pH: {{ farm_details.ph_level|default:"N/A" }}</p>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Weather and Farming Insights (2 columns) -->
+    <div class="lg:col-span-2 space-y-8">
+        <!-- Weather Widget -->
+        <div id="weather-container">
+            {% if primary_field %}
+                {% with field=primary_field %}
+                    {% include "weather/widget.html" %}
+                {% endwith %}
+            {% else %}
+                {% include "weather/widget_empty.html" %}
+            {% endif %}
+        </div>
+        
+        <!-- Farming Actions -->
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+            <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
+                <i data-lucide="activity" class="w-5 h-5 mr-2 text-mint"></i>
+                Quick Farming Actions
+            </h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl p-4 transition-all duration-300 text-center group">
+                    <i data-lucide="droplets" class="w-6 h-6 mx-auto mb-2 text-mint group-hover:scale-110 transition-transform"></i>
+                    <span class="text-xs text-white font-medium">Irrigation</span>
+                </button>
+                
+                <button class="bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl p-4 transition-all duration-300 text-center group">
+                    <i data-lucide="flask-conical" class="w-6 h-6 mx-auto mb-2 text-mint group-hover:scale-110 transition-transform"></i>
+                    <span class="text-xs text-white font-medium">Fertilize</span>
+                </button>
+                
+                <button class="bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl p-4 transition-all duration-300 text-center group">
+                    <i data-lucide="bug" class="w-6 h-6 mx-auto mb-2 text-mint group-hover:scale-110 transition-transform"></i>
+                    <span class="text-xs text-white font-medium">Pest Control</span>
+                </button>
+                
+                <button class="bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl p-4 transition-all duration-300 text-center group">
+                    <i data-lucide="camera" class="w-6 h-6 mx-auto mb-2 text-mint group-hover:scale-110 transition-transform"></i>
+                    <span class="text-xs text-white font-medium">Log Activity</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Maize Farming Tips -->
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+            <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
+                <i data-lucide="lightbulb" class="w-5 h-5 mr-2 text-mint"></i>
+                Maize Farming Tips
+            </h3>
+            
+            <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-white font-medium">Optimal Planting Time</p>
+                        <p class="text-xs text-mint-light/60">Based on current weather patterns, plant within the next 7-10 days for best yield</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <i data-lucide="alert-triangle" class="w-4 h-4 text-yellow-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-white font-medium">Pest Alert</p>
+                        <p class="text-xs text-mint-light/60">High risk of armyworms in your region. Monitor crops closely.</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <i data-lucide="info" class="w-4 h-4 text-blue-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-white font-medium">Fertilizer Recommendation</p>
+                        <p class="text-xs text-mint-light/60">Your soil pH suggests adding nitrogen-rich fertilizer in 2 weeks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Right Column - Quick Stats & Equipment -->
+    <div class="space-y-6">
+        <!-- Equipment Status -->
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                <i data-lucide="settings" class="w-5 h-5 mr-2 text-mint"></i>
+                Equipment Status
+            </h3>
+            
+            <div class="space-y-3">
+                {% if farm_details.available_equipment %}
+                    {% for equipment in farm_details.available_equipment %}
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-mint-light/70">{{ equipment|title }}</span>
+                        <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-sm text-mint-light/60">No equipment registered</p>
+                {% endif %}
+            </div>
+            
+            <button class="w-full mt-4 bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl px-4 py-2 text-sm text-mint transition-all duration-300">
+                Manage Equipment
+            </button>
+        </div>
+        
+        <!-- Labor Information -->
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                <i data-lucide="users" class="w-5 h-5 mr-2 text-mint"></i>
+                Labor Information
+            </h3>
+            
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-mint-light/70">Labor Source</span>
+                    <span class="text-sm text-white font-medium">{{ farm_details.get_labor_source_display|default:"Not specified" }}</span>
+                </div>
+                
+                {% if farm_details.labor_count %}
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-mint-light/70">Workers</span>
+                    <span class="text-sm text-white font-medium">{{ farm_details.labor_count }}</span>
+                </div>
+                {% endif %}
+                
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-mint-light/70">Farming Methods</span>
+                    <span class="text-sm text-white font-medium">
+                        {% if farm_details.organic_farming %}Organic{% else %}Conventional{% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                <i data-lucide="bar-chart-3" class="w-5 h-5 mr-2 text-mint"></i>
+                This Season
+            </h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-xs text-mint-light/70">Expected Yield</span>
+                        <span class="text-xs text-white font-medium">{{ farm_details.expected_yield|default:"TBD" }} tons/ha</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-xs text-mint-light/70">Market Access</span>
+                        <span class="text-xs text-white font-medium">{{ farm_details.market_access|default:"Not specified" }}</span>
+                    </div>
+                </div>
+                
+                <div class="pt-3 border-t border-white/10">
+                    <button class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-4 py-2 text-sm font-medium transition-all duration-300">
+                        View Detailed Reports
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Refresh weather widget every 5 minutes
+setInterval(() => {
+    {% if primary_field %}
+    fetch(`/weather/api/update/{{ primary_field.id }}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Reload the page to show updated data
+                window.location.reload();
+            } else {
+                console.error('Failed to update weather:', data.message);
+            }
+        })
+        .catch(error => console.error('Error refreshing weather:', error));
+    {% endif %}
+}, 300000); // 5 minutes
+</script>
+{% endblock %}
