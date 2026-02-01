@@ -20,26 +20,42 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 def login_view(request):
-   
-    
-    # Redirect already logged-in users to dashboard
+    """Handle login using either email or username"""
+
     if request.user.is_authenticated:
         return redirect('dashboard')
 
     if request.method == 'POST':
-        username = request.POST.get('username')
+        identifier = request.POST.get('username')  # could be username or email
         password = request.POST.get('password')
+        remember = request.POST.get('remember')
 
-        # Authenticate user
-        user = authenticate(request, username=username, password=password)
+        user = None
+
+        # Try to authenticate by email first
+        try:
+            user_obj = User.objects.get(email=identifier)
+            user = authenticate(request, email=user_obj.email, password=password)
+        except User.DoesNotExist:
+            # If no email match, try username
+            try:
+                user_obj = User.objects.get(username=identifier)
+                user = authenticate(request, email=user_obj.email, password=password)
+            except User.DoesNotExist:
+                user = None
+
         if user is not None:
             login(request, user)
-            messages.success(request, f'Welcome back, {user.username}!')
+
+            # Handle "Remember Me"
+            if not remember:
+                request.session.set_expiry(0)  # session expires when browser closes
+
+            messages.success(request, f'Welcome back, {user.full_name}!')
             return redirect('dashboard')
         else:
-            messages.error(request, 'Invalid username or password.')
+            messages.error(request, 'Invalid email/username or password.')
 
-    # Render the login page on GET request or failed login
     return render(request, 'auth/login.html')
 
 
