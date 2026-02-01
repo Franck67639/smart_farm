@@ -97,7 +97,25 @@
                     Sign In
                 </button>
             </form>
-            
+            <!-- Error Messages -->
+{% if messages %}
+<div>
+    {% for message in messages %}
+    <div class="bg-red-500/20 border border-red-400/30 rounded-xl p-4 mb-3">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-red-400 rounded-full flex items-center justify-center">
+                <i data-lucide="alert-circle" class="w-4 h-4 text-white"></i>
+            </div>
+            <div>
+                <span class="text-white font-medium">{{ message.tags|title }}</span>
+                <p class="text-sm text-red-200">{{ message }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
             <!-- Divider -->
             <div class="relative my-8">
                 <div class="absolute inset-0 flex items-center">
