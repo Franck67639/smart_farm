@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # Add this for i18n
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -66,9 +67,11 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',  # Add this for i18n
             ],
         },
     },
@@ -118,8 +121,29 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Africa/Douala'
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
+
+# Languages configuration
+LANGUAGES = [
+    ('en', 'English'),
+    ('fr', 'Français'),
+]
+
+# Language code mapping
+LANGUAGE_MAPPING = {
+    'en': 'en-us',
+    'fr': 'fr-fr',
+}
+
+# Default language and fallback
+LANGUAGE_CODE = 'en-us'
+LANGUAGE_COOKIE_NAME = 'django_language'
+
+# Locale paths
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 
 # Static files (CSS, JavaScript, Images)

@@ -1,0 +1,201 @@
+# English translations for SmartFarm
+# This file is distributed under the same license as the SmartFarm package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: SmartFarm\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: SmartFarm Team\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "SmartFarm Cameroon - Data-Driven Agricultural Optimization Platform"
+msgstr "SmartFarm Cameroon - Data-Driven Agricultural Optimization Platform"
+
+msgid "Sign In"
+msgstr "Sign In"
+
+msgid "Get Started"
+msgstr "Get Started"
+
+msgid "Features"
+msgstr "Features"
+
+msgid "Methodology"
+msgstr "Methodology"
+
+msgid "ROI Calculator"
+msgstr "ROI Calculator"
+
+msgid "Validation"
+msgstr "Validation"
+
+msgid "v1.2.3 • Agricultural Intelligence Platform"
+msgstr "v1.2.3 • Agricultural Intelligence Platform"
+
+msgid "Data-Driven"
+msgstr "Data-Driven"
+
+msgid "Agriculture for"
+msgstr "Agriculture for"
+
+msgid "Cameroon"
+msgstr "Cameroon"
+
+msgid "Yield Increase"
+msgstr "Yield Increase"
+
+msgid "Average ROI"
+msgstr "Average ROI"
+
+msgid "Farms Analyzed"
+msgstr "Farms Analyzed"
+
+msgid "See How It Works"
+msgstr "See How It Works"
+
+msgid "Transform your farming with precision analytics, real-time insights, and AI-powered recommendations tailored for Cameroonian agriculture."
+msgstr "Transform your farming with precision analytics, real-time insights, and AI-powered recommendations tailored for Cameroonian agriculture."
+
+msgid "Start Free Trial"
+msgstr "Start Free Trial"
+
+msgid "Learn More"
+msgstr "Learn More"
+
+msgid "No credit card required • 14-day free trial • Cancel anytime"
+msgstr "No credit card required • 14-day free trial • Cancel anytime"
+
+msgid "SCIENTIFIC METHODOLOGY"
+msgstr "SCIENTIFIC METHODOLOGY"
+
+msgid "Agricultural Intelligence"
+msgstr "Agricultural Intelligence"
+
+msgid "Our multi-layered analytical framework processes over"
+msgstr "Our multi-layered analytical framework processes over"
+
+msgid "17 agricultural parameters"
+msgstr "17 agricultural parameters"
+
+msgid "through advanced machine learning models to deliver actionable insights with"
+msgstr "through advanced machine learning models to deliver actionable insights with"
+
+msgid "94.7% accuracy"
+msgstr "94.7% accuracy"
+
+msgid "Real-Time Data Processing Pipeline"
+msgstr "Real-Time Data Processing Pipeline"
+
+msgid "Data Collection"
+msgstr "Data Collection"
+
+msgid "Multi-source agricultural data gathering"
+msgstr "Multi-source agricultural data gathering"
+
+msgid "Satellite Imagery"
+msgstr "Satellite Imagery"
+
+msgid "Weather Stations"
+msgstr "Weather Stations"
+
+msgid "Soil Sensors"
+msgstr "Soil Sensors"
+
+msgid "Data Processing"
+msgstr "Data Processing"
+
+msgid "Real-time data normalization & cleansing"
+msgstr "Real-time data normalization & cleansing"
+
+msgid "Quality Control"
+msgstr "Quality Control"
+
+msgid "Data Validation"
+msgstr "Data Validation"
+
+msgid "Normalization"
+msgstr "Normalization"
+
+msgid "Predictive Modeling"
+msgstr "Predictive Modeling"
+
+msgid "ML algorithms for pattern recognition"
+msgstr "ML algorithms for pattern recognition"
+
+msgid "Neural Networks"
+msgstr "Neural Networks"
+
+msgid "Random Forest"
+msgstr "Random Forest"
+
+msgid "Time Series"
+msgstr "Time Series"
+
+msgid "Optimization"
+msgstr "Optimization"
+
+msgid "Resource allocation algorithms"
+msgstr "Resource allocation algorithms"
+
+msgid "Linear Programming"
+msgstr "Linear Programming"
+
+msgid "Genetic Algorithms"
+msgstr "Genetic Algorithms"
+
+msgid "Multi-Objective"
+msgstr "Multi-Objective"
+
+msgid "Actionable Insights"
+msgstr "Actionable Insights"
+
+msgid "Real-time recommendations"
+msgstr "Real-time recommendations"
+
+msgid "Alerts"
+msgstr "Alerts"
+
+msgid "Recommendations"
+msgstr "Recommendations"
+
+msgid "Forecasts"
+msgstr "Forecasts"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Pricing"
+msgstr "Pricing"
+
+msgid "Company"
+msgstr "Company"
+
+msgid "About Us"
+msgstr "About Us"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Legal"
+msgstr "Legal"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+msgid "Cookie Policy"
+msgstr "Cookie Policy"
+
+msgid "© 2024 SmartFarm Cameroon. All rights reserved."
+msgstr "© 2024 SmartFarm Cameroon. All rights reserved."

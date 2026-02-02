@@ -18,13 +18,19 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
 from . import views
 from . import views_geocoding
 
 urlpatterns = [
-    
     path('admin/', admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
     
+    # Non-internationalized URLs (admin, static, etc.)
+]
+
+# Internationalized URL patterns
+urlpatterns += i18n_patterns(
     # Authentication
     path('login/', views.login_view, name='login'),
     path('register/', views.register_view, name='register'),
@@ -57,7 +63,7 @@ urlpatterns = [
     path('onboarding/save-location/', views.save_onboarding_step_view, name='save_onboarding_step'),
     path('onboarding/save-step/', views.save_onboarding_step_view, name='save_onboarding_step'),
     path('api/set-farm/', views.set_farm_view, name='set_farm'),
-]
+)
 
 # Serve media files during development
 if settings.DEBUG:

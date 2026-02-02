@@ -1,0 +1,49 @@
+{% load i18n %}
+<div class="relative" id="language-switcher-{{ switcher_id }}">
+    <button class="language-dropdown-btn flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors border border-gray-600">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
+        </svg>
+        <span class="text-sm font-medium text-gray-300">
+            {% if request.LANGUAGE_CODE == 'en' %}English{% else %}Français{% endif %}
+        </span>
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+    </button>
+    
+    <div class="language-menu hidden absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg z-50">
+        <form action="{% url 'set_language' %}" method="post" class="divide-y divide-gray-700">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            
+            <button type="submit" name="language" value="en" 
+                    class="w-full px-4 py-3 text-left hover:bg-gray-800 transition-colors flex items-center space-x-3 {% if request.LANGUAGE_CODE == 'en' %}bg-gray-800{% endif %}">
+                <span class="text-lg">🇬🇧</span>
+                <div>
+                    <div class="text-sm font-medium text-white">English</div>
+                    <div class="text-xs text-gray-400">English</div>
+                </div>
+                {% if request.LANGUAGE_CODE == 'en' %}
+                <svg class="w-4 h-4 text-green-400 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                {% endif %}
+            </button>
+            
+            <button type="submit" name="language" value="fr" 
+                    class="w-full px-4 py-3 text-left hover:bg-gray-800 transition-colors flex items-center space-x-3 {% if request.LANGUAGE_CODE == 'fr' %}bg-gray-800{% endif %}">
+                <span class="text-lg">🇫🇷</span>
+                <div>
+                    <div class="text-sm font-medium text-white">Français</div>
+                    <div class="text-xs text-gray-400">French</div>
+                </div>
+                {% if request.LANGUAGE_CODE == 'fr' %}
+                <svg class="w-4 h-4 text-green-400 ml-auto" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</div>
