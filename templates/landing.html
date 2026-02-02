@@ -1,0 +1,946 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFarm Cameroon - Data-Driven Agricultural Optimization Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    
+    <style>
+        /* Essential styles only */
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(52, 211, 153, 0.3);
+        }
+        
+        .data-grid {
+            background-image: 
+                linear-gradient(rgba(52, 211, 153, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(52, 211, 153, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            transition: width 1s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-md border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="sprout" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">SmartFarm</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-300 hover:text-white transition-colors">Features</a>
+                    <a href="#methodology" class="text-gray-300 hover:text-white transition-colors">Methodology</a>
+                    <a href="#roi-calculator" class="text-gray-300 hover:text-white transition-colors">ROI Calculator</a>
+                    <a href="#validation" class="text-gray-300 hover:text-white transition-colors">Validation</a>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="{% url 'login' %}" class="text-gray-300 hover:text-white transition-colors">Sign In</a>
+                    <a href="{% url 'register' %}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                        Get Started
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-300 hover:text-white" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-md border-b border-gray-800">
+            <div class="px-6 py-4 space-y-3">
+                <a href="#features" class="block text-gray-300 hover:text-white transition-colors">Features</a>
+                <a href="#methodology" class="block text-gray-300 hover:text-white transition-colors">Methodology</a>
+                <a href="#roi-calculator" class="block text-gray-300 hover:text-white transition-colors">ROI Calculator</a>
+                <a href="#validation" class="block text-gray-300 hover:text-white transition-colors">Validation</a>
+                <div class="pt-3 border-t border-gray-800 space-y-3">
+                    <a href="{% url 'login' %}" class="block text-gray-300 hover:text-white transition-colors">Sign In</a>
+                    <a href="{% url 'register' %}" class="block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors text-center">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+<style>
+/* Scientific, clean, data-focused design system */
+:root {
+    --metric-card-bg: rgba(255, 255, 255, 0.03);
+    --grid-line-color: rgba(52, 211, 153, 0.1);
+    --precision-green: #10b981;
+    --dark-bg: #0a0a0a;
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+    border: 1px solid rgba(52, 211, 153, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    border-radius: 6px;
+    border: 2px solid #0a0a0a;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
+    border-color: rgba(52, 211, 153, 0.3);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, #059669 0%, #047857 100%);
+}
+
+/* Firefox scrollbar styling */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #10b981 #0a0a0a;
+}
+
+/* Scrollbar for specific elements */
+.metric-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.metric-card::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.metric-card::-webkit-scrollbar-thumb {
+    background: rgba(52, 211, 153, 0.5);
+    border-radius: 4px;
+    border: none;
+}
+
+.metric-card::-webkit-scrollbar-thumb:hover {
+    background: rgba(52, 211, 153, 0.8);
+}
+
+.data-grid {
+    background-image: 
+        linear-gradient(var(--grid-line-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.metric-card {
+    background: var(--metric-card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.metric-card:hover {
+    border-color: rgba(52, 211, 153, 0.3);
+    transform: translateY(-2px);
+}
+
+.progress-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #34d399);
+    transition: width 1s ease-out;
+}
+
+.data-point {
+    position: relative;
+    padding-left: 24px;
+}
+
+.data-point::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--precision-green);
+    border-radius: 50%;
+}
+
+.analytics-graph {
+    background: linear-gradient(180deg, 
+        rgba(16, 185, 129, 0.1) 0%, 
+        rgba(16, 185, 129, 0.05) 50%, 
+        transparent 100%);
+}
+
+.comparison-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comparison-table tr:hover {
+    background: rgba(16, 185, 129, 0.05);
+}
+
+    </style>
+
+<!-- Main Content -->
+<div class="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black data-grid">
+    
+    <!-- Clean Hero Section with Image Slider -->
+    <section class="min-h-screen flex items-center justify-center relative pt-16 overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
+        
+        <!-- Image Slider Background -->
+        <div class="absolute inset-0">
+            <div class="relative w-full h-full">
+                <!-- Slider Images -->
+                <div class="slider-container absolute inset-0">
+                    <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1625246333195-78d946388a3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;"></div>
+                    <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;"></div>
+                    <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1592982184088-057a8dd9c0c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;"></div>
+                    <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80') center/cover;"></div>
+                    <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1418985991508-e47386d96a71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;"></div>
+                </div>
+                
+                <!-- Overlay Gradient -->
+                <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+            </div>
+        </div>
+        
+        <!-- Slider Controls -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+            <button onclick="currentSlide(1)" class="slider-dot w-3 h-3 bg-white/50 hover:bg-white transition-colors rounded-full"></button>
+            <button onclick="currentSlide(2)" class="slider-dot w-3 h-3 bg-white/50 hover:bg-white transition-colors rounded-full"></button>
+            <button onclick="currentSlide(3)" class="slider-dot w-3 h-3 bg-white/50 hover:bg-white transition-colors rounded-full"></button>
+            <button onclick="currentSlide(4)" class="slider-dot w-3 h-3 bg-white/50 hover:bg-white transition-colors rounded-full"></button>
+            <button onclick="currentSlide(5)" class="slider-dot w-3 h-3 bg-white/50 hover:bg-white transition-colors rounded-full"></button>
+        </div>
+        
+        <!-- Navigation Arrows -->
+        <button onclick="changeSlide(-1)" class="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300">
+            <i data-lucide="chevron-left" class="w-6 h-6 text-white"></i>
+        </button>
+        <button onclick="changeSlide(1)" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300">
+            <i data-lucide="chevron-right" class="w-6 h-6 text-white"></i>
+        </button>
+        
+        <div class="relative z-10 max-w-6xl mx-auto px-6 py-20 text-center">
+            <!-- Status Badge -->
+            <div class="inline-flex items-center space-x-2 bg-gray-800/50 backdrop-blur-md px-4 py-2 rounded-full mb-8" 
+                 data-aos="fade-down" 
+                 data-aos-duration="800" 
+                 data-aos-delay="100">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-sm text-gray-300 font-mono">v1.2.3 • Agricultural Intelligence Platform</span>
+            </div>
+            
+            <!-- Main Headline -->
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight" 
+                data-aos="fade-up" 
+                data-aos-duration="1000" 
+                data-aos-delay="200">
+                <span class="text-green-400">Data-Driven</span><br>
+                <span class="text-white">Agriculture for</span><br>
+                <span class="text-white">Cameroon</span>
+            </h1>
+            
+            <!-- Subtitle -->
+            <p class="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed" 
+               data-aos="fade-up" 
+               data-aos-duration="1000" 
+               data-aos-delay="400">
+                Transform your farming with precision analytics, real-time insights, and 
+                AI-powered recommendations tailored for Cameroonian agriculture.
+            </p>
+            
+            <!-- Key Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
+                <div class="text-center bg-black/30 backdrop-blur-sm rounded-xl p-6" 
+                     data-aos="zoom-in" 
+                     data-aos-duration="800" 
+                     data-aos-delay="600">
+                    <div class="text-4xl font-bold text-green-400 mb-2">85%</div>
+                    <div class="text-gray-400">Yield Increase</div>
+                </div>
+                <div class="text-center bg-black/30 backdrop-blur-sm rounded-xl p-6" 
+                     data-aos="zoom-in" 
+                     data-aos-duration="800" 
+                     data-aos-delay="700">
+                    <div class="text-4xl font-bold text-green-400 mb-2">2.5x</div>
+                    <div class="text-gray-400">Average ROI</div>
+                </div>
+                <div class="text-center bg-black/30 backdrop-blur-sm rounded-xl p-6" 
+                     data-aos="zoom-in" 
+                     data-aos-duration="800" 
+                     data-aos-delay="800">
+                    <div class="text-4xl font-bold text-green-400 mb-2">247</div>
+                    <div class="text-gray-400">Farms Analyzed</div>
+                </div>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" 
+                 data-aos="fade-up" 
+                 data-aos-duration="1000" 
+                 data-aos-delay="900">
+                <a href="{% url 'register' %}" 
+                   class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Start Free Trial</span>
+                </a>
+                <a href="#features" 
+                   class="border border-gray-700 text-gray-300 hover:text-white hover:border-gray-600 px-8 py-4 rounded-lg font-medium transition-all duration-300">
+                    See How It Works
+                </a>
+            </div>
+            
+            <!-- Trust Indicators -->
+            <div class="mt-12 text-sm text-gray-500" 
+                 data-aos="fade-up" 
+                 data-aos-duration="800" 
+                 data-aos-delay="1000">
+                No credit card required • 14-day free trial • Cancel anytime
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Scientific Methodology Section -->
+    <section id="methodology" class="py-12 md:py-20 px-4 md:px-6 bg-gradient-to-b from-black/50 to-gray-900/50">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center mb-12 md:mb-20">
+                <div class="inline-flex items-center space-x-2 bg-green-900/20 border border-green-500/30 px-3 py-2 md:px-4 rounded-full mb-4 md:mb-6"
+                     data-aos="fade-up" 
+                     data-aos-duration="800">
+                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-xs md:text-sm text-green-300 font-mono">SCIENTIFIC METHODOLOGY</span>
+                </div>
+                <h2 class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 md:mb-6"
+                    data-aos="fade-up" 
+                    data-aos-duration="1000" 
+                    data-aos-delay="100">
+                    <span class="text-green-400">Data-Driven</span> Agricultural Intelligence
+                </h2>
+                <p class="text-lg md:text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed"
+                   data-aos="fade-up" 
+                   data-aos-duration="1000" 
+                   data-aos-delay="200">
+                    Our multi-layered analytical framework processes over <span class="text-green-300 font-semibold">17 agricultural parameters</span> 
+                    through advanced machine learning models to deliver actionable insights with <span class="text-green-300 font-semibold">94.7% accuracy</span>.
+                </p>
+            </div>
+            
+            <!-- Interactive Data Pipeline -->
+            <div class="mb-12 md:mb-20">
+                <h3 class="text-xl md:text-2xl font-bold text-white mb-6 md:mb-8 text-center"
+                    data-aos="fade-up" 
+                    data-aos-duration="800">Real-Time Data Processing Pipeline</h3>
+                <div class="relative">
+                    <!-- Connection Lines -->
+                    <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-green-600 via-green-500 to-green-600 transform -translate-y-1/2"></div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 relative">
+                        <!-- Step 1 -->
+                        <div class="text-center group"
+                             data-aos="zoom-in" 
+                             data-aos-duration="800" 
+                             data-aos-delay="100">
+                            <div class="relative">
+                                <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg shadow-green-600/25">
+                                    <i data-lucide="satellite" class="w-8 h-8 md:w-10 md:h-10 text-white"></i>
+                                </div>
+                                <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-xs font-bold">1</span>
+                                </div>
+                            </div>
+                            <h3 class="text-white font-bold text-sm md:text-base mb-2">Data Collection</h3>
+                            <p class="text-gray-400 text-xs md:text-sm mb-3">Multi-source agricultural data gathering</p>
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Satellite Imagery</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Weather Stations</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Soil Sensors</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="text-center group"
+                             data-aos="zoom-in" 
+                             data-aos-duration="800" 
+                             data-aos-delay="200">
+                            <div class="relative">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl flex items-center justify-center mx-auto mb-4 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg shadow-green-600/25">
+                                    <i data-lucide="cpu" class="w-10 h-10 text-white"></i>
+                                </div>
+                                <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-xs font-bold">2</span>
+                                </div>
+                            </div>
+                            <h3 class="text-white font-bold mb-2">Data Processing</h3>
+                            <p class="text-gray-400 text-sm mb-3">Real-time data normalization & cleansing</p>
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Quality Control</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Data Validation</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Normalization</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="text-center group"
+                             data-aos="zoom-in" 
+                             data-aos-duration="800" 
+                             data-aos-delay="300">
+                            <div class="relative">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl flex items-center justify-center mx-auto mb-4 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg shadow-green-600/25">
+                                    <i data-lucide="brain" class="w-10 h-10 text-white"></i>
+                                </div>
+                                <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-xs font-bold">3</span>
+                                </div>
+                            </div>
+                            <h3 class="text-white font-bold mb-2">Predictive Modeling</h3>
+                            <p class="text-gray-400 text-sm mb-3">ML algorithms for pattern recognition</p>
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Neural Networks</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Random Forest</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Time Series</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4 -->
+                        <div class="text-center group"
+                             data-aos="zoom-in" 
+                             data-aos-duration="800" 
+                             data-aos-delay="400">
+                            <div class="relative">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl flex items-center justify-center mx-auto mb-4 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg shadow-green-600/25">
+                                    <i data-lucide="settings" class="w-10 h-10 text-white"></i>
+                                </div>
+                                <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-xs font-bold">4</span>
+                                </div>
+                            </div>
+                            <h3 class="text-white font-bold mb-2">Optimization</h3>
+                            <p class="text-gray-400 text-sm mb-3">Resource allocation algorithms</p>
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Linear Programming</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Genetic Algorithms</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Multi-Objective</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 5 -->
+                        <div class="text-center group"
+                             data-aos="zoom-in" 
+                             data-aos-duration="800" 
+                             data-aos-delay="500">
+                            <div class="relative">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl flex items-center justify-center mx-auto mb-4 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-lg shadow-green-600/25">
+                                    <i data-lucide="lightbulb" class="w-10 h-10 text-white"></i>
+                                </div>
+                                <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white text-xs font-bold">5</span>
+                                </div>
+                            </div>
+                            <h3 class="text-white font-bold mb-2">Actionable Insights</h3>
+                            <p class="text-gray-400 text-sm mb-3">Real-time recommendations</p>
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Alerts</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Recommendations</span>
+                                </div>
+                                <div class="flex items-center justify-center space-x-2 text-xs text-gray-500">
+                                    <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                    <span>Forecasts</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Algorithmic Features -->
+    <section class="py-20 px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    <span class="text-green-400">Algorithmic</span> Decision Support
+                </h2>
+                <p class="text-gray-400 max-w-3xl mx-auto">
+                    Our machine learning models process historical and real-time data to generate 
+                    precise recommendations for optimal agricultural outcomes.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1: Predictive Analytics -->
+                <div class="metric-card rounded-xl p-6">
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 bg-green-900/30 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Predictive Yield Modeling</h3>
+                            <div class="text-green-400 text-sm font-mono">Accuracy: 94.7%</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        ML algorithms analyze 15+ variables to forecast crop yields with 
+                        industry-leading accuracy.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Model Confidence</span>
+                            <span class="text-green-400">High</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 2: Optimization Engine -->
+                <div class="metric-card rounded-xl p-6">
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 bg-green-900/30 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Resource Optimization</h3>
+                            <div class="text-green-400 text-sm font-mono">Efficiency: +42%</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Linear programming models optimize water, fertilizer, and labor allocation 
+                        for maximum ROI.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Optimization Score</span>
+                            <span class="text-green-400">92/100</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 3: Risk Analysis -->
+                <div class="metric-card rounded-xl p-6">
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 bg-green-900/30 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.998-.833-2.732 0L4.346 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Risk Assessment</h3>
+                            <div class="text-green-400 text-sm font-mono">Early Detection: 7 days</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Identifies pest, disease, and weather risks with 7-day advance warning 
+                        and mitigation strategies.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">Risk Coverage</span>
+                            <span class="text-green-400">28 risk factors</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 88%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple CTA Section -->
+    <section class="py-20 px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-12 border border-gray-800"
+                 data-aos="zoom-in" 
+                 data-aos-duration="800">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6"
+                    data-aos="fade-up" 
+                    data-aos-duration="800" 
+                    data-aos-delay="100">
+                    Start Your <span class="text-green-400">14-Day Free Trial</span>
+                </h2>
+                
+                <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto"
+                   data-aos="fade-up" 
+                   data-aos-duration="800" 
+                   data-aos-delay="200">
+                    Transform your farming with data-driven insights and personalized recommendations.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center"
+                     data-aos="fade-up" 
+                     data-aos-duration="800" 
+                     data-aos-delay="300">
+                    <a href="{% url 'register' %}" 
+                       class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105">
+                        Start Free Trial
+                    </a>
+                    <a href="#features" 
+                       class="border border-gray-700 text-gray-300 hover:text-white hover:border-gray-600 px-8 py-4 rounded-lg font-medium transition-all duration-300">
+                        Learn More
+                    </a>
+                </div>
+                
+                <div class="mt-8 text-sm text-gray-500"
+                     data-aos="fade-up" 
+                     data-aos-duration="800" 
+                     data-aos-delay="400">
+                    No credit card required • Cancel anytime • Full access to all features
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-800 py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div data-aos="fade-up" 
+                     data-aos-duration="800" 
+                     data-aos-delay="100">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="sprout" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">SmartFarm</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Data-driven agricultural intelligence platform for Cameroonian farmers.
+                    </p>
+                </div>
+                
+                <!-- Product -->
+                <div data-aos="fade-up" 
+                     data-aos-duration="800" 
+                     data-aos-delay="200">
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">ROI Calculator</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company -->
+                <div data-aos="fade-up" 
+                     data-aos-duration="800" 
+                     data-aos-delay="300">
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div data-aos="fade-up" 
+                     data-aos-duration="800" 
+                     data-aos-delay="400">
+                    <h4 class="text-white font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm"
+                 data-aos="fade-up" 
+                 data-aos-duration="800" 
+                 data-aos-delay="500">
+                <p>&copy; 2024 SmartFarm Cameroon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+<script>
+// Data visualization animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate progress bars on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const progressBars = entry.target.querySelectorAll('.progress-fill');
+                progressBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    document.querySelectorAll('.metric-card').forEach(card => observer.observe(card));
+    
+    // ROI Calculator functionality
+    const roiInputs = document.querySelectorAll('#roi-calculator input, #roi-calculator select');
+    roiInputs.forEach(input => {
+        input.addEventListener('input', updateROICalculation);
+    });
+    
+    function updateROICalculation() {
+        // Add ROI calculation logic here
+        console.log('Update ROI calculations based on inputs');
+    }
+    
+    // Data points animation
+    const dataPoints = document.querySelectorAll('.data-point');
+    dataPoints.forEach((point, index) => {
+        point.style.opacity = '0';
+        point.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            point.style.transition = 'all 0.6s ease';
+            point.style.opacity = '1';
+            point.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+});
+</script>
+
+<script>
+// Mobile menu toggle
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+            
+            // Scroll to target
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Initialize Lucide icons and AOS
+document.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+    
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: false,
+        mirror: false,
+        anchorPlacement: 'top-bottom',
+        offset: 120,
+        delay: 0
+    });
+    
+    // Initialize image slider
+    initSlider();
+});
+
+// Image Slider functionality
+let currentSlideIndex = 0;
+let slideInterval;
+
+function initSlider() {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    
+    if (slides.length === 0) return;
+    
+    // Show first slide
+    showSlide(0);
+    
+    // Start automatic slideshow
+    startSlideshow();
+    
+    // Pause on hover
+    const sliderContainer = document.querySelector('.slider-container');
+    if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', stopSlideshow);
+        sliderContainer.addEventListener('mouseleave', startSlideshow);
+    }
+}
+
+function showSlide(index) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    
+    if (slides.length === 0) return;
+    
+    // Wrap around if index is out of bounds
+    if (index >= slides.length) currentSlideIndex = 0;
+    else if (index < 0) currentSlideIndex = slides.length - 1;
+    else currentSlideIndex = index;
+    
+    // Hide all slides
+    slides.forEach(slide => slide.style.opacity = '0');
+    
+    // Show current slide
+    slides[currentSlideIndex].style.opacity = '1';
+    
+    // Update dots
+    dots.forEach((dot, index) => {
+        if (index === currentSlideIndex) {
+            dot.classList.remove('bg-white/50');
+            dot.classList.add('bg-white');
+        } else {
+            dot.classList.remove('bg-white');
+            dot.classList.add('bg-white/50');
+        }
+    });
+}
+
+function changeSlide(direction) {
+    showSlide(currentSlideIndex + direction);
+    stopSlideshow();
+    startSlideshow();
+}
+
+function currentSlide(index) {
+    showSlide(index - 1);
+    stopSlideshow();
+    startSlideshow();
+}
+
+function startSlideshow() {
+    slideInterval = setInterval(() => {
+        changeSlide(1);
+    }, 5000); // Change slide every 5 seconds
+}
+
+function stopSlideshow() {
+    if (slideInterval) {
+        clearInterval(slideInterval);
+    }
+}
+</script>
+</body>
+</html>

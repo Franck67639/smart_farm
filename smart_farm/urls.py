@@ -30,9 +30,11 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('logout/', views.logout_view, name='logout'),
     
+    # Landing Page
+    path('', views.landing_view, name='landing'),
+    
     # Main Application
-    path('', views.dashboard_view, name='dashboard'),
-    path('dashboard/', views.dashboard_view, name='dashboard_page'),
+    path('dashboard/', views.dashboard_view, name='dashboard'),
     
     # Farm Management
     path('farm/switch/<uuid:farm_id>/', views.switch_farm, name='switch_farm'),

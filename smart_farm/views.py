@@ -19,6 +19,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
+def landing_view(request):
+    """Landing page for SmartFarm Cameroon"""
+    # If user is already authenticated, redirect to dashboard
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    
+    return render(request, 'landing.html')
+
 def login_view(request):
     """Handle login using either email or username"""
 
@@ -179,7 +187,7 @@ def logout_view(request):
     from django.contrib.auth import logout
     logout(request)
     messages.info(request, 'You have been logged out.')
-    return redirect('login')
+    return redirect('landing')
 
 @login_required
 def dashboard_view(request):

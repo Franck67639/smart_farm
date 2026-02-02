@@ -134,7 +134,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Authentication URLs
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_REDIRECT_URL = 'landing'
 
 # Security settings for HTMX
 CSRF_TRUSTED_ORIGINS = []
