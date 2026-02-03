@@ -11,15 +11,15 @@ class SmartFarmConfig(AppConfig):
 
     def ready(self):
         """
-        Initialize mail service when app is ready
+        Initialize simple mail service when app is ready
         """
         try:
             from django.conf import settings
             if getattr(settings, 'MAIL_SERVICE_ENABLED', True):
-                from .mail_service import start_mail_service
-                start_mail_service()
-                logger.info("SmartFarm app ready - Mail service initialized")
+                from .mail_service_simple import start_simple_mail_service
+                start_simple_mail_service()
+                logger.info("SmartFarm app ready - Simple mail service initialized")
             else:
                 logger.info("SmartFarm app ready - Mail service disabled")
         except Exception as e:
-            logger.error(f"Failed to initialize mail service: {e}")
+            logger.error(f"Failed to initialize simple mail service: {e}")

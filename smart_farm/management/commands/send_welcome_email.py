@@ -4,7 +4,7 @@ Django management command to send welcome email to a specific user
 
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth import get_user_model
-from smart_farm.mail_service import mail_service
+from smart_farm.mail_service_simple import simple_mail_service
 import logging
 
 User = get_user_model()
@@ -47,15 +47,14 @@ class Command(BaseCommand):
             return
         
         try:
-            # Send welcome email
-            mail_service.send_welcome_email(user)
-            self.stdout.write(self.style.SUCCESS(f'✓ Welcome email queued for {user.email}'))
+            # Send welcome email using simple service
+            success = simple_mail_service.send_welcome_email(user)
             
-            # Show mail service status
-            if hasattr(mail_service.mail_queue, 'qsize'):
-                queue_size = mail_service.mail_queue.qsize()
-                self.stdout.write(f'  Queue size: {queue_size}')
+            if success:
+                self.stdout.write(self.style.SUCCESS(f'✓ Welcome email sent successfully to {user.email}'))
+            else:
+                self.stdout.write(self.style.ERROR(f'✗ Welcome email failed to send to {user.email}'))
             
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f'✗ Failed to queue welcome email: {e}'))
+            self.stdout.write(self.style.ERROR(f'✗ Failed to send welcome email: {e}'))
             logger.error(f"Failed to send welcome email to {email}: {e}")

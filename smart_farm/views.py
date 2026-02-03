@@ -138,15 +138,19 @@ def create_user_account(request):
                 phone=request.POST.get('phone').strip()
             )
             
-            # Send welcome email asynchronously
+            # Send welcome email using simple service
             try:
-                from .mail_service import mail_service
-                mail_service.send_welcome_email(user)
+                from .mail_service_simple import simple_mail_service
+                success = simple_mail_service.send_welcome_email(user)
+                if success:
+                    logger.info(f"Welcome email sent successfully to {email}")
+                else:
+                    logger.warning(f"Welcome email failed to send to {email}")
             except Exception as e:
                 # Log error but don't fail user creation
                 import logging
                 logger = logging.getLogger(__name__)
-                logger.error(f"Failed to queue welcome email for {email}: {e}")
+                logger.error(f"Failed to send welcome email for {email}: {e}")
             
             return user, None
     except Exception as e:
