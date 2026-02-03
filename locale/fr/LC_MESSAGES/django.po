@@ -1,0 +1,288 @@
+# French translations for SmartFarm
+# This file is distributed under the same license as the SmartFarm package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: SmartFarm\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: SmartFarm Team\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "SmartFarm Cameroon - Data-Driven Agricultural Optimization Platform"
+msgstr "SmartFarm Cameroun - Plateforme d'Optimisation Agricole Basée sur les Données"
+
+msgid "Sign In"
+msgstr "Se Connecter"
+
+msgid "Get Started"
+msgstr "Commencer"
+
+msgid "Features"
+msgstr "Fonctionnalités"
+
+msgid "Methodology"
+msgstr "Méthodologie"
+
+msgid "ROI Calculator"
+msgstr "Calculateur ROI"
+
+msgid "Validation"
+msgstr "Validation"
+
+msgid "v1.2.3 • Agricultural Intelligence Platform"
+msgstr "v1.2.3 • Plateforme d'Intelligence Agricole"
+
+msgid "Data-Driven"
+msgstr "Basée sur les Données"
+
+msgid "Agriculture for"
+msgstr "Agriculture pour"
+
+msgid "Cameroon"
+msgstr "Cameroun"
+
+msgid "Yield Increase"
+msgstr "Augmentation du Rendement"
+
+msgid "Average ROI"
+msgstr "ROI Moyen"
+
+msgid "Farms Analyzed"
+msgstr "Fermes Analysées"
+
+msgid "See How It Works"
+msgstr "Voir Comment Ça Marche"
+
+msgid "Transform your farming with precision analytics, real-time insights, and AI-powered recommendations tailored for Cameroonian agriculture."
+msgstr "Transformez votre agriculture avec des analyses de précision, des informations en temps réel et des recommandations alimentées par l'IA adaptées à l'agriculture camerounaise."
+
+msgid "Start Free Trial"
+msgstr "Commencer l'Essai Gratuit"
+
+msgid "Learn More"
+msgstr "En Savoir Plus"
+
+msgid "No credit card required • 14-day free trial • Cancel anytime"
+msgstr "Aucune carte de crédit requise • Essai gratuit de 14 jours • Annulez à tout moment"
+
+msgid "SCIENTIFIC METHODOLOGY"
+msgstr "MÉTHODOLOGIE SCIENTIFIQUE"
+
+msgid "Agricultural Intelligence"
+msgstr "Intelligence Agricole"
+
+msgid "Our multi-layered analytical framework processes over"
+msgstr "Notre cadre analytique multicouche traite plus de"
+
+msgid "17 agricultural parameters"
+msgstr "17 paramètres agricoles"
+
+msgid "through advanced machine learning models to deliver actionable insights with"
+msgstr "grâce à des modèles d'apprentissage automatique avancés pour fournir des informations exploitables avec"
+
+msgid "94.7% accuracy"
+msgstr "94,7% de précision"
+
+msgid "Real-Time Data Processing Pipeline"
+msgstr "Pipeline de Traitement de Données en Temps Réel"
+
+msgid "Data Collection"
+msgstr "Collecte de Données"
+
+msgid "Multi-source agricultural data gathering"
+msgstr "Collecte de données agricoles multi-sources"
+
+msgid "Satellite Imagery"
+msgstr "Imagerie Satellite"
+
+msgid "Weather Stations"
+msgstr "Stations Météo"
+
+msgid "Soil Sensors"
+msgstr "Capteurs de Sol"
+
+msgid "Data Processing"
+msgstr "Traitement des Données"
+
+msgid "Real-time data normalization & cleansing"
+msgstr "Normalisation et nettoyage des données en temps réel"
+
+msgid "Quality Control"
+msgstr "Contrôle Qualité"
+
+msgid "Data Validation"
+msgstr "Validation des Données"
+
+msgid "Normalization"
+msgstr "Normalisation"
+
+msgid "Predictive Modeling"
+msgstr "Modélisation Prédictive"
+
+msgid "ML algorithms for pattern recognition"
+msgstr "Algorithmes ML pour la reconnaissance de formes"
+
+msgid "Neural Networks"
+msgstr "Réseaux de Neurones"
+
+msgid "Random Forest"
+msgstr "Forêt Aléatoire"
+
+msgid "Time Series"
+msgstr "Séries Temporelles"
+
+msgid "Optimization"
+msgstr "Optimisation"
+
+msgid "Resource allocation algorithms"
+msgstr "Algorithmes d'allocation des ressources"
+
+msgid "Linear Programming"
+msgstr "Programmation Linéaire"
+
+msgid "Genetic Algorithms"
+msgstr "Algorithmes Génétiques"
+
+msgid "Multi-Objective"
+msgstr "Multi-Objectif"
+
+msgid "Actionable Insights"
+msgstr "Informations Exploitables"
+
+msgid "Real-time recommendations"
+msgstr "Recommandations en temps réel"
+
+msgid "Alerts"
+msgstr "Alertes"
+
+msgid "Recommendations"
+msgstr "Recommandations"
+
+msgid "Forecasts"
+msgstr "Prévisions"
+
+msgid "Product"
+msgstr "Produit"
+
+msgid "Pricing"
+msgstr "Tarification"
+
+msgid "Company"
+msgstr "Entreprise"
+
+msgid "About Us"
+msgstr "À Propos"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Legal"
+msgstr "Légal"
+
+msgid "Privacy Policy"
+msgstr "Politique de Confidentialité"
+
+msgid "Terms of Service"
+msgstr "Conditions d'Utilisation"
+
+msgid "Cookie Policy"
+msgstr "Politique de Cookies"
+
+msgid "Algorithmic"
+msgstr "Algorithmique"
+
+msgid "Decision Support"
+msgstr "Aide à la Décision"
+
+msgid "Our machine learning models process historical and real-time data to generate precise recommendations for optimal agricultural outcomes."
+msgstr "Nos modèles d'apprentissage automatique traitent les données historiques et en temps réel pour générer des recommandations précises pour des résultats agricoles optimaux."
+
+msgid "Predictive Yield Modeling"
+msgstr "Modélisation Prédictive du Rendement"
+
+msgid "Accuracy: 94.7%"
+msgstr "Précision : 94,7%"
+
+msgid "Model Confidence"
+msgstr "Confiance du Modèle"
+
+msgid "High"
+msgstr "Élevée"
+
+msgid "ML algorithms analyze 15+ variables to forecast crop yields with industry-leading accuracy."
+msgstr "Les algorithmes ML analysent 15+ variables pour prévoir les rendements des cultures avec une précision leader de l'industrie."
+
+msgid "Resource Optimization"
+msgstr "Optimisation des Ressources"
+
+msgid "Efficiency: +42%"
+msgstr "Efficacité : +42%"
+
+msgid "Linear programming models optimize water, fertilizer, and labor allocation for maximum ROI."
+msgstr "Les modèles de programmation linéaire optimisent l'allocation de l'eau, des engrais et de la main-d'œuvre pour un ROI maximal."
+
+msgid "Optimization Score"
+msgstr "Score d'Optimisation"
+
+msgid "Risk Assessment"
+msgstr "Évaluation des Risques"
+
+msgid "Early Detection: 7 days"
+msgstr "Détection Précoce : 7 jours"
+
+msgid "Identifies pest, disease, and weather risks with 7-day advance warning and mitigation strategies."
+msgstr "Identifie les risques de ravageurs, de maladies et de météo avec un avertissement 7 jours à l'avance et des stratégies d'atténuation."
+
+msgid "Risk Coverage"
+msgstr "Couverture des Risques"
+
+msgid "Start Your"
+msgstr "Commencez Votre"
+
+msgid "14-Day Free Trial"
+msgstr "Essai Gratuit de 14 Jours"
+
+msgid "Transform your farming with data-driven insights and personalized recommendations."
+msgstr "Transformez votre agriculture avec des informations basées sur les données et des recommandations personnalisées."
+
+msgid "No credit card required • Cancel anytime • Full access to all features"
+msgstr "Aucune carte de crédit requise • Annulez à tout moment • Accès complet à toutes les fonctionnalités"
+
+msgid "Data-driven agricultural intelligence platform for Cameroonian farmers."
+msgstr "Plateforme d'intelligence agricole basée sur les données pour les agriculteurs camerounais."
+
+msgid "Pricing"
+msgstr "Tarification"
+
+msgid "About Us"
+msgstr "À Propos"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Legal"
+msgstr "Légal"
+
+msgid "Privacy Policy"
+msgstr "Politique de Confidentialité"
+
+msgid "Terms of Service"
+msgstr "Conditions d'Utilisation"
+
+msgid "Cookie Policy"
+msgstr "Politique de Cookies"
+
+msgid "© 2024 SmartFarm Cameroon. All rights reserved."
+msgstr "© 2024 SmartFarm Cameroun. Tous droits réservés."

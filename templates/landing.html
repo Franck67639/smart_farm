@@ -331,7 +331,7 @@
                 style="
                   background:
                     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-                    url(&quot;https://www.bing.com/images/search?view=detailV2&ccid=yyTSH5Fl&id=D1E4B4E34D81574C430787AA778DBF1937EA6BF7&thid=OIP.yyTSH5FlqmPgfBWBfRjRHAHaE8&mediaurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.cb24d21f9165aa63e07c15817d18d11c%3frik%3d92vqNxm%252fjXeqhw%26riu%3dhttp%253a%252f%252fmedia.beam.usnews.com%252f13%252f18%252fddbead684c69af9e437eded399dc%252f141105-farm-stock.jpg%26ehk%3dL4WREhw8MW2MjlytQAmr9Sdorr9MpZMbFGPhCn%252f%252fbKk%253d%26risl%3d%26pid%3dImgRaw%26r%3d0&exph=800&expw=1200&q=farm+images&FORM=IRPRST&ck=34A6A43ACC8A84D2B5A20EF462B1407A&selectedIndex=6&itb=0&quot;)
+                    url(&quot;{% static 'hero_images/hero0.avif' %}&quot;)
                       center/cover;
                 "
               ></div>
@@ -340,7 +340,16 @@
                 style="
                   background:
                     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-                    url(&quot;https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80&quot;)
+                    url(&quot;{% static 'hero_images/hero1.webp' %}&quot;)
+                    center/cover;
+                    "
+                    ></div>
+                    <div
+                    class="slide absolute inset-0 opacity-0 transition-opacity duration-1000"
+                    style="
+                    background:
+                    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+                    url(&quot;{% static 'hero_images/hero0.avif' %}&quot;)
                       center/cover;
                 "
               ></div>
@@ -349,7 +358,7 @@
                 style="
                   background:
                     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-                    url(&quot;https://images.unsplash.com/photo-1592982184088-057a8dd9c0c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80&quot;)
+                    url(&quot;{% static 'hero_images/hero2.webp' %}&quot;)
                       center/cover;
                 "
               ></div>
@@ -358,16 +367,7 @@
                 style="
                   background:
                     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-                    url(&quot;https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80&quot;)
-                      center/cover;
-                "
-              ></div>
-              <div
-                class="slide absolute inset-0 opacity-0 transition-opacity duration-1000"
-                style="
-                  background:
-                    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-                    url(&quot;https://images.unsplash.com/photo-1418985991508-e47386d96a71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80&quot;)
+                    url(&quot;{% static 'hero_images/hero3.png' %}&quot;)
                       center/cover;
                 "
               ></div>
@@ -837,12 +837,10 @@
         <div class="max-w-7xl mx-auto">
           <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-              <span class="text-green-400">Algorithmic</span> Decision Support
+              <span class="text-green-400">{% trans "Algorithmic" %}</span> {% trans "Decision Support" %}
             </h2>
             <p class="text-gray-400 max-w-3xl mx-auto">
-              Our machine learning models process historical and real-time data
-              to generate precise recommendations for optimal agricultural
-              outcomes.
+              {% trans "Our machine learning models process historical and real-time data to generate precise recommendations for optimal agricultural outcomes." %}
             </p>
           </div>
 
@@ -869,21 +867,20 @@
                 </div>
                 <div>
                   <h3 class="text-xl font-bold text-white mb-2">
-                    Predictive Yield Modeling
+                    {% trans "Predictive Yield Modeling" %}
                   </h3>
                   <div class="text-green-400 text-sm font-mono">
-                    Accuracy: 94.7%
+                    {% trans "Accuracy: 94.7%" %}
                   </div>
                 </div>
               </div>
               <p class="text-gray-400 mb-4">
-                ML algorithms analyze 15+ variables to forecast crop yields with
-                industry-leading accuracy.
+                {% trans "ML algorithms analyze 15+ variables to forecast crop yields with industry-leading accuracy." %}
               </p>
               <div class="space-y-2">
                 <div class="flex justify-between text-sm">
-                  <span class="text-gray-500">Model Confidence</span>
-                  <span class="text-green-400">High</span>
+                  <span class="text-gray-500">{% trans "Model Confidence" %}</span>
+                  <span class="text-green-400">{% trans "High" %}</span>
                 </div>
                 <div class="progress-bar">
                   <div class="progress-fill" style="width: 95%"></div>
@@ -913,20 +910,19 @@
                 </div>
                 <div>
                   <h3 class="text-xl font-bold text-white mb-2">
-                    Resource Optimization
+                    {% trans "Resource Optimization" %}
                   </h3>
                   <div class="text-green-400 text-sm font-mono">
-                    Efficiency: +42%
+                    {% trans "Efficiency: +42%" %}
                   </div>
                 </div>
               </div>
               <p class="text-gray-400 mb-4">
-                Linear programming models optimize water, fertilizer, and labor
-                allocation for maximum ROI.
+                {% trans "Linear programming models optimize water, fertilizer, and labor allocation for maximum ROI." %}
               </p>
               <div class="space-y-2">
                 <div class="flex justify-between text-sm">
-                  <span class="text-gray-500">Optimization Score</span>
+                  <span class="text-gray-500">{% trans "Optimization Score" %}</span>
                   <span class="text-green-400">92/100</span>
                 </div>
                 <div class="progress-bar">
@@ -957,20 +953,19 @@
                 </div>
                 <div>
                   <h3 class="text-xl font-bold text-white mb-2">
-                    Risk Assessment
+                    {% trans "Risk Assessment" %}
                   </h3>
                   <div class="text-green-400 text-sm font-mono">
-                    Early Detection: 7 days
+                    {% trans "Early Detection: 7 days" %}
                   </div>
                 </div>
               </div>
               <p class="text-gray-400 mb-4">
-                Identifies pest, disease, and weather risks with 7-day advance
-                warning and mitigation strategies.
+                {% trans "Identifies pest, disease, and weather risks with 7-day advance warning and mitigation strategies." %}
               </p>
               <div class="space-y-2">
                 <div class="flex justify-between text-sm">
-                  <span class="text-gray-500">Risk Coverage</span>
+                  <span class="text-gray-500">{% trans "Risk Coverage" %}</span>
                   <span class="text-green-400">28 risk factors</span>
                 </div>
                 <div class="progress-bar">
@@ -996,7 +991,7 @@
               data-aos-duration="800"
               data-aos-delay="100"
             >
-              Start Your <span class="text-green-400">14-Day Free Trial</span>
+              {% trans "Start Your" %} <span class="text-green-400">{% trans "14-Day Free Trial" %}</span>
             </h2>
 
             <p
@@ -1005,8 +1000,7 @@
               data-aos-duration="800"
               data-aos-delay="200"
             >
-              Transform your farming with data-driven insights and personalized
-              recommendations.
+              {% trans "Transform your farming with data-driven insights and personalized recommendations." %}
             </p>
 
             <div
@@ -1019,13 +1013,13 @@
                 href="{% url 'register' %}"
                 class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105"
               >
-                Start Free Trial
+                {% trans "Start Free Trial" %}
               </a>
               <a
                 href="#features"
                 class="border border-gray-700 text-gray-300 hover:text-white hover:border-gray-600 px-8 py-4 rounded-lg font-medium transition-all duration-300"
               >
-                Learn More
+                {% trans "Learn More" %}
               </a>
             </div>
 
@@ -1035,8 +1029,7 @@
               data-aos-duration="800"
               data-aos-delay="400"
             >
-              No credit card required • Cancel anytime • Full access to all
-              features
+              {% trans "No credit card required • Cancel anytime • Full access to all features" %}
             </div>
           </div>
         </div>
@@ -1061,8 +1054,7 @@
                 <span class="text-xl font-bold text-white">SmartFarm</span>
               </div>
               <p class="text-gray-400 text-sm">
-                Data-driven agricultural intelligence platform for Cameroonian
-                farmers.
+                {% trans "Data-driven agricultural intelligence platform for Cameroonian farmers." %}
               </p>
             </div>
 
@@ -1072,21 +1064,21 @@
               data-aos-duration="800"
               data-aos-delay="200"
             >
-              <h4 class="text-white font-semibold mb-4">Product</h4>
+              <h4 class="text-white font-semibold mb-4">{% trans "Product" %}</h4>
               <ul class="space-y-2 text-gray-400 text-sm">
                 <li>
                   <a href="#" class="hover:text-white transition-colors"
-                    >Features</a
+                    >{% trans "Features" %}</a
                   >
                 </li>
                 <li>
                   <a href="#" class="hover:text-white transition-colors"
-                    >Pricing</a
+                    >{% trans "Pricing" %}</a
                   >
                 </li>
                 <li>
                   <a href="#" class="hover:text-white transition-colors"
-                    >ROI Calculator</a
+                    >{% trans "ROI Calculator" %}</a
                   >
                 </li>
               </ul>
@@ -1098,21 +1090,21 @@
               data-aos-duration="800"
               data-aos-delay="300"
             >
-              <h4 class="text-white font-semibold mb-4">Company</h4>
+              <h4 class="text-white font-semibold mb-4">{% trans "Company" %}</h4>
               <ul class="space-y-2 text-gray-400 text-sm">
                 <li>
                   <a href="#" class="hover:text-white transition-colors"
-                    >About Us</a
+                    >{% trans "About Us" %}</a
                   >
                 </li>
                 <li>
                   <a href="#" class="hover:text-white transition-colors"
-                    >Contact</a
+                    >{% trans "Contact" %}</a
                   >
                 </li>
                 <li>
                   <a href="#" class="hover:text-white transition-colors"
-                    >Blog</a
+                    >{% trans "Blog" %}</a
                   >
                 </li>
               </ul>
@@ -1124,21 +1116,21 @@
               data-aos-duration="800"
               data-aos-delay="400"
             >
-              <h4 class="text-white font-semibold mb-4">Legal</h4>
+              <h4 class="text-white font-semibold mb-4">{% trans "Legal" %}</h4>
               <ul class="space-y-2 text-gray-400 text-sm">
                 <li>
                   <a href="#" class="hover:text-white transition-colors"
-                    >Privacy Policy</a
+                    >{% trans "Privacy Policy" %}</a
                   >
                 </li>
                 <li>
                   <a href="#" class="hover:text-white transition-colors"
-                    >Terms of Service</a
+                    >{% trans "Terms of Service" %}</a
                   >
                 </li>
                 <li>
                   <a href="#" class="hover:text-white transition-colors"
-                    >Cookie Policy</a
+                    >{% trans "Cookie Policy" %}</a
                   >
                 </li>
               </ul>
@@ -1151,7 +1143,7 @@
             data-aos-duration="800"
             data-aos-delay="500"
           >
-            <p>&copy; 2024 SmartFarm Cameroon. All rights reserved.</p>
+            <p>{% trans "© 2024 SmartFarm Cameroon. All rights reserved." %}</p>
           </div>
         </div>
       </footer>
