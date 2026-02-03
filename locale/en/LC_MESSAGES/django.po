@@ -695,6 +695,189 @@ msgstr "No weather data available"
 msgid "Add a farm field to see weather data"
 msgstr "Add a farm field to see weather data"
 
+msgid "Transforming Agriculture with Technology"
+msgstr "Transforming Agriculture with Technology"
+
+msgid "Welcome to SmartFarm!"
+msgstr "Welcome to SmartFarm!"
+
+msgid "Dear"
+msgstr "Dear"
+
+msgid "Thank you for joining SmartFarm Cameroon! We're excited to have you as part of our community of innovative farmers using technology to transform agriculture in Cameroon."
+msgstr "Thank you for joining SmartFarm Cameroon! We're excited to have you as part of our community of innovative farmers using technology to transform agriculture in Cameroon."
+
+msgid "Your Farm Profile"
+msgstr "Your Farm Profile"
+
+msgid "Email:"
+msgstr "Email:"
+
+msgid "Registration Date:"
+msgstr "Registration Date:"
+
+msgid "Farm Name:"
+msgstr "Farm Name:"
+
+msgid "SmartFarm provides you with powerful tools to optimize your farming operations:"
+msgstr "SmartFarm provides you with powerful tools to optimize your farming operations:"
+
+msgid "Weather Intelligence"
+msgstr "Weather Intelligence"
+
+msgid "Real-time weather forecasts and agricultural insights"
+msgstr "Real-time weather forecasts and agricultural insights"
+
+msgid "Crop Analytics"
+msgstr "Crop Analytics"
+
+msgid "Data-driven recommendations for better yields"
+msgstr "Data-driven recommendations for better yields"
+
+msgid "Smart Planning"
+msgstr "Smart Planning"
+
+msgid "Optimized planting schedules and resource management"
+msgstr "Optimized planting schedules and resource management"
+
+msgid "Irrigation Control"
+msgstr "Irrigation Control"
+
+msgid "Water management for maximum efficiency"
+msgstr "Water management for maximum efficiency"
+
+msgid "Get started by completing your farm profile to receive personalized recommendations and insights tailored to your specific needs."
+msgstr "Get started by completing your farm profile to receive personalized recommendations and insights tailored to your specific needs."
+
+msgid "Complete Your Farm Profile"
+msgstr "Complete Your Farm Profile"
+
+msgid "If you have any questions or need assistance, our support team is here to help you succeed."
+msgstr "If you have any questions or need assistance, our support team is here to help you succeed."
+
+msgid "Happy farming!"
+msgstr "Happy farming!"
+
+msgid "The SmartFarm Cameroon Team"
+msgstr "The SmartFarm Cameroon Team"
+
+msgid "This email was sent to"
+msgstr "This email was sent to"
+
+msgid "because you registered for SmartFarm Cameroon."
+msgstr "because you registered for SmartFarm Cameroon."
+
+msgid "©"
+msgstr "©"
+
+msgid "All rights reserved."
+msgstr "All rights reserved."
+
+msgid "Quick Reminder"
+msgstr "Quick Reminder"
+
+msgid "we noticed you haven't completed your farm profile yet."
+msgstr "we noticed you haven't completed your farm profile yet."
+
+msgid "Completing your farm profile unlocks powerful features tailored specifically for your farming needs:"
+msgstr "Completing your farm profile unlocks powerful features tailored specifically for your farming needs:"
+
+msgid "Personalized Weather Insights"
+msgstr "Personalized Weather Insights"
+
+msgid "Get weather forecasts specific to your farm location"
+msgstr "Get weather forecasts specific to your farm location"
+
+msgid "Crop Recommendations"
+msgstr "Crop Recommendations"
+
+msgid "Receive suggestions based on your soil type and climate"
+msgstr "Receive suggestions based on your soil type and climate"
+
+msgid "Smart Irrigation"
+msgstr "Smart Irrigation"
+
+msgid "Optimize water usage for your specific crops and soil"
+msgstr "Optimize water usage for your specific crops and soil"
+
+msgid "Yield Analytics"
+msgstr "Yield Analytics"
+
+msgid "Track and improve your farm's productivity"
+msgstr "Track and improve your farm's productivity"
+
+msgid "It only takes 5 minutes to complete your profile and start benefiting from SmartFarm's intelligent farming tools."
+msgstr "It only takes 5 minutes to complete your profile and start benefiting from SmartFarm's intelligent farming tools."
+
+msgid "Complete My Profile Now"
+msgstr "Complete My Profile Now"
+
+msgid "If you need any help or have questions, our support team is always ready to assist you."
+msgstr "If you need any help or have questions, our support team is always ready to assist you."
+
+msgid "This is a friendly reminder from SmartFarm Cameroon."
+msgstr "This is a friendly reminder from SmartFarm Cameroon."
+
+msgid "Weather Alert"
+msgstr "Weather Alert"
+
+msgid "Severe Weather Alert"
+msgstr "Severe Weather Alert"
+
+msgid "Location:"
+msgstr "Location:"
+
+msgid "Alert Type:"
+msgstr "Alert Type:"
+
+msgid "Time:"
+msgstr "Time:"
+
+msgid "Weather Warning"
+msgstr "Weather Warning"
+
+msgid "Weather Advisory"
+msgstr "Weather Advisory"
+
+msgid "Weather Details"
+msgstr "Weather Details"
+
+msgid "Temperature:"
+msgstr "Temperature:"
+
+msgid "Humidity:"
+msgstr "Humidity:"
+
+msgid "Wind Speed:"
+msgstr "Wind Speed:"
+
+msgid "Rain Chance:"
+msgstr "Rain Chance:"
+
+msgid "Expected Rainfall:"
+msgstr "Expected Rainfall:"
+
+msgid "Farming Recommendations"
+msgstr "Farming Recommendations"
+
+msgid "Hi"
+msgstr "Hi"
+
+msgid "we're sending you this alert to help you protect your crops and optimize your farming operations based on current weather conditions."
+msgstr "we're sending you this alert to help you protect your crops and optimize your farming operations based on current weather conditions."
+
+msgid "Please take appropriate measures to safeguard your farm. You can check real-time weather updates and detailed forecasts in your SmartFarm dashboard."
+msgstr "Please take appropriate measures to safeguard your farm. You can check real-time weather updates and detailed forecasts in your SmartFarm dashboard."
+
+msgid "View Weather Dashboard"
+msgstr "View Weather Dashboard"
+
+msgid "Stay safe and keep farming!"
+msgstr "Stay safe and keep farming!"
+
+msgid "This weather alert was generated for your farm location."
+msgstr "This weather alert was generated for your farm location."
+
 msgid "Password"
 msgstr "Password"
 

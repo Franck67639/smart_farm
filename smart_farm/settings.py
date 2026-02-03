@@ -206,3 +206,27 @@ LOGGING = {
 AUTHENTICATION_BACKENDS = [
     'smart_farm.models.EmailBackend',
 ]
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true'
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'False').lower() == 'true'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'SmartFarm Cameroon <noreply@smartfarm.cm>')
+SITE_URL = os.getenv('SITE_URL', 'http://127.0.0.1:8000')
+
+# Mail Service Configuration
+MAIL_SERVICE_ENABLED = os.getenv('MAIL_SERVICE_ENABLED', 'True').lower() == 'true'
+MAIL_QUEUE_MAX_SIZE = int(os.getenv('MAIL_QUEUE_MAX_SIZE', '1000'))
+MAIL_RETRY_ATTEMPTS = int(os.getenv('MAIL_RETRY_ATTEMPTS', '3'))
+MAIL_RETRY_DELAY = int(os.getenv('MAIL_RETRY_DELAY', '300'))  # 5 minutes
+
+# Async Mail Service Logging
+LOGGING['loggers']['mail_service'] = {
+    'handlers': ['file', 'console'],
+    'level': 'INFO',
+    'propagate': True,
+}

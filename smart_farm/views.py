@@ -137,6 +137,17 @@ def create_user_account(request):
                 full_name=request.POST.get('full_name').strip(),
                 phone=request.POST.get('phone').strip()
             )
+            
+            # Send welcome email asynchronously
+            try:
+                from .mail_service import mail_service
+                mail_service.send_welcome_email(user)
+            except Exception as e:
+                # Log error but don't fail user creation
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.error(f"Failed to queue welcome email for {email}: {e}")
+            
             return user, None
     except Exception as e:
         return None, str(e)

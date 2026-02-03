@@ -713,6 +713,192 @@ msgstr "Aucune donnée météo disponible"
 msgid "Add a farm field to see weather data"
 msgstr "Ajoutez un champ agricole pour voir les données météo"
 
+msgid "Transforming Agriculture with Technology"
+msgstr "Transformer l'Agriculture avec la Technologie"
+
+msgid "Welcome to SmartFarm!"
+msgstr "Bienvenue sur SmartFarm!"
+
+msgid "Dear"
+msgstr "Cher"
+
+msgid "Thank you for joining SmartFarm Cameroon! We're excited to have you as part of our community of innovative farmers using technology to transform agriculture in Cameroon."
+msgstr "Merci de rejoindre SmartFarm Cameroon! Nous sommes ravis de vous accueillir dans notre communauté d'agriculteurs innovants qui utilisent la technologie pour transformer l'agriculture au Cameroun."
+
+msgid "Your Farm Profile"
+msgstr "Votre Profil Agricole"
+
+msgid "Email:"
+msgstr "Email :"
+
+msgid "Registration Date:"
+msgstr "Date d'Inscription :"
+
+msgid "Farm Name:"
+msgstr "Nom de la Ferme :"
+
+msgid "SmartFarm provides you with powerful tools to optimize your farming operations:"
+msgstr "SmartFarm vous fournit des outils puissants pour optimiser vos opérations agricoles :"
+
+msgid "Weather Intelligence"
+msgstr "Intelligence Météo"
+
+msgid "Real-time weather forecasts and agricultural insights"
+msgstr "Prévisions météo en temps réel et informations agricoles"
+
+msgid "Crop Analytics"
+msgstr "Analyse des Cultures"
+
+msgid "Data-driven recommendations for better yields"
+msgstr "Recommandations basées sur les données pour de meilleurs rendements"
+
+msgid "Smart Planning"
+msgstr "Planification Intelligente"
+
+msgid "Optimized planting schedules and resource management"
+msgstr "Calendriers de plantation optimisés et gestion des ressources"
+
+msgid "Irrigation Control"
+msgstr "Contrôle de l'Irrigation"
+
+msgid "Water management for maximum efficiency"
+msgstr "Gestion de l'eau pour une efficacité maximale"
+
+msgid "Get started by completing your farm profile to receive personalized recommendations and insights tailored to your specific needs."
+msgstr "Commencez par compléter votre profil agricole pour recevoir des recommandations personnalisées et des informations adaptées à vos besoins spécifiques."
+
+msgid "Complete Your Farm Profile"
+msgstr "Compléter Votre Profil Agricole"
+
+msgid "If you have any questions or need assistance, our support team is here to help you succeed."
+msgstr "Si vous avez des questions ou besoin d'aide, notre équipe de support est là pour vous aider à réussir."
+
+msgid "Happy farming!"
+msgstr "Bonnes récoltes!"
+
+msgid "The SmartFarm Cameroon Team"
+msgstr "L'Équipe SmartFarm Cameroon"
+
+msgid "This email was sent to"
+msgstr "Cet email a été envoyé à"
+
+msgid "because you registered for SmartFarm Cameroon."
+msgstr "parce que vous vous êtes inscrit à SmartFarm Cameroon."
+
+msgid "©"
+msgstr "©"
+
+msgid "All rights reserved."
+msgstr "Tous droits réservés."
+
+msgid "Rappel Rapide"
+msgstr "Rappel Rapide"
+
+msgid "Salut"
+msgstr "Salut"
+
+msgid "we noticed you haven't completed your farm profile yet."
+msgstr "nous avons remarqué que vous n'avez pas encore complété votre profil agricole."
+
+msgid "Completing your farm profile unlocks powerful features tailored specifically for your farming needs:"
+msgstr "Compléter votre profil agricole débloque des fonctionnalités puissantes adaptées spécifiquement à vos besoins agricoles :"
+
+msgid "Personalized Weather Insights"
+msgstr "Informations Météo Personnalisées"
+
+msgid "Get weather forecasts specific to your farm location"
+msgstr "Obtenez des prévisions météo spécifiques à l'emplacement de votre ferme"
+
+msgid "Crop Recommendations"
+msgstr "Recommandations de Cultures"
+
+msgid "Receive suggestions based on your soil type and climate"
+msgstr "Recevez des suggestions basées sur votre type de sol et votre climat"
+
+msgid "Smart Irrigation"
+msgstr "Irrigation Intelligente"
+
+msgid "Optimize water usage for your specific crops and soil"
+msgstr "Optimisez l'utilisation de l'eau pour vos cultures et sols spécifiques"
+
+msgid "Yield Analytics"
+msgstr "Analyse de Rendement"
+
+msgid "Track and improve your farm's productivity"
+msgstr "Suivez et améliorez la productivité de votre ferme"
+
+msgid "It only takes 5 minutes to complete your profile and start benefiting from SmartFarm's intelligent farming tools."
+msgstr "Il ne faut que 5 minutes pour compléter votre profil et commencer à bénéficier des outils agricoles intelligents de SmartFarm."
+
+msgid "Complete My Profile Now"
+msgstr "Compléter Mon Profil Maintenant"
+
+msgid "If you need any help or have questions, our support team is always ready to assist you."
+msgstr "Si vous avez besoin d'aide ou avez des questions, notre équipe de support est toujours prête à vous assister."
+
+msgid "This is a friendly reminder from SmartFarm Cameroon."
+msgstr "Ceci est un rappel amical de SmartFarm Cameroon."
+
+msgid "Weather Alert"
+msgstr "Alerte Météo"
+
+msgid "Severe Weather Alert"
+msgstr "Alerte Météo Sévère"
+
+msgid "Location:"
+msgstr "Lieu :"
+
+msgid "Alert Type:"
+msgstr "Type d'Alerte :"
+
+msgid "Time:"
+msgstr "Heure :"
+
+msgid "Weather Warning"
+msgstr "Avertissement Météo"
+
+msgid "Weather Advisory"
+msgstr "Avis Météo"
+
+msgid "Weather Details"
+msgstr "Détails Météo"
+
+msgid "Temperature:"
+msgstr "Température :"
+
+msgid "Humidity:"
+msgstr "Humidité :"
+
+msgid "Wind Speed:"
+msgstr "Vitesse du Vent :"
+
+msgid "Rain Chance:"
+msgstr "Chance de Pluie :"
+
+msgid "Expected Rainfall:"
+msgstr "Précipitations Attendues :"
+
+msgid "Farming Recommendations"
+msgstr "Recommandations Agricoles"
+
+msgid "Hi"
+msgstr "Bonjour"
+
+msgid "we're sending you this alert to help you protect your crops and optimize your farming operations based on current weather conditions."
+msgstr "nous vous envoyons cette alerte pour vous aider à protéger vos cultures et optimiser vos opérations agricoles basées sur les conditions météo actuelles."
+
+msgid "Please take appropriate measures to safeguard your farm. You can check real-time weather updates and detailed forecasts in your SmartFarm dashboard."
+msgstr "Veuillez prendre les mesures appropriées pour protéger votre ferme. Vous pouvez vérifier les mises à jour météo en temps réel et les prévisions détaillées dans votre tableau de bord SmartFarm."
+
+msgid "View Weather Dashboard"
+msgstr "Voir le Tableau de Bord Météo"
+
+msgid "Stay safe and keep farming!"
+msgstr "Restez en sécurité et continuez à cultiver!"
+
+msgid "This weather alert was generated for your farm location."
+msgstr "Cette alerte météo a été générée pour l'emplacement de votre ferme."
+
 msgid "Password"
 msgstr "Mot de passe"
 
