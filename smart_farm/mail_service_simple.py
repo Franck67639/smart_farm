@@ -25,7 +25,7 @@ class SimpleMailService:
         logger.info("Simple mail service initialized")
     
     def _send_email_sync(self, mail_data: Dict[str, Any]) -> bool:
-        """Send email synchronously"""
+        """Send email synchronously with timeout"""
         try:
             subject = mail_data['subject']
             template_name = mail_data.get('template_name')
@@ -55,18 +55,35 @@ class SimpleMailService:
                     to=[recipient_email]
                 )
             
-            # Send email
-            result = email.send()
+            # Send email with timeout
+            import signal
             
-            if result > 0:
-                logger.info(f"Email sent successfully to {recipient_email}")
-                self._log_mail_activity(mail_data, 'sent')
-                return True
-            else:
-                logger.error(f"Email sending failed to {recipient_email}")
-                self._log_mail_activity(mail_data, 'failed', 'Email send returned 0')
-                return False
+            def timeout_handler(signum, frame):
+                raise TimeoutError("Email sending timed out")
+            
+            # Set 10-second timeout for email sending
+            signal.signal(signal.SIGALRM, timeout_handler)
+            signal.alarm(10)
+            
+            try:
+                result = email.send()
+                signal.alarm(0)  # Cancel alarm
                 
+                if result > 0:
+                    logger.info(f"Email sent successfully to {recipient_email}")
+                    self._log_mail_activity(mail_data, 'sent')
+                    return True
+                else:
+                    logger.error(f"Email sending failed to {recipient_email}")
+                    self._log_mail_activity(mail_data, 'failed', 'Email send returned 0')
+                    return False
+            finally:
+                signal.alarm(0)  # Ensure alarm is cancelled
+                
+        except TimeoutError as e:
+            logger.error(f"Email sending timed out for {recipient_email}: {e}")
+            self._log_mail_activity(mail_data, 'failed', 'Email sending timed out')
+            return False
         except Exception as e:
             logger.error(f"Failed to send email to {recipient_email}: {e}")
             self._log_mail_activity(mail_data, 'failed', str(e))
@@ -169,14 +186,5 @@ def start_simple_mail_service():
         logger.error(f"Failed to start simple mail service: {e}")
 
 
-# Django signal handlers
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
-
-@receiver(post_save, sender=User)
-def user_created_handler(sender, instance, created, **kwargs):
-    """Handle user creation - send welcome email"""
-    if created:
-        # Send welcome email using simple service
-        simple_mail_service.send_welcome_email(instance)
+# Note: Removed signal handler to prevent blocking user registration
+# Email sending will be called explicitly from views.py
