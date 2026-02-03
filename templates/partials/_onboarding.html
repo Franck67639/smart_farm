@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Welcome to SmartFarm - Onboarding{% endblock title %}
+{% block title %}{% trans "Welcome to SmartFarm - Onboarding" %}{% endblock title %}
 
 {% block content %}
 <div class="min-h-screen flex items-center justify-center px-4 py-8">
@@ -10,7 +11,7 @@
             <!-- Progress Bar -->
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-sm text-mint-light/70">Step <span x-text="currentStep + 1">1</span> of 8</span>
+                    <span class="text-sm text-mint-light/70">{% trans "Step" %} <span x-text="currentStep + 1">1</span> {% trans "of" %} 8</span>
                     <span class="text-sm text-mint-light/70"><span x-text="Math.round(((currentStep + 1) / 8) * 100)">12</span>%</span>
                 </div>
                 <div class="w-full bg-black/30 rounded-full h-2 backdrop-blur-sm border border-white/10">
@@ -32,9 +33,9 @@
                                     <i data-lucide="leaf" class="w-10 h-10 text-white"></i>
                                 </div>
                                 
-                                <h1 class="text-3xl font-bold text-white mb-4">Welcome to SmartFarm</h1>
+                                <h1 class="text-3xl font-bold text-white mb-4">{% trans "Welcome to SmartFarm" %}</h1>
                                 <p class="text-mint-light/80 text-lg leading-relaxed">
-                                    Your premium maize farming companion for Cameroon's agricultural success
+                                    {% trans "Your premium maize farming companion for Cameroon's agricultural success" %}
                                 </p>
                             </div>
                             
@@ -45,8 +46,8 @@
                                         <i data-lucide="cloud-sun" class="w-5 h-5 text-mint"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-white">Smart Weather Insights</h3>
-                                        <p class="text-sm text-mint-light/70">Real-time forecasts for optimal planting</p>
+                                        <h3 class="font-semibold text-white">{% trans "Smart Weather Insights" %}</h3>
+                                        <p class="text-sm text-mint-light/70">{% trans "Real-time forecasts for optimal planting" %}</p>
                                     </div>
                                 </div>
                                 
@@ -55,8 +56,8 @@
                                         <i data-lucide="map-pin" class="w-5 h-5 text-mint"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-white">Location Intelligence</h3>
-                                        <p class="text-sm text-mint-light/70">Tailored advice for Cameroon regions</p>
+                                        <h3 class="font-semibold text-white">{% trans "Location Intelligence" %}</h3>
+                                        <p class="text-sm text-mint-light/70">{% trans "Tailored advice for Cameroon regions" %}</p>
                                     </div>
                                 </div>
                                 
@@ -65,8 +66,8 @@
                                         <i data-lucide="trending-up" class="w-5 h-5 text-mint"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-white">Yield Optimization</h3>
-                                        <p class="text-sm text-mint-light/70">Data-driven recommendations</p>
+                                        <h3 class="font-semibold text-white">{% trans "Yield Optimization" %}</h3>
+                                        <p class="text-sm text-mint-light/70">{% trans "Data-driven recommendations" %}</p>
                                     </div>
                                 </div>
                             </div>
@@ -74,10 +75,10 @@
                             <!-- Navigation -->
                             <div class="flex space-x-4 mt-auto">
                                 <button @click="skipOnboarding()" class="flex-1 bg-black/20 border border-white/10 text-white/70 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-black/30">
-                                    Skip Tour
+                                    {% trans "Skip Tour" %}
                                 </button>
                                 <button @click="nextStep()" class="flex-1 bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep">
-                                    Get Started
+                                    {% trans "Get Started" %}
                                 </button>
                             </div>
                         </div>
@@ -87,16 +88,16 @@
                     <div class="w-full flex-shrink-0 h-full">
                         <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-3xl shadow-2xl p-8 h-full flex flex-col overflow-y-auto">
                             <div class="text-center mb-8">
-                                <h1 class="text-3xl font-bold text-white mb-4">Basic Farm Information</h1>
+                                <h1 class="text-3xl font-bold text-white mb-4">{% trans "Basic Farm Information" %}</h1>
                                 <p class="text-mint-light/80 text-lg">
-                                    Tell us about your farm
+                                    {% trans "Tell us about your farm" %}
                                 </p>
                             </div>
                             
                             <form class="space-y-8" @submit.prevent="nextStep()">
                                 <!-- Farm Name -->
                                 <div>
-                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Farm Name</label>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Farm Name" %}</label>
                                     <input 
                                         type="text" 
                                         x-model="onboardingData.farmName"
@@ -107,14 +108,14 @@
                                 
                                 <!-- Farm Type -->
                                 <div>
-                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Farm Type</label>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Farm Type" %}</label>
                                     <div class="grid grid-cols-2 gap-3">
                                         <label class="relative">
                                             <input type="radio" x-model="onboardingData.farmType" value="smallholder" class="peer sr-only">
                                             <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:border-mint/50">
                                                 <div class="text-center">
                                                     <i data-lucide="home" class="w-6 h-6 mx-auto mb-2 text-mint"></i>
-                                                    <span class="text-sm font-medium">Smallholder</span>
+                                                    <span class="text-sm font-medium">{% trans "Smallholder" %}</span>
                                                 </div>
                                             </div>
                                         </label>
@@ -123,7 +124,7 @@
                                             <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:border-mint/50">
                                                 <div class="text-center">
                                                     <i data-lucide="building" class="w-6 h-6 mx-auto mb-2 text-mint"></i>
-                                                    <span class="text-sm font-medium">Commercial</span>
+                                                    <span class="text-sm font-medium">{% trans "Commercial" %}</span>
                                                 </div>
                                             </div>
                                         </label>
@@ -132,7 +133,7 @@
                                             <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:border-mint/50">
                                                 <div class="text-center">
                                                     <i data-lucide="users" class="w-6 h-6 mx-auto mb-2 text-mint"></i>
-                                                    <span class="text-sm font-medium">Subsistence</span>
+                                                    <span class="text-sm font-medium">{% trans "Subsistence" %}</span>
                                                 </div>
                                             </div>
                                         </label>
@@ -141,7 +142,7 @@
                                             <div class="bg-black/20 border border-white/10 peer-checked:border-mint peer-checked:bg-forest-mid/30 rounded-xl p-4 cursor-pointer transition-all duration-300 hover:border-mint/50">
                                                 <div class="text-center">
                                                     <i data-lucide="layers" class="w-6 h-6 mx-auto mb-2 text-mint"></i>
-                                                    <span class="text-sm font-medium">Mixed</span>
+                                                    <span class="text-sm font-medium">{% trans "Mixed" %}</span>
                                                 </div>
                                             </div>
                                         </label>
@@ -150,37 +151,37 @@
                                 
                                 <!-- Farm Size Category -->
                                 <div>
-                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Farm Size Category</label>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Farm Size Category" %}</label>
                                     <select 
                                         x-model="onboardingData.farmSizeCategory"
                                         class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
-                                        <option value="less_than_1">Less than 1 hectare</option>
-                                        <option value="1_to_5">1-5 hectares</option>
-                                        <option value="5_to_10">5-10 hectares</option>
-                                        <option value="10_to_50">10-50 hectares</option>
-                                        <option value="more_than_50">More than 50 hectares</option>
+                                        <option value="less_than_1">{% trans "Less than 1 hectare" %}</option>
+                                        <option value="1_to_5">{% trans "1-5 hectares" %}</option>
+                                        <option value="5_to_10">{% trans "5-10 hectares" %}</option>
+                                        <option value="10_to_50">{% trans "10-50 hectares" %}</option>
+                                        <option value="more_than_50">{% trans "More than 50 hectares" %}</option>
                                     </select>
                                 </div>
                                 
                                 <!-- Primary Crop -->
                                 <div>
-                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Primary Crop</label>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Primary Crop" %}</label>
                                     <select 
                                         x-model="onboardingData.primaryCrop"
                                         class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
-                                        <option value="maize">Maize</option>
-                                        <option value="cassava">Cassava</option>
-                                        <option value="beans">Beans</option>
-                                        <option value="rice">Rice</option>
-                                        <option value="vegetables">Vegetables</option>
-                                        <option value="mixed">Mixed Crops</option>
-                                        <option value="other">Other</option>
+                                        <option value="maize">{% trans "Maize" %}</option>
+                                        <option value="cassava">{% trans "Cassava" %}</option>
+                                        <option value="beans">{% trans "Beans" %}</option>
+                                        <option value="rice">{% trans "Rice" %}</option>
+                                        <option value="vegetables">{% trans "Vegetables" %}</option>
+                                        <option value="mixed">{% trans "Mixed Crops" %}</option>
+                                        <option value="other">{% trans "Other" %}</option>
                                     </select>
                                 </div>
                                 
                                 <!-- Farming Years -->
                                 <div>
-                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Years of Farming Experience</label>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Years of Farming Experience" %}</label>
                                     <input 
                                         type="number" 
                                         x-model="onboardingData.farmingYears"
@@ -193,11 +194,11 @@
                                 
                                 <!-- Maize Variety Selection -->
                                 <div>
-                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">Maize Variety (Optional)</label>
+                                    <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Maize Variety (Optional)" %}</label>
                                     <select 
                                         x-model="selectedMaizeVariety"
                                         class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
-                                        <option value="">Select a variety...</option>
+                                        <option value="">{% trans "Select a variety..." %}</option>
                                         {% for variety in maize_varieties %}
                                         <option value="{{ variety.id }}">{{ variety.name }}</option>
                                         {% endfor %}
@@ -208,10 +209,10 @@
                             <!-- Navigation -->
                             <div class="flex space-x-4 mt-auto pt-4">
                                 <button @click="previousStep()" class="flex-1 bg-black/20 border border-white/10 text-white/70 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-black/30">
-                                    Back
+                                    {% trans "Back" %}
                                 </button>
                                 <button @click="nextStep()" class="flex-1 bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep">
-                                    Next
+                                    {% trans "Next" %}
                                 </button>
                             </div>
                         </div>
@@ -221,9 +222,9 @@
                     <div class="w-full flex-shrink-0 h-full">
                         <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-3xl shadow-2xl p-8 h-full flex flex-col overflow-y-auto">
                             <div class="text-center mb-8">
-                                <h1 class="text-3xl font-bold text-white mb-4">Farm Location</h1>
+                                <h1 class="text-3xl font-bold text-white mb-4">{% trans "Farm Location" %}</h1>
                                 <p class="text-mint-light/80 text-lg">
-                                    Let us pinpoint your farm for accurate weather data
+                                    {% trans "Let us pinpoint your farm for accurate weather data" %}
                                 </p>
                             </div>
                         
@@ -236,9 +237,9 @@
                                     :disabled="detecting"
                                     class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl px-6 py-4 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep flex items-center justify-center space-x-3">
                                     <i data-lucide="map-pin" class="w-5 h-5"></i>
-                                    <span x-show="!detecting">Detect My Current Location</span>
+                                    <span x-show="!detecting">{% trans "Detect My Current Location" %}</span>
                                     <span x-show="detecting" class="flex items-center space-x-2">
-                                        <span>Detecting</span>
+                                        <span>{% trans "Detecting" %}</span>
                                         <span x-show="attempts > 0" class="text-xs">(<span x-text="attempts"></span>/<span x-text="maxAttempts"></span>)</span>
                                         <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                                     </span>
@@ -252,7 +253,7 @@
                                             <div class="w-8 h-8 bg-mint rounded-full flex items-center justify-center">
                                                 <i data-lucide="check" class="w-4 h-4 text-forest-deep"></i>
                                             </div>
-                                            <span class="text-white font-medium">Location Detected!</span>
+                                            <span class="text-white font-medium">{% trans "Location Detected!" %}</span>
                                             <div x-show="attempts > 1" class="text-xs text-mint-light/60">
                                                 (Attempt <span x-text="attempts"></span>)
                                             </div>
@@ -260,15 +261,15 @@
                                         
                                         <div class="space-y-2 text-sm mb-3">
                                             <div class="flex justify-between">
-                                                <span class="text-mint-light/70">Latitude:</span>
+                                                <span class="text-mint-light/70">{% trans "Latitude:" %}</span>
                                                 <span class="text-white font-mono" x-text="location?.lat.toFixed(6)"></span>
                                             </div>
                                             <div class="flex justify-between">
-                                                <span class="text-mint-light/70">Longitude:</span>
+                                                <span class="text-mint-light/70">{% trans "Longitude:" %}</span>
                                                 <span class="text-white font-mono" x-text="location?.lng.toFixed(6)"></span>
                                             </div>
                                             <div x-show="address" class="pt-2 border-t border-white/10">
-                                                <span class="text-mint-light/70 block mb-1">Address:</span>
+                                                <span class="text-mint-light/70 block mb-1">{% trans "Address:" %}</span>
                                                 <span class="text-white text-xs" x-text="address"></span>
                                             </div>
                                         </div>
@@ -281,7 +282,7 @@
                                                 <i data-lucide="alert-circle" class="w-4 h-4 text-white"></i>
                                             </div>
                                             <div>
-                                                <span class="text-white font-medium">Location Error</span>
+                                                <span class="text-white font-medium">{% trans "Location Error" %}</span>
                                                 <p class="text-sm text-red-200" x-text="error"></p>
                                             </div>
                                         </div>
@@ -290,15 +291,15 @@
                                 
                                 <!-- Manual Location Entry -->
                                 <div class="border-t border-white/10 pt-6 space-y-6">
-                                    <p class="text-center text-mint-light/70 mb-4">Or enter your location manually:</p>
+                                    <p class="text-center text-mint-light/70 mb-4">{% trans "Or enter your location manually:" %}</p>
                                     
                                     <!-- Region Selection -->
                                     <div>
-                                        <label class="block text-sm font-medium text-mint-light/80 mb-2">Region</label>
+                                        <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Region" %}</label>
                                         <select 
                                             x-model="onboardingData.region"
                                             class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
-                                            <option value="">Select your region...</option>
+                                            <option value="">{% trans "Select your region..." %}</option>
                                             <option value="northwest">Northwest</option>
                                             <option value="southwest">Southwest</option>
                                             <option value="west">West</option>
@@ -315,7 +316,7 @@
                                     <!-- Division and Subdivision -->
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-sm font-medium text-mint-light/80 mb-2">Division/Department</label>
+                                            <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Division/Department" %}</label>
                                             <input 
                                                 type="text" 
                                                 x-model="onboardingData.division"
@@ -323,7 +324,7 @@
                                                 class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-medium text-mint-light/80 mb-2">Subdivision/District</label>
+                                            <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Subdivision/District" %}</label>
                                             <input 
                                                 type="text" 
                                                 x-model="onboardingData.subdivision"
@@ -334,7 +335,7 @@
                                     
                                     <!-- Village/Town -->
                                     <div>
-                                        <label class="block text-sm font-medium text-mint-light/80 mb-2">Village or Town</label>
+                                        <label class="block text-sm font-medium text-mint-light/80 mb-2">{% trans "Village or Town" %}</label>
                                         <input 
                                             type="text" 
                                             x-model="onboardingData.villageTown"
@@ -346,7 +347,7 @@
                                     <!-- GPS Coordinates -->
                                     <div class="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-sm text-mint-light/70 mb-2">Latitude (Optional)</label>
+                                            <label class="block text-sm text-mint-light/70 mb-2">{% trans "Latitude (Optional)" %}</label>
                                             <input 
                                                 type="number" 
                                                 step="0.000001"
@@ -357,7 +358,7 @@
                                                 class="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
                                         </div>
                                         <div>
-                                            <label class="block text-sm text-mint-light/70 mb-2">Longitude (Optional)</label>
+                                            <label class="block text-sm text-mint-light/70 mb-2">{% trans "Longitude (Optional)" %}</label>
                                             <input 
                                                 type="number" 
                                                 step="0.000001"
@@ -374,10 +375,10 @@
                             <!-- Navigation -->
                             <div class="flex space-x-4 mt-auto pt-4">
                                 <button @click="previousStep()" class="flex-1 bg-black/20 border border-white/10 text-white/70 rounded-xl px-6 py-3 font-medium transition-all duration-300 hover:bg-black/30">
-                                    Back
+                                    {% trans "Back" %}
                                 </button>
                                 <button @click="nextStep()" class="flex-1 bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep">
-                                    Next
+                                    {% trans "Next" %}
                                 </button>
                             </div>
                         </div>
@@ -737,6 +738,31 @@
 {% csrf_token %}
 
 <script>
+// Translations for JavaScript validation messages
+const ONBOARDING_TRANSLATIONS = {
+    errors: {
+        please_enter_farm_name: "{% trans 'Please enter your farm name' %}",
+        please_select_farm_type: "{% trans 'Please select your farm type' %}",
+        please_select_farm_size_category: "{% trans 'Please select your farm size category' %}",
+        please_select_primary_crop: "{% trans 'Please select your primary crop' %}",
+        please_enter_valid_farming_years: "{% trans 'Please enter valid farming years' %}",
+        please_select_region: "{% trans 'Please select your region' %}",
+        please_enter_village_town: "{% trans 'Please enter your village/town' %}",
+        please_select_soil_type: "{% trans 'Please select soil type' %}",
+        please_select_soil_fertility: "{% trans 'Please select soil fertility level' %}",
+        please_select_water_source: "{% trans 'Please select water source' %}",
+        please_select_irrigation_method: "{% trans 'Please select irrigation method' %}",
+        please_select_labor_source: "{% trans 'Please select labor source' %}",
+        please_select_experience_level: "{% trans 'Please select your experience level' %}",
+        please_describe_farming_methods: "{% trans 'Please describe your farming methods' %}",
+        please_enter_farming_goals: "{% trans 'Please enter your farming goals' %}",
+        please_enter_main_challenges: "{% trans 'Please enter your main challenges' %}",
+        please_describe_market_access: "{% trans 'Please describe your market access' %}",
+        failed_to_save_data: "{% trans 'Failed to save data: ' %}",
+        network_error: "{% trans 'Network error: Failed to save data' %}"
+    }
+};
+
 document.addEventListener('alpine:init', () => {
     Alpine.data('onboardingWizard', () => ({
         currentStep: 0,
@@ -929,23 +955,23 @@ document.addEventListener('alpine:init', () => {
             // Step 1: Basic Farm Information
             if (this.currentStep === 1) {
                 if (!this.onboardingData.farmName.trim()) {
-                    this.showError('Please enter your farm name');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_enter_farm_name);
                     return false;
                 }
                 if (!this.onboardingData.farmType) {
-                    this.showError('Please select your farm type');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_farm_type);
                     return false;
                 }
                 if (!this.onboardingData.farmSizeCategory) {
-                    this.showError('Please select your farm size category');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_farm_size_category);
                     return false;
                 }
                 if (!this.onboardingData.primaryCrop) {
-                    this.showError('Please select your primary crop');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_primary_crop);
                     return false;
                 }
                 if (!this.onboardingData.farmingYears || this.onboardingData.farmingYears <= 0) {
-                    this.showError('Please enter valid farming years');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_enter_valid_farming_years);
                     return false;
                 }
             }
@@ -953,11 +979,11 @@ document.addEventListener('alpine:init', () => {
             // Step 2: Location Information
             if (this.currentStep === 2) {
                 if (!this.onboardingData.region) {
-                    this.showError('Please select your region');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_region);
                     return false;
                 }
                 if (!this.onboardingData.villageTown.trim()) {
-                    this.showError('Please enter your village/town');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_enter_village_town);
                     return false;
                 }
             }
@@ -965,11 +991,11 @@ document.addEventListener('alpine:init', () => {
             // Step 3: Soil Information
             if (this.currentStep === 3) {
                 if (!this.onboardingData.soilType) {
-                    this.showError('Please select soil type');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_soil_type);
                     return false;
                 }
                 if (!this.onboardingData.soilFertility) {
-                    this.showError('Please select soil fertility level');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_soil_fertility);
                     return false;
                 }
             }
@@ -977,11 +1003,11 @@ document.addEventListener('alpine:init', () => {
             // Step 4: Water and Irrigation
             if (this.currentStep === 4) {
                 if (!this.onboardingData.waterSource) {
-                    this.showError('Please select water source');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_water_source);
                     return false;
                 }
                 if (!this.onboardingData.irrigationMethod) {
-                    this.showError('Please select irrigation method');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_irrigation_method);
                     return false;
                 }
             }
@@ -994,15 +1020,15 @@ document.addEventListener('alpine:init', () => {
             // Step 6: Farming Practices and Experience
             if (this.currentStep === 6) {
                 if (!this.onboardingData.laborSource) {
-                    this.showError('Please select labor source');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_labor_source);
                     return false;
                 }
                 if (!this.onboardingData.experienceLevel) {
-                    this.showError('Please select your experience level');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_select_experience_level);
                     return false;
                 }
                 if (!this.onboardingData.farmingMethods.trim()) {
-                    this.showError('Please describe your farming methods');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_describe_farming_methods);
                     return false;
                 }
             }
@@ -1010,15 +1036,15 @@ document.addEventListener('alpine:init', () => {
             // Step 7: Goals and Challenges
             if (this.currentStep === 7) {
                 if (!this.onboardingData.farmingGoals.trim()) {
-                    this.showError('Please enter your farming goals');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_enter_farming_goals);
                     return false;
                 }
                 if (!this.onboardingData.mainChallenges.trim()) {
-                    this.showError('Please enter your main challenges');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_enter_main_challenges);
                     return false;
                 }
                 if (!this.onboardingData.marketAccess.trim()) {
-                    this.showError('Please describe your market access');
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.please_describe_market_access);
                     return false;
                 }
             }
@@ -1095,11 +1121,11 @@ document.addEventListener('alpine:init', () => {
             };
             
             // Return a Promise for async handling
-            return fetch('/onboarding/save-step/', {
+            return fetch('{% url "save_onboarding_step" %}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
                 },
                 body: JSON.stringify(stepData)
             }).then(response => response.json())
@@ -1109,13 +1135,13 @@ document.addEventListener('alpine:init', () => {
                     return true;
                 } else {
                     console.error('Failed to save step data:', data.error);
-                    this.showError('Failed to save data: ' + data.error);
+                    this.showError(ONBOARDING_TRANSLATIONS.errors.failed_to_save_data + data.error);
                     return false;
                 }
             })
             .catch(error => {
                 console.error('Error saving step data:', error);
-                this.showError('Network error: Failed to save data');
+                this.showError(ONBOARDING_TRANSLATIONS.errors.network_error);
                 return false;
             });
         },
@@ -1173,11 +1199,11 @@ document.addEventListener('alpine:init', () => {
             };
             
             // Save all onboarding data and redirect to dashboard
-            fetch('/onboarding/complete/', {
+            fetch('{% url "onboarding_complete" %}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value
                 },
                 body: JSON.stringify(allData)
             }).then(response => response.json())

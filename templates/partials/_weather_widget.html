@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- Weather Widget Partial -->
 <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-3xl shadow-2xl p-6" 
      hx-get="/weather/partial/" 
@@ -9,12 +10,12 @@
         <div>
             <h2 class="text-xl font-semibold text-white flex items-center">
                 <i data-lucide="cloud-sun" class="w-5 h-5 mr-2 text-mint"></i>
-                Weather Dashboard
+                {% trans "Weather Dashboard" %}
             </h2>
             <p class="text-sm text-mint-light/60">Douala, Cameroon</p>
         </div>
         <div class="text-right">
-            <p class="text-xs text-mint-light/60">Last updated</p>
+            <p class="text-xs text-mint-light/60">{% trans "Last updated" %}</p>
             <p class="text-sm text-mint-light/80" id="weather-time">2:30 PM</p>
         </div>
     </div>
@@ -33,43 +34,43 @@
         </div>
         
         <!-- Weather Description -->
-        <p class="text-lg text-mint-light/80 mb-2">Partly Cloudy</p>
-        <p class="text-sm text-mint-light/60">Feels like 34°</p>
+        <p class="text-lg text-mint-light/80 mb-2">{% trans "Partly Cloudy" %}</p>
+        <p class="text-sm text-mint-light/60">{% trans "Feels like" %} 34°</p>
     </div>
     
     <!-- Weather Details Grid -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div class="bg-black/20 rounded-xl p-3 text-center">
             <i data-lucide="wind" class="w-5 h-5 mx-auto mb-1 text-mint"></i>
-            <p class="text-xs text-mint-light/60">Wind Speed</p>
+            <p class="text-xs text-mint-light/60">{% trans "Wind Speed" %}</p>
             <p class="text-sm font-semibold text-white">12 km/h</p>
         </div>
         
         <div class="bg-black/20 rounded-xl p-3 text-center">
             <i data-lucide="droplets" class="w-5 h-5 mx-auto mb-1 text-mint"></i>
-            <p class="text-xs text-mint-light/60">Humidity</p>
+            <p class="text-xs text-mint-light/60">{% trans "Humidity" %}</p>
             <p class="text-sm font-semibold text-white">78%</p>
         </div>
         
         <div class="bg-black/20 rounded-xl p-3 text-center">
             <i data-lucide="sun" class="w-5 h-5 mx-auto mb-1 text-mint"></i>
-            <p class="text-xs text-mint-light/60">UV Index</p>
-            <p class="text-sm font-semibold text-white">8 (High)</p>
+            <p class="text-xs text-mint-light/60">{% trans "UV Index" %}</p>
+            <p class="text-sm font-semibold text-white">8 ({% trans "High" %})</p>
         </div>
         
         <div class="bg-black/20 rounded-xl p-3 text-center">
             <i data-lucide="cloud-rain" class="w-5 h-5 mx-auto mb-1 text-mint"></i>
-            <p class="text-xs text-mint-light/60">Rain Chance</p>
+            <p class="text-xs text-mint-light/60">{% trans "Rain Chance" %}</p>
             <p class="text-sm font-semibold text-white">25%</p>
         </div>
     </div>
     
     <!-- Hourly Forecast -->
     <div class="mb-6">
-        <h3 class="text-sm font-semibold text-mint-light/80 mb-3">Hourly Forecast</h3>
+        <h3 class="text-sm font-semibold text-mint-light/80 mb-3">{% trans "Hourly Forecast" %}</h3>
         <div class="flex space-x-3 overflow-x-auto pb-2">
             <div class="flex-shrink-0 bg-black/20 rounded-xl p-3 text-center min-w-[80px]">
-                <p class="text-xs text-mint-light/60 mb-1">Now</p>
+                <p class="text-xs text-mint-light/60 mb-1">{% trans "Now" %}</p>
                 <i data-lucide="sun" class="w-6 h-6 mx-auto mb-1 text-yellow-400"></i>
                 <p class="text-sm font-semibold text-white">31°</p>
             </div>
@@ -108,11 +109,11 @@
     
     <!-- 7-Day Forecast -->
     <div>
-        <h3 class="text-sm font-semibold text-mint-light/80 mb-3">7-Day Forecast</h3>
+        <h3 class="text-sm font-semibold text-mint-light/80 mb-3">{% trans "7-Day Forecast" %}</h3>
         <div class="space-y-2">
             <div class="flex items-center justify-between bg-black/20 rounded-xl p-3">
                 <div class="flex items-center space-x-3">
-                    <p class="text-sm text-white font-medium w-16">Today</p>
+                    <p class="text-sm text-white font-medium w-16">{% trans "Today" %}</p>
                     <i data-lucide="sun" class="w-5 h-5 text-yellow-400"></i>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -129,7 +130,7 @@
             
             <div class="flex items-center justify-between bg-black/20 rounded-xl p-3">
                 <div class="flex items-center space-x-3">
-                    <p class="text-sm text-white font-medium w-16">Mon</p>
+                    <p class="text-sm text-white font-medium w-16">{% trans "Mon" %}</p>
                     <i data-lucide="cloud-sun" class="w-5 h-5 text-yellow-400/80"></i>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -146,7 +147,7 @@
             
             <div class="flex items-center justify-between bg-black/20 rounded-xl p-3">
                 <div class="flex items-center space-x-3">
-                    <p class="text-sm text-white font-medium w-16">Tue</p>
+                    <p class="text-sm text-white font-medium w-16">{% trans "Tue" %}</p>
                     <i data-lucide="cloud-rain" class="w-5 h-5 text-blue-400"></i>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -163,7 +164,7 @@
             
             <div class="flex items-center justify-between bg-black/20 rounded-xl p-3">
                 <div class="flex items-center space-x-3">
-                    <p class="text-sm text-white font-medium w-16">Wed</p>
+                    <p class="text-sm text-white font-medium w-16">{% trans "Wed" %}</p>
                     <i data-lucide="cloud" class="w-5 h-5 text-mint-light/60"></i>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -180,7 +181,7 @@
             
             <div class="flex items-center justify-between bg-black/20 rounded-xl p-3">
                 <div class="flex items-center space-x-3">
-                    <p class="text-sm text-white font-medium w-16">Thu</p>
+                    <p class="text-sm text-white font-medium w-16">{% trans "Thu" %}</p>
                     <i data-lucide="sun" class="w-5 h-5 text-yellow-400"></i>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -197,7 +198,7 @@
             
             <div class="flex items-center justify-between bg-black/20 rounded-xl p-3">
                 <div class="flex items-center space-x-3">
-                    <p class="text-sm text-white font-medium w-16">Fri</p>
+                    <p class="text-sm text-white font-medium w-16">{% trans "Fri" %}</p>
                     <i data-lucide="sun" class="w-5 h-5 text-yellow-400"></i>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -214,7 +215,7 @@
             
             <div class="flex items-center justify-between bg-black/20 rounded-xl p-3">
                 <div class="flex items-center space-x-3">
-                    <p class="text-sm text-white font-medium w-16">Sat</p>
+                    <p class="text-sm text-white font-medium w-16">{% trans "Sat" %}</p>
                     <i data-lucide="cloud-sun" class="w-5 h-5 text-yellow-400/80"></i>
                 </div>
                 <div class="flex items-center space-x-4">

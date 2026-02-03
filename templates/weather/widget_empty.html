@@ -1,8 +1,9 @@
+{% load i18n %}
 <!-- Empty Weather Widget -->
 <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-xl p-6">
     <div class="text-center py-8">
         <i data-lucide="cloud-sun" class="w-12 h-12 text-mint-light/40 mx-auto mb-3"></i>
-        <p class="text-sm text-mint-light/60">No farm fields available</p>
-        <p class="text-xs text-mint-light/40 mt-2">Add a farm field to see weather data</p>
+        <p class="text-sm text-mint-light/60">{% trans "No weather data available" %}</p>
+        <p class="text-xs text-mint-light/40 mt-2">{% trans "Add a farm field to see weather data" %}</p>
     </div>
 </div>

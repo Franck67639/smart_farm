@@ -15,7 +15,7 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'full_name']
+    REQUIRED_FIELDS = ['full_name']
     
     def __str__(self):
         return self.email
@@ -289,3 +289,26 @@ class WeatherData(models.Model):
     
     def __str__(self):
         return f"Weather - {self.farm.farm_name} ({self.date})"
+
+
+# Custom Authentication Backend
+from django.contrib.auth.backends import BaseBackend
+
+class EmailBackend(BaseBackend):
+    """
+    Custom authentication backend that authenticates using email
+    """
+    def authenticate(self, request, email=None, password=None, **kwargs):
+        try:
+            user = User.objects.get(email=email)
+            if user.check_password(password):
+                return user
+        except User.DoesNotExist:
+            return None
+        return None
+
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return None

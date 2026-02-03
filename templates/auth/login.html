@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Login - SmartFarm{% endblock %}
+{% block title %}{% trans "Login" %} - SmartFarm{% endblock %}
 
 {% block content %}
 <div class="min-h-screen flex items-center justify-center px-4 py-8">
@@ -14,49 +15,66 @@
                     <i data-lucide="leaf" class="w-10 h-10 text-forest-deep"></i>
                 </div>
                 
-                <h1 class="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-                <p class="text-mint-light/80">Sign in to your SmartFarm account</p>
+                <!-- Back to Home Link -->
+                <div class="mb-4">
+                    <a href="{% url 'landing' %}" class="inline-flex items-center text-mint-light/60 hover:text-mint-light transition-colors duration-300">
+                        <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                        {% trans "Back to Home" %}
+                    </a>
+                </div>
+                
+                <h1 class="text-3xl font-bold text-white mb-2">{% trans "Welcome Back" %}</h1>
+                <p class="text-mint-light/80">{% trans "Sign in to your SmartFarm account" %}</p>
             </div>
             
             <!-- Login Form -->
             <form class="space-y-6" method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 
-                <!-- Username Field -->
+                <!-- Email Field -->
                 <div>
                     <label for="username" class="block text-sm font-medium text-mint-light/80 mb-2">
-                        Username or Email
+                        {% trans "Email Address" %}
                     </label>
-                    <div class="relative">
+                    <div class="relative group">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="user" class="w-5 h-5 text-mint-light/50"></i>
+                            <i data-lucide="mail" class="w-5 h-5 text-mint-light/50 group-focus-within:text-mint transition-colors"></i>
                         </div>
                         <input 
-                            type="text" 
+                            type="email" 
                             id="username"
                             name="username"
-                            placeholder="Enter your username"
+                            placeholder="{% trans 'Enter your email address' %}"
                             required
-                            class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                            autocomplete="email"
+                            class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent focus:bg-black/30 transition-all duration-300 group-hover:border-white/20">
                     </div>
                 </div>
                 
                 <!-- Password Field -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-mint-light/80 mb-2">
-                        Password
+                        {% trans "Password" %}
                     </label>
-                    <div class="relative">
+                    <div class="relative group">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="lock" class="w-5 h-5 text-mint-light/50"></i>
+                            <i data-lucide="lock" class="w-5 h-5 text-mint-light/50 group-focus-within:text-mint transition-colors"></i>
                         </div>
                         <input 
                             type="password" 
                             id="password"
                             name="password"
-                            placeholder="Enter your password"
+                            placeholder="{% trans 'Enter your password' %}"
                             required
-                            class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300">
+                            autocomplete="current-password"
+                            class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-12 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent focus:bg-black/30 transition-all duration-300 group-hover:border-white/20">
+                        <button
+                            type="button"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            onclick="togglePassword('password')"
+                        >
+                            <i data-lucide="eye" class="w-5 h-5 text-mint-light/50 hover:text-mint transition-colors cursor-pointer" id="password-eye"></i>
+                        </button>
                     </div>
                 </div>
                 
@@ -67,11 +85,11 @@
                             type="checkbox" 
                             name="remember"
                             class="w-4 h-4 text-mint bg-black/20 border-white/10 rounded focus:ring-mint">
-                        <span class="ml-2 text-sm text-mint-light/80">Remember me</span>
+                        <span class="ml-2 text-sm text-mint-light/80">{% trans "Remember me" %}</span>
                     </label>
                     
                     <a href="#" class="text-sm text-mint hover:text-mint-light transition-colors duration-300">
-                        Forgot password?
+                        {% trans "Forgot password?" %}
                     </a>
                 </div>
                 
@@ -83,8 +101,8 @@
                             <i data-lucide="alert-circle" class="w-4 h-4 text-white"></i>
                         </div>
                         <div>
-                            <span class="text-white font-medium">Login Failed</span>
-                            <p class="text-sm text-red-200">Please check your credentials and try again.</p>
+                            <span class="text-white font-medium">{% trans "Login Failed" %}</span>
+                            <p class="text-sm text-red-200">{% trans "Please check your credentials and try again." %}</p>
                         </div>
                     </div>
                 </div>
@@ -93,8 +111,11 @@
                 <!-- Submit Button -->
                 <button 
                     type="submit"
-                    class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep">
-                    Sign In
+                    id="login-submit-btn"
+                    class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2">
+                    <i data-lucide="log-in" class="w-5 h-5"></i>
+                    <span>{% trans "Sign In" %}</span>
+                    <div id="login-spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 </button>
             </form>
             <!-- Error Messages -->
@@ -122,7 +143,7 @@
                     <div class="w-full border-t border-white/10"></div>
                 </div>
                 <div class="relative flex justify-center text-sm">
-                    <span class="px-4 bg-transparent text-mint-light/60">Or continue with</span>
+                    <span class="px-4 bg-transparent text-mint-light/60">{% trans "Or continue with" %}</span>
                 </div>
             </div>
             
@@ -130,21 +151,21 @@
             <div class="grid grid-cols-2 gap-4">
                 <button class="flex items-center justify-center space-x-2 bg-black/20 border border-white/10 hover:bg-black/30 rounded-xl px-4 py-3 transition-all duration-300">
                     <i data-lucide="phone" class="w-5 h-5 text-mint"></i>
-                    <span class="text-white text-sm font-medium">Phone</span>
+                    <span class="text-white text-sm font-medium">{% trans "Phone" %}</span>
                 </button>
                 
                 <button class="flex items-center justify-center space-x-2 bg-black/20 border border-white/10 hover:bg-black/30 rounded-xl px-4 py-3 transition-all duration-300">
                     <i data-lucide="message-circle" class="w-5 h-5 text-mint"></i>
-                    <span class="text-white text-sm font-medium">WhatsApp</span>
+                    <span class="text-white text-sm font-medium">{% trans "WhatsApp" %}</span>
                 </button>
             </div>
             
             <!-- Sign Up Link -->
             <div class="text-center mt-8">
                 <p class="text-mint-light/80">
-                    Don't have an account? 
+                    {% trans "Don't have an account?" %} 
                     <a href="{% url 'register' %}" class="text-mint hover:text-mint-light font-medium transition-colors duration-300">
-                        Sign up for free
+                        {% trans "Sign up for free" %}
                     </a>
                 </p>
             </div>
@@ -152,22 +173,74 @@
         
         <!-- Trust Indicators -->
         <div class="mt-8 text-center">
-            <p class="text-sm text-mint-light/60 mb-4">Join 500+ farmers in Cameroon</p>
+            <p class="text-sm text-mint-light/60 mb-4">{% trans "Join 500+ farmers in Cameroon" %}</p>
             <div class="flex items-center justify-center space-x-6">
                 <div class="text-center">
                     <div class="text-2xl font-bold text-mint">500+</div>
-                    <div class="text-xs text-mint-light/60">Active Farms</div>
+                    <div class="text-xs text-mint-light/60">{% trans "Active Farms" %}</div>
                 </div>
                 <div class="text-center">
                     <div class="text-2xl font-bold text-mint">15%</div>
-                    <div class="text-xs text-mint-light/60">Yield Increase</div>
+                    <div class="text-xs text-mint-light/60">{% trans "Yield Increase" %}</div>
                 </div>
                 <div class="text-center">
                     <div class="text-2xl font-bold text-mint">98%</div>
-                    <div class="text-xs text-mint-light/60">Success Rate</div>
+                    <div class="text-xs text-mint-light/60">{% trans "Success Rate" %}</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    // Password toggle functionality
+    window.togglePassword = function(fieldId) {
+        const field = document.getElementById(fieldId);
+        const eyeIcon = document.getElementById(fieldId + '-eye');
+        
+        if (field.type === 'password') {
+            field.type = 'text';
+            eyeIcon.setAttribute('data-lucide', 'eye-off');
+        } else {
+            field.type = 'password';
+            eyeIcon.setAttribute('data-lucide', 'eye');
+        }
+        lucide.createIcons();
+    };
+    
+    // Form submission with loading state
+    const loginForm = document.querySelector('form[action="{% url "login" %}"]');
+    const submitBtn = document.getElementById('login-submit-btn');
+    const spinner = document.getElementById('login-spinner');
+    const btnText = submitBtn.querySelector('span');
+    const btnIcon = submitBtn.querySelector('i[data-lucide="log-in"]');
+    
+    loginForm.addEventListener('submit', function() {
+        // Show loading state
+        submitBtn.disabled = true;
+        spinner.classList.remove('hidden');
+        btnText.textContent = 'Signing in...';
+        btnIcon.style.display = 'none';
+    });
+    
+    // Email validation feedback
+    const emailField = document.getElementById('username');
+    emailField.addEventListener('blur', function() {
+        const email = this.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (email && !emailRegex.test(email)) {
+            this.classList.add('border-red-400');
+            this.classList.remove('border-white/10');
+        } else {
+            this.classList.remove('border-red-400');
+            this.classList.add('border-white/10');
+        }
+    });
+});
+</script>
 {% endblock %}

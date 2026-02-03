@@ -260,5 +260,548 @@ msgstr "Aucune carte de crédit requise • Annulez à tout moment • Accès co
 msgid "Data-driven agricultural intelligence platform for Cameroonian farmers."
 msgstr "Plateforme d'intelligence agricole basée sur les données pour les agriculteurs camerounais."
 
+msgid "Login"
+msgstr "Connexion"
+
+msgid "Welcome Back"
+msgstr "Bon Retour"
+
+msgid "Sign in to your SmartFarm account"
+msgstr "Connectez-vous à votre compte SmartFarm"
+
+msgid "Username or Email"
+msgstr "Nom d'utilisateur ou Email"
+
+msgid "Enter your username"
+msgstr "Entrez votre nom d'utilisateur"
+
+msgid "Email Address"
+msgstr "Adresse Email"
+
+msgid "Enter your email address"
+msgstr "Entrez votre adresse email"
+
+msgid "Invalid email or password."
+msgstr "Email ou mot de passe invalide."
+
+msgid "No account found with this email address."
+msgstr "Aucun compte trouvé avec cette adresse email."
+
+msgid "Incorrect password. Please try again."
+msgstr "Mot de passe incorrect. Veuillez réessayer."
+
+msgid "Welcome to SmartFarm - Onboarding"
+msgstr "Bienvenue sur SmartFarm - Intégration"
+
+msgid "Step"
+msgstr "Étape"
+
+msgid "of"
+msgstr "sur"
+
+msgid "Welcome to SmartFarm"
+msgstr "Bienvenue sur SmartFarm"
+
+msgid "Your premium maize farming companion for Cameroon's agricultural success"
+msgstr "Votre compagnon premium pour la culture du maïs pour le succès agricole du Cameroun"
+
+msgid "Smart Weather Insights"
+msgstr "Informations Météo Intelligentes"
+
+msgid "Real-time forecasts for optimal planting"
+msgstr "Prévisions en temps réel pour une plantation optimale"
+
+msgid "Location Intelligence"
+msgstr "Intelligence Localisée"
+
+msgid "Tailored advice for Cameroon regions"
+msgstr "Conseils adaptés aux régions du Cameroun"
+
+msgid "Yield Optimization"
+msgstr "Optimisation des Rendements"
+
+msgid "Data-driven recommendations"
+msgstr "Recommandations basées sur les données"
+
+msgid "Skip Tour"
+msgstr "Ignorer la Visite"
+
+msgid "Basic Farm Information"
+msgstr "Informations de Base de la Ferme"
+
+msgid "Tell us about your farm"
+msgstr "Parlez-nous de votre ferme"
+
+msgid "Farm Name"
+msgstr "Nom de la Ferme"
+
+msgid "Farm Type"
+msgstr "Type de Ferme"
+
+msgid "Smallholder"
+msgstr "Petit Exploitant"
+
+msgid "Commercial"
+msgstr "Commerciale"
+
+msgid "Subsistence"
+msgstr "Subsistance"
+
+msgid "Mixed"
+msgstr "Mixte"
+
+msgid "Farm Size Category"
+msgstr "Catégorie de Taille de Ferme"
+
+msgid "Less than 1 hectare"
+msgstr "Moins de 1 hectare"
+
+msgid "1-5 hectares"
+msgstr "1-5 hectares"
+
+msgid "5-10 hectares"
+msgstr "5-10 hectares"
+
+msgid "10-50 hectares"
+msgstr "10-50 hectares"
+
+msgid "More than 50 hectares"
+msgstr "Plus de 50 hectares"
+
+msgid "Primary Crop"
+msgstr "Culture Principale"
+
+msgid "Maize"
+msgstr "Maïs"
+
+msgid "Cassava"
+msgstr "Manioc"
+
+msgid "Beans"
+msgstr "Haricots"
+
+msgid "Rice"
+msgstr "Riz"
+
+msgid "Vegetables"
+msgstr "Légumes"
+
+msgid "Mixed Crops"
+msgstr "Cultures Mixtes"
+
+msgid "Other"
+msgstr "Autre"
+
+msgid "Years of Farming Experience"
+msgstr "Années d'Expérience Agricole"
+
+msgid "Maize Variety (Optional)"
+msgstr "Variété de Maïs (Optionnel)"
+
+msgid "Select a variety..."
+msgstr "Sélectionnez une variété..."
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "Farm Location"
+msgstr "Emplacement de la Ferme"
+
+msgid "Let us pinpoint your farm for accurate weather data"
+msgstr "Laissez-nous localiser votre ferme pour des données météos précises"
+
+msgid "Detect My Current Location"
+msgstr "Détecter Ma Position Actuelle"
+
+msgid "Detecting"
+msgstr "Détection"
+
+msgid "Location Detected!"
+msgstr "Position Détectée!"
+
+msgid "Latitude:"
+msgstr "Latitude :"
+
+msgid "Longitude:"
+msgstr "Longitude :"
+
+msgid "Address:"
+msgstr "Adresse :"
+
+msgid "Location Error"
+msgstr "Erreur de Localisation"
+
+msgid "Or enter your location manually:"
+msgstr "Ou entrez votre position manuellement :"
+
+msgid "Region"
+msgstr "Région"
+
+msgid "Select your region..."
+msgstr "Sélectionnez votre région..."
+
+msgid "Division/Department"
+msgstr "Division/Département"
+
+msgid "Subdivision/District"
+msgstr "Sous-division/Arrondissement"
+
+msgid "Village or Town"
+msgstr "Village ou Ville"
+
+msgid "Latitude (Optional)"
+msgstr "Latitude (Optionnel)"
+
+msgid "Longitude (Optional)"
+msgstr "Longitude (Optionnel)"
+
+msgid "Please enter your farm name"
+msgstr "Veuillez entrer le nom de votre ferme"
+
+msgid "Please select your farm type"
+msgstr "Veuillez sélectionner le type de votre ferme"
+
+msgid "Please select your farm size category"
+msgstr "Veuillez sélectionner la catégorie de taille de votre ferme"
+
+msgid "Please select your primary crop"
+msgstr "Veuillez sélectionner votre culture principale"
+
+msgid "Please enter valid farming years"
+msgstr "Veuillez entrer des années d'expérience agricole valides"
+
+msgid "Please select your region"
+msgstr "Veuillez sélectionner votre région"
+
+msgid "Please enter your village/town"
+msgstr "Veuillez entrer votre village/ville"
+
+msgid "Please select soil type"
+msgstr "Veuillez sélectionner le type de sol"
+
+msgid "Please select soil fertility level"
+msgstr "Veuillez sélectionner le niveau de fertilité du sol"
+
+msgid "Please select water source"
+msgstr "Veuillez sélectionner la source d'eau"
+
+msgid "Please select irrigation method"
+msgstr "Veuillez sélectionner la méthode d'irrigation"
+
+msgid "Please select labor source"
+msgstr "Veuillez sélectionner la source de main d'œuvre"
+
+msgid "Please select your experience level"
+msgstr "Veuillez sélectionner votre niveau d'expérience"
+
+msgid "Please describe your farming methods"
+msgstr "Veuillez décrire vos méthodes agricoles"
+
+msgid "Please enter your farming goals"
+msgstr "Veuillez entrer vos objectifs agricoles"
+
+msgid "Please enter your main challenges"
+msgstr "Veuillez entrer vos principaux défis"
+
+msgid "Please describe your market access"
+msgstr "Veuillez décrire votre accès au marché"
+
+msgid "Failed to save data: "
+msgstr "Échec de la sauvegarde des données : "
+
+msgid "Network error: Failed to save data"
+msgstr "Erreur réseau : Échec de la sauvegarde des données"
+
+msgid "Your Farm"
+msgstr "Votre Ferme"
+
+msgid "Location not set"
+msgstr "Lieu non défini"
+
+msgid "Farming"
+msgstr "Agriculture"
+
+msgid "Farm Size"
+msgstr "Taille de la Ferme"
+
+msgid "Not specified"
+msgstr "Non spécifié"
+
+msgid "Current Season"
+msgstr "Saison Actuelle"
+
+msgid "Early Season"
+msgstr "Début de Saison"
+
+msgid "March - May 2025"
+msgstr "Mars - Mai 2025"
+
+msgid "Selected"
+msgstr "Sélectionné"
+
+msgid "Maize Variety"
+msgstr "Variété de Maïs"
+
+msgid "Not selected"
+msgstr "Non sélectionné"
+
+msgid "Experience"
+msgstr "Expérience"
+
+msgid "years"
+msgstr "années"
+
+msgid "Farming experience"
+msgstr "Expérience agricole"
+
+msgid "Beginner"
+msgstr "Débutant"
+
+msgid "Soil Type"
+msgstr "Type de Sol"
+
+msgid "Not tested"
+msgstr "Non testé"
+
+msgid "Medium"
+msgstr "Moyen"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Quick Farming Actions"
+msgstr "Actions Agricoles Rapides"
+
+msgid "Irrigation"
+msgstr "Irrigation"
+
+msgid "Fertilize"
+msgstr "Fertiliser"
+
+msgid "Pest Control"
+msgstr "Lutte Antiparasitaire"
+
+msgid "Log Activity"
+msgstr "Enregistrer l'Activité"
+
+msgid "Maize Farming Tips"
+msgstr "Conseils de Culture du Maïs"
+
+msgid "Optimal Planting Time"
+msgstr "Période de Plantation Optimale"
+
+msgid "Based on current weather patterns, plant within the next 7-10 days for best yield"
+msgstr "Basé sur les conditions météo actuelles, plante dans les 7-10 prochains jours pour un meilleur rendement"
+
+msgid "Pest Alert"
+msgstr "Alerte Parasites"
+
+msgid "High risk of armyworms in your region. Monitor crops closely."
+msgstr "Risque élevé de chenilles légionnaires dans votre région. Surveillez les cultures de près."
+
+msgid "Fertilizer Recommendation"
+msgstr "Recommandation d'Engrais"
+
+msgid "Your soil pH suggests adding nitrogen-rich fertilizer in 2 weeks."
+msgstr "Le pH de votre sol suggère d'ajouter un engrais riche en azote dans 2 semaines."
+
+msgid "Equipment Status"
+msgstr "État du Matériel"
+
+msgid "No equipment registered"
+msgstr "Aucun matériel enregistré"
+
+msgid "Manage Equipment"
+msgstr "Gérer le Matériel"
+
+msgid "Labor Information"
+msgstr "Informations sur la Main d'Œuvre"
+
+msgid "Labor Source"
+msgstr "Source de Main d'Œuvre"
+
+msgid "Workers"
+msgstr "Travailleurs"
+
+msgid "Farming Methods"
+msgstr "Méthodes Agricoles"
+
+msgid "Organic"
+msgstr "Biologique"
+
+msgid "Conventional"
+msgstr "Conventionnel"
+
+msgid "This Season"
+msgstr "Cette Saison"
+
+msgid "Expected Yield"
+msgstr "Rendement Attendu"
+
+msgid "TBD"
+msgstr "À Déterminer"
+
+msgid "tons/ha"
+msgstr "tonnes/ha"
+
+msgid "Market Access"
+msgstr "Accès au Marché"
+
+msgid "View Detailed Reports"
+msgstr "Voir les Rapports Détaillés"
+
+msgid "Weather Dashboard"
+msgstr "Tableau de Bord Météo"
+
+msgid "Last updated"
+msgstr "Dernière mise à jour"
+
+msgid "Partly Cloudy"
+msgstr "Partiellement Nuageux"
+
+msgid "Feels like"
+msgstr "Ressenti"
+
+msgid "Wind Speed"
+msgstr "Vitesse du Vent"
+
+msgid "Humidity"
+msgstr "Humidité"
+
+msgid "UV Index"
+msgstr "Indice UV"
+
+msgid "Rain Chance"
+msgstr "Chance de Pluie"
+
+msgid "Hourly Forecast"
+msgstr "Prévisions Horaire"
+
+msgid "Now"
+msgstr "Maintenant"
+
+msgid "7-Day Forecast"
+msgstr "Prévisions sur 7 Jours"
+
+msgid "Today"
+msgstr "Aujourd'hui"
+
+msgid "Mon"
+msgstr "Lun"
+
+msgid "Tue"
+msgstr "Mar"
+
+msgid "Wed"
+msgstr "Mer"
+
+msgid "Thu"
+msgstr "Jeu"
+
+msgid "Fri"
+msgstr "Ven"
+
+msgid "Sat"
+msgstr "Sam"
+
+msgid "No weather data available"
+msgstr "Aucune donnée météo disponible"
+
+msgid "Add a farm field to see weather data"
+msgstr "Ajoutez un champ agricole pour voir les données météo"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Enter your password"
+msgstr "Entrez votre mot de passe"
+
+msgid "Remember me"
+msgstr "Se souvenir de moi"
+
+msgid "Forgot password?"
+msgstr "Mot de passe oublié?"
+
+msgid "Login Failed"
+msgstr "Échec de Connexion"
+
+msgid "Please check your credentials and try again."
+msgstr "Veuillez vérifier vos identifiants et réessayer."
+
+msgid "Or continue with"
+msgstr "Ou continuer avec"
+
+msgid "Phone"
+msgstr "Téléphone"
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "Don't have an account?"
+msgstr "Vous n'avez pas de compte?"
+
+msgid "Sign up for free"
+msgstr "Inscrivez-vous gratuitement"
+
+msgid "Register"
+msgstr "S'inscrire"
+
+msgid "Create Account"
+msgstr "Créer un Compte"
+
+msgid "Join SmartFarm and start your journey to better farming"
+msgstr "Rejoignez SmartFarm et commencez votre voyage vers une meilleure agriculture"
+
+msgid "Full Name"
+msgstr "Nom Complet"
+
+msgid "Your name"
+msgstr "Votre nom"
+
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgid "Choose username"
+msgstr "Choisir un nom d'utilisateur"
+
+msgid "Phone Number"
+msgstr "Numéro de Téléphone"
+
+msgid "Confirm Password"
+msgstr "Confirmer le Mot de passe"
+
+msgid "Create password"
+msgstr "Créer un mot de passe"
+
+msgid "Confirm password"
+msgstr "Confirmer le mot de passe"
+
+msgid "I agree to the"
+msgstr "J'accepte les"
+
+msgid "and"
+msgstr "et"
+
+msgid "Registration Issue"
+msgstr "Problème d'Inscription"
+
+msgid "Please fix the following:"
+msgstr "Veuillez corriger ce qui suit :"
+
+msgid "Or register with"
+msgstr "Ou s'inscrire avec"
+
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte?"
+
+msgid "Sign in here"
+msgstr "Connectez-vous ici"
+
+msgid "Back to Home"
+msgstr "Retour à l'Accueil"
+
 msgid "© 2024 SmartFarm Cameroon. All rights reserved."
 msgstr "© 2024 SmartFarm Cameroun. Tous droits réservés."

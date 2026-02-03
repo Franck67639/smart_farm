@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     'weather.apps.WeatherConfig',
 ]
 
+# Custom User Model
+AUTH_USER_MODEL = 'smart_farm.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -198,3 +201,8 @@ LOGGING = {
         },
     },
 }
+
+# Custom authentication backend
+AUTHENTICATION_BACKENDS = [
+    'smart_farm.models.EmailBackend',
+]

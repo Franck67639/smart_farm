@@ -15,10 +15,6 @@ from datetime import datetime
 
 from .models import User, FarmDetails, MaizeVariety
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-
 def landing_view(request):
     """Landing page for SmartFarm Cameroon"""
     # If user is already authenticated, redirect to dashboard
@@ -28,29 +24,32 @@ def landing_view(request):
     return render(request, 'landing.html')
 
 def login_view(request):
-    """Handle login using either email or username"""
+    """Handle login using email"""
 
     if request.user.is_authenticated:
         return redirect('dashboard')
 
     if request.method == 'POST':
-        identifier = request.POST.get('username')  # could be username or email
+        email = request.POST.get('username')  # form field name stays the same but we treat it as email
         password = request.POST.get('password')
         remember = request.POST.get('remember')
 
         user = None
 
-        # Try to authenticate by email first
+        # Check if email exists first
         try:
-            user_obj = User.objects.get(email=identifier)
-            user = authenticate(request, email=user_obj.email, password=password)
-        except User.DoesNotExist:
-            # If no email match, try username
-            try:
-                user_obj = User.objects.get(username=identifier)
+            user_obj = User.objects.get(email=email)
+            # Email exists, now check password
+            if user_obj.check_password(password):
                 user = authenticate(request, email=user_obj.email, password=password)
-            except User.DoesNotExist:
-                user = None
+            else:
+                # Email exists but password is wrong
+                messages.error(request, 'Incorrect password. Please try again.')
+                return render(request, 'auth/login.html')
+        except User.DoesNotExist:
+            # Email doesn't exist
+            messages.error(request, 'No account found with this email address.')
+            return render(request, 'auth/login.html')
 
         if user is not None:
             login(request, user)
@@ -61,8 +60,6 @@ def login_view(request):
 
             messages.success(request, f'Welcome back, {user.full_name}!')
             return redirect('dashboard')
-        else:
-            messages.error(request, 'Invalid email/username or password.')
 
     return render(request, 'auth/login.html')
 
@@ -74,23 +71,12 @@ def validate_registration_data(request):
     errors = {}
     
     # Get form data
-    username = request.POST.get('username', '').strip()
     email = request.POST.get('email', '').strip()
     full_name = request.POST.get('full_name', '').strip()
     phone = request.POST.get('phone', '').strip()
     password = request.POST.get('password', '')
     confirm_password = request.POST.get('confirm_password', '')
     terms = request.POST.get('terms')
-    
-    # Username validation
-    if not username:
-        errors['username'] = 'Username is required'
-    elif len(username) < 3:
-        errors['username'] = 'Username must be at least 3 characters long'
-    elif not re.match(r'^[a-zA-Z0-9_]+$', username):
-        errors['username'] = 'Username can only contain letters, numbers, and underscores'
-    elif User.objects.filter(username__iexact=username).exists():
-        errors['username'] = 'Username already exists'
     
     # Email validation
     if not email:
@@ -143,9 +129,10 @@ def create_user_account(request):
     """
     try:
         with transaction.atomic():
+            email = request.POST.get('email').strip()
             user = User.objects.create_user(
-                username=request.POST.get('username').strip(),
-                email=request.POST.get('email').strip(),
+                username=email,  # Django still expects username parameter
+                email=email,
                 password=request.POST.get('password'),
                 full_name=request.POST.get('full_name').strip(),
                 phone=request.POST.get('phone').strip()

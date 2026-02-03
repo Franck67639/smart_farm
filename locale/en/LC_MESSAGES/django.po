@@ -239,5 +239,560 @@ msgstr "Terms of Service"
 msgid "Cookie Policy"
 msgstr "Cookie Policy"
 
+msgid "Welcome Back"
+msgstr "Welcome Back"
+
+msgid "Sign in to your SmartFarm account"
+msgstr "Sign in to your SmartFarm account"
+
+msgid "Username or Email"
+msgstr "Username or Email"
+
+msgid "Enter your username"
+msgstr "Enter your username"
+
+msgid "Email Address"
+msgstr "Email Address"
+
+msgid "Enter your email address"
+msgstr "Enter your email address"
+
+msgid "Invalid email or password."
+msgstr "Invalid email or password."
+
+msgid "No account found with this email address."
+msgstr "No account found with this email address."
+
+msgid "Incorrect password. Please try again."
+msgstr "Incorrect password. Please try again."
+
+msgid "Welcome to SmartFarm - Onboarding"
+msgstr "Welcome to SmartFarm - Onboarding"
+
+msgid "Step"
+msgstr "Step"
+
+msgid "of"
+msgstr "of"
+
+msgid "Welcome to SmartFarm"
+msgstr "Welcome to SmartFarm"
+
+msgid "Your premium maize farming companion for Cameroon's agricultural success"
+msgstr "Your premium maize farming companion for Cameroon's agricultural success"
+
+msgid "Smart Weather Insights"
+msgstr "Smart Weather Insights"
+
+msgid "Real-time forecasts for optimal planting"
+msgstr "Real-time forecasts for optimal planting"
+
+msgid "Location Intelligence"
+msgstr "Location Intelligence"
+
+msgid "Tailored advice for Cameroon regions"
+msgstr "Tailored advice for Cameroon regions"
+
+msgid "Yield Optimization"
+msgstr "Yield Optimization"
+
+msgid "Data-driven recommendations"
+msgstr "Data-driven recommendations"
+
+msgid "Skip Tour"
+msgstr "Skip Tour"
+
+msgid "Get Started"
+msgstr "Get Started"
+
+msgid "Basic Farm Information"
+msgstr "Basic Farm Information"
+
+msgid "Tell us about your farm"
+msgstr "Tell us about your farm"
+
+msgid "Farm Name"
+msgstr "Farm Name"
+
+msgid "Farm Type"
+msgstr "Farm Type"
+
+msgid "Smallholder"
+msgstr "Smallholder"
+
+msgid "Commercial"
+msgstr "Commercial"
+
+msgid "Subsistence"
+msgstr "Subsistence"
+
+msgid "Mixed"
+msgstr "Mixed"
+
+msgid "Farm Size Category"
+msgstr "Farm Size Category"
+
+msgid "Less than 1 hectare"
+msgstr "Less than 1 hectare"
+
+msgid "1-5 hectares"
+msgstr "1-5 hectares"
+
+msgid "5-10 hectares"
+msgstr "5-10 hectares"
+
+msgid "10-50 hectares"
+msgstr "10-50 hectares"
+
+msgid "More than 50 hectares"
+msgstr "More than 50 hectares"
+
+msgid "Primary Crop"
+msgstr "Primary Crop"
+
+msgid "Maize"
+msgstr "Maize"
+
+msgid "Cassava"
+msgstr "Cassava"
+
+msgid "Beans"
+msgstr "Beans"
+
+msgid "Rice"
+msgstr "Rice"
+
+msgid "Vegetables"
+msgstr "Vegetables"
+
+msgid "Mixed Crops"
+msgstr "Mixed Crops"
+
+msgid "Other"
+msgstr "Other"
+
+msgid "Years of Farming Experience"
+msgstr "Years of Farming Experience"
+
+msgid "Maize Variety (Optional)"
+msgstr "Maize Variety (Optional)"
+
+msgid "Select a variety..."
+msgstr "Select a variety..."
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Next"
+msgstr "Next"
+
+msgid "Farm Location"
+msgstr "Farm Location"
+
+msgid "Let us pinpoint your farm for accurate weather data"
+msgstr "Let us pinpoint your farm for accurate weather data"
+
+msgid "Detect My Current Location"
+msgstr "Detect My Current Location"
+
+msgid "Detecting"
+msgstr "Detecting"
+
+msgid "Location Detected!"
+msgstr "Location Detected!"
+
+msgid "Latitude:"
+msgstr "Latitude:"
+
+msgid "Longitude:"
+msgstr "Longitude:"
+
+msgid "Address:"
+msgstr "Address:"
+
+msgid "Location Error"
+msgstr "Location Error"
+
+msgid "Or enter your location manually:"
+msgstr "Or enter your location manually:"
+
+msgid "Region"
+msgstr "Region"
+
+msgid "Select your region..."
+msgstr "Select your region..."
+
+msgid "Division/Department"
+msgstr "Division/Department"
+
+msgid "Subdivision/District"
+msgstr "Subdivision/District"
+
+msgid "Village or Town"
+msgstr "Village or Town"
+
+msgid "Latitude (Optional)"
+msgstr "Latitude (Optional)"
+
+msgid "Longitude (Optional)"
+msgstr "Longitude (Optional)"
+
+msgid "Please enter your farm name"
+msgstr "Please enter your farm name"
+
+msgid "Please select your farm type"
+msgstr "Please select your farm type"
+
+msgid "Please select your farm size category"
+msgstr "Please select your farm size category"
+
+msgid "Please select your primary crop"
+msgstr "Please select your primary crop"
+
+msgid "Please enter valid farming years"
+msgstr "Please enter valid farming years"
+
+msgid "Please select your region"
+msgstr "Please select your region"
+
+msgid "Please enter your village/town"
+msgstr "Please enter your village/town"
+
+msgid "Please select soil type"
+msgstr "Please select soil type"
+
+msgid "Please select soil fertility level"
+msgstr "Please select soil fertility level"
+
+msgid "Please select water source"
+msgstr "Please select water source"
+
+msgid "Please select irrigation method"
+msgstr "Please select irrigation method"
+
+msgid "Please select labor source"
+msgstr "Please select labor source"
+
+msgid "Please select your experience level"
+msgstr "Please select your experience level"
+
+msgid "Please describe your farming methods"
+msgstr "Please describe your farming methods"
+
+msgid "Please enter your farming goals"
+msgstr "Please enter your farming goals"
+
+msgid "Please enter your main challenges"
+msgstr "Please enter your main challenges"
+
+msgid "Please describe your market access"
+msgstr "Please describe your market access"
+
+msgid "Failed to save data: "
+msgstr "Failed to save data: "
+
+msgid "Network error: Failed to save data"
+msgstr "Network error: Failed to save data"
+
+msgid "Your Farm"
+msgstr "Your Farm"
+
+msgid "Location not set"
+msgstr "Location not set"
+
+msgid "Cameroon"
+msgstr "Cameroon"
+
+msgid "Farming"
+msgstr "Farming"
+
+msgid "Farm Size"
+msgstr "Farm Size"
+
+msgid "Not specified"
+msgstr "Not specified"
+
+msgid "Current Season"
+msgstr "Current Season"
+
+msgid "Early Season"
+msgstr "Early Season"
+
+msgid "March - May 2025"
+msgstr "March - May 2025"
+
+msgid "Selected"
+msgstr "Selected"
+
+msgid "Maize Variety"
+msgstr "Maize Variety"
+
+msgid "Not selected"
+msgstr "Not selected"
+
+msgid "Experience"
+msgstr "Experience"
+
+msgid "years"
+msgstr "years"
+
+msgid "Farming experience"
+msgstr "Farming experience"
+
+msgid "Beginner"
+msgstr "Beginner"
+
+msgid "Soil Type"
+msgstr "Soil Type"
+
+msgid "Not tested"
+msgstr "Not tested"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "Quick Farming Actions"
+msgstr "Quick Farming Actions"
+
+msgid "Irrigation"
+msgstr "Irrigation"
+
+msgid "Fertilize"
+msgstr "Fertilize"
+
+msgid "Pest Control"
+msgstr "Pest Control"
+
+msgid "Log Activity"
+msgstr "Log Activity"
+
+msgid "Maize Farming Tips"
+msgstr "Maize Farming Tips"
+
+msgid "Optimal Planting Time"
+msgstr "Optimal Planting Time"
+
+msgid "Based on current weather patterns, plant within the next 7-10 days for best yield"
+msgstr "Based on current weather patterns, plant within the next 7-10 days for best yield"
+
+msgid "Pest Alert"
+msgstr "Pest Alert"
+
+msgid "High risk of armyworms in your region. Monitor crops closely."
+msgstr "High risk of armyworms in your region. Monitor crops closely."
+
+msgid "Fertilizer Recommendation"
+msgstr "Fertilizer Recommendation"
+
+msgid "Your soil pH suggests adding nitrogen-rich fertilizer in 2 weeks."
+msgstr "Your soil pH suggests adding nitrogen-rich fertilizer in 2 weeks."
+
+msgid "Equipment Status"
+msgstr "Equipment Status"
+
+msgid "No equipment registered"
+msgstr "No equipment registered"
+
+msgid "Manage Equipment"
+msgstr "Manage Equipment"
+
+msgid "Labor Information"
+msgstr "Labor Information"
+
+msgid "Labor Source"
+msgstr "Labor Source"
+
+msgid "Workers"
+msgstr "Workers"
+
+msgid "Farming Methods"
+msgstr "Farming Methods"
+
+msgid "Organic"
+msgstr "Organic"
+
+msgid "Conventional"
+msgstr "Conventional"
+
+msgid "This Season"
+msgstr "This Season"
+
+msgid "Expected Yield"
+msgstr "Expected Yield"
+
+msgid "TBD"
+msgstr "TBD"
+
+msgid "tons/ha"
+msgstr "tons/ha"
+
+msgid "Market Access"
+msgstr "Market Access"
+
+msgid "View Detailed Reports"
+msgstr "View Detailed Reports"
+
+msgid "Weather Dashboard"
+msgstr "Weather Dashboard"
+
+msgid "Last updated"
+msgstr "Last updated"
+
+msgid "Partly Cloudy"
+msgstr "Partly Cloudy"
+
+msgid "Feels like"
+msgstr "Feels like"
+
+msgid "Wind Speed"
+msgstr "Wind Speed"
+
+msgid "Humidity"
+msgstr "Humidity"
+
+msgid "UV Index"
+msgstr "UV Index"
+
+msgid "Rain Chance"
+msgstr "Rain Chance"
+
+msgid "Hourly Forecast"
+msgstr "Hourly Forecast"
+
+msgid "Now"
+msgstr "Now"
+
+msgid "7-Day Forecast"
+msgstr "7-Day Forecast"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "Mon"
+msgstr "Mon"
+
+msgid "Tue"
+msgstr "Tue"
+
+msgid "Wed"
+msgstr "Wed"
+
+msgid "Thu"
+msgstr "Thu"
+
+msgid "Fri"
+msgstr "Fri"
+
+msgid "Sat"
+msgstr "Sat"
+
+msgid "No weather data available"
+msgstr "No weather data available"
+
+msgid "Add a farm field to see weather data"
+msgstr "Add a farm field to see weather data"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Enter your password"
+msgstr "Enter your password"
+
+msgid "Remember me"
+msgstr "Remember me"
+
+msgid "Forgot password?"
+msgstr "Forgot password?"
+
+msgid "Login Failed"
+msgstr "Login Failed"
+
+msgid "Please check your credentials and try again."
+msgstr "Please check your credentials and try again."
+
+msgid "Sign In"
+msgstr "Sign In"
+
+msgid "Or continue with"
+msgstr "Or continue with"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "Don't have an account?"
+msgstr "Don't have an account?"
+
+msgid "Sign up for free"
+msgstr "Sign up for free"
+
+msgid "Create Account"
+msgstr "Create Account"
+
+msgid "Join SmartFarm and start your journey to better farming"
+msgstr "Join SmartFarm and start your journey to better farming"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "Your name"
+msgstr "Your name"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Choose username"
+msgstr "Choose username"
+
+msgid "Phone Number"
+msgstr "Phone Number"
+
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+msgid "Create password"
+msgstr "Create password"
+
+msgid "Confirm password"
+msgstr "Confirm password"
+
+msgid "I agree to the"
+msgstr "I agree to the"
+
+msgid "and"
+msgstr "and"
+
+msgid "Registration Issue"
+msgstr "Registration Issue"
+
+msgid "Please fix the following:"
+msgstr "Please fix the following:"
+
+msgid "Or register with"
+msgstr "Or register with"
+
+msgid "Already have an account?"
+msgstr "Already have an account?"
+
+msgid "Sign in here"
+msgstr "Sign in here"
+
+msgid "Back to Home"
+msgstr "Back to Home"
+
+msgid "Methodology"
+msgstr "Methodology"
+
+msgid "ROI Calculator"
+msgstr "ROI Calculator"
+
+msgid "Validation"
+msgstr "Validation"
+
 msgid "© 2024 SmartFarm Cameroon. All rights reserved."
 msgstr "© 2024 SmartFarm Cameroon. All rights reserved."

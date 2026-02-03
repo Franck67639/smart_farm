@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block title %}Register - SmartFarm{% endblock %} 
+{% extends "base.html" %} 
+{% load i18n %}
+{% block title %}{% trans "Register" %} - SmartFarm{% endblock %} 
 {%block content %}
 <div class="min-h-screen flex items-center justify-center px-4 py-8">
   <div class="w-full max-w-2xl">
@@ -15,9 +17,17 @@
           <i data-lucide="leaf" class="w-10 h-10 text-forest-deep"></i>
         </div>
 
-        <h2 class="text-2xl font-bold text-white mb-2">Create Account</h2>
+        <!-- Back to Home Link -->
+        <div class="mb-4">
+          <a href="{% url 'landing' %}" class="inline-flex items-center text-mint-light/60 hover:text-mint-light transition-colors duration-300">
+            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+            {% trans "Back to Home" %}
+          </a>
+        </div>
+
+        <h2 class="text-2xl font-bold text-white mb-2">{% trans "Create Account" %}</h2>
         <p class="text-mint-light/80 mb-6">
-          Join SmartFarm and start your journey to better farming
+          {% trans "Join SmartFarm and start your journey to better farming" %}
         </p>
       </div>
 
@@ -33,66 +43,39 @@
               for="full_name"
               class="block text-sm font-medium text-mint-light/80 mb-2"
             >
-              Full Name
+              {% trans "Full Name" %}
             </label>
-            <div class="relative">
+            <div class="relative group">
               <div
                 class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
               >
-                <i data-lucide="user" class="w-5 h-5 text-mint-light/50"></i>
+                <i data-lucide="user" class="w-5 h-5 text-mint-light/50 group-focus-within:text-mint transition-colors"></i>
               </div>
               <input
                 type="text"
                 id="full_name"
                 name="full_name"
-                placeholder="Your name"
+                placeholder="{% trans 'Your name' %}"
                 required
-                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+                autocomplete="name"
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent focus:bg-black/30 transition-all duration-300 group-hover:border-white/20"
               />
             </div>
           </div>
 
-          <!-- Username -->
-          <div>
-            <label
-              for="username"
-              class="block text-sm font-medium text-mint-light/80 mb-2"
-            >
-              Username
-            </label>
-            <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-              >
-                <i data-lucide="at-sign" class="w-5 h-5 text-mint-light/50"></i>
-              </div>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Choose username"
-                required
-                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Email and Phone in Two Columns -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Email -->
           <div>
             <label
               for="email"
               class="block text-sm font-medium text-mint-light/80 mb-2"
             >
-              Email Address
+              {% trans "Email Address" %}
             </label>
-            <div class="relative">
+            <div class="relative group">
               <div
                 class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
               >
-                <i data-lucide="mail" class="w-5 h-5 text-mint-light/50"></i>
+                <i data-lucide="mail" class="w-5 h-5 text-mint-light/50 group-focus-within:text-mint transition-colors"></i>
               </div>
               <input
                 type="email"
@@ -100,34 +83,36 @@
                 name="email"
                 placeholder="your@email.com"
                 required
-                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+                autocomplete="email"
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent focus:bg-black/30 transition-all duration-300 group-hover:border-white/20"
               />
             </div>
           </div>
+        </div>
 
-          <!-- Phone Number -->
-          <div>
-            <label
-              for="phone"
-              class="block text-sm font-medium text-mint-light/80 mb-2"
+        <!-- Phone Number - Full Width -->
+        <div>
+          <label
+            for="phone"
+            class="block text-sm font-medium text-mint-light/80 mb-2"
+          >
+            {% trans "Phone Number" %}
+          </label>
+          <div class="relative group">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
             >
-              Phone Number
-            </label>
-            <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-              >
-                <i data-lucide="phone" class="w-5 h-5 text-mint-light/50"></i>
-              </div>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="+237 XXX XXX XXX"
-                required
-                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
-              />
+              <i data-lucide="phone" class="w-5 h-5 text-mint-light/50 group-focus-within:text-mint transition-colors"></i>
             </div>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="+237 XXX XXX XXX"
+              required
+              autocomplete="tel"
+              class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent focus:bg-black/30 transition-all duration-300 group-hover:border-white/20"
+            />
           </div>
         </div>
 
@@ -139,22 +124,30 @@
               for="password"
               class="block text-sm font-medium text-mint-light/80 mb-2"
             >
-              Password
+              {% trans "Password" %}
             </label>
-            <div class="relative">
+            <div class="relative group">
               <div
                 class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
               >
-                <i data-lucide="lock" class="w-5 h-5 text-mint-light/50"></i>
+                <i data-lucide="lock" class="w-5 h-5 text-mint-light/50 group-focus-within:text-mint transition-colors"></i>
               </div>
               <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Create password"
+                placeholder="{% trans 'Create password' %}"
                 required
-                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+                autocomplete="new-password"
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-12 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent focus:bg-black/30 transition-all duration-300 group-hover:border-white/20"
               />
+              <button
+                type="button"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                onclick="togglePassword('password')"
+              >
+                <i data-lucide="eye" class="w-5 h-5 text-mint-light/50 hover:text-mint transition-colors cursor-pointer" id="password-eye"></i>
+              </button>
             </div>
           </div>
 
@@ -164,22 +157,30 @@
               for="confirm_password"
               class="block text-sm font-medium text-mint-light/80 mb-2"
             >
-              Confirm Password
+              {% trans "Confirm Password" %}
             </label>
-            <div class="relative">
+            <div class="relative group">
               <div
                 class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
               >
-                <i data-lucide="lock" class="w-5 h-5 text-mint-light/50"></i>
+                <i data-lucide="lock" class="w-5 h-5 text-mint-light/50 group-focus-within:text-mint transition-colors"></i>
               </div>
               <input
                 type="password"
                 id="confirm_password"
                 name="confirm_password"
-                placeholder="Confirm password"
+                placeholder="{% trans 'Confirm password' %}"
                 required
-                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent transition-all duration-300"
+                autocomplete="new-password"
+                class="w-full bg-black/20 border border-white/10 rounded-xl pl-10 pr-12 py-3 text-white placeholder-mint-light/50 focus:ring-2 focus:ring-mint focus:border-transparent focus:bg-black/30 transition-all duration-300 group-hover:border-white/20"
               />
+              <button
+                type="button"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                onclick="togglePassword('confirm_password')"
+              >
+                <i data-lucide="eye" class="w-5 h-5 text-mint-light/50 hover:text-mint transition-colors cursor-pointer" id="confirm_password-eye"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -194,17 +195,17 @@
             class="w-4 h-4 text-mint bg-black/20 border-white/10 rounded focus:ring-mint mt-1"
           />
           <label for="terms" class="ml-3 text-sm text-mint-light/80">
-            I agree to the
+            {% trans "I agree to the" %}
             <a
               href="#"
               class="text-mint hover:text-mint-light transition-colors duration-300"
-              >Terms of Service</a
+              >{% trans "Terms of Service" %}</a
             >
-            and
+            {% trans "and" %}
             <a
               href="#"
               class="text-mint hover:text-mint-light transition-colors duration-300"
-              >Privacy Policy</a
+              >{% trans "Privacy Policy" %}</a
             >
           </label>
         </div>
@@ -220,7 +221,7 @@
                   <i data-lucide="alert-circle" class="w-4 h-4 text-white"></i>
                 </div>
                 <div>
-                  <span class="text-white font-medium">Registration Issue</span>
+                  <span class="text-white font-medium">{% trans "Registration Issue" %}</span>
                   <p class="text-sm text-red-200">{{ message }}</p>
                 </div>
               </div>
@@ -238,7 +239,7 @@
                 <i data-lucide="alert-triangle" class="w-4 h-4 text-white"></i>
               </div>
               <div>
-                <span class="text-white font-medium">Please fix the following:</span>
+                <span class="text-white font-medium">{% trans "Please fix the following:" %}</span>
                 <ul id="error-list" class="text-sm text-yellow-200 mt-2 space-y-1">
                 </ul>
               </div>
@@ -249,9 +250,12 @@
         <!-- Submit Button -->
         <button
           type="submit"
-          class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep"
+          id="register-submit-btn"
+          class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-6 py-3 font-medium transition-all duration-300 focus:ring-2 focus:ring-mint focus:ring-offset-2 focus:ring-offset-forest-deep transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2"
         >
-          Create Account
+          <i data-lucide="user-plus" class="w-5 h-5"></i>
+          <span>{% trans "Create Account" %}</span>
+          <div id="register-spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
         </button>
       </form>
 
@@ -262,7 +266,7 @@
         </div>
         <div class="relative flex justify-center text-sm">
           <span class="px-4 bg-transparent text-mint-light/60"
-            >Or register with</span
+            >{% trans "Or register with" %}</span
           >
         </div>
       </div>
@@ -273,26 +277,26 @@
           class="flex items-center justify-center space-x-2 bg-black/20 border border-white/10 hover:bg-black/30 rounded-xl px-4 py-3 transition-all duration-300"
         >
           <i data-lucide="phone" class="w-5 h-5 text-mint"></i>
-          <span class="text-white text-sm font-medium">Phone</span>
+          <span class="text-white text-sm font-medium">{% trans "Phone" %}</span>
         </button>
 
         <button
           class="flex items-center justify-center space-x-2 bg-black/20 border border-white/10 hover:bg-black/30 rounded-xl px-4 py-3 transition-all duration-300"
         >
           <i data-lucide="message-circle" class="w-5 h-5 text-mint"></i>
-          <span class="text-white text-sm font-medium">WhatsApp</span>
+          <span class="text-white text-sm font-medium">{% trans "WhatsApp" %}</span>
         </button>
       </div>
 
       <!-- Login Link -->
       <div class="text-center mt-8">
         <p class="text-mint-light/80">
-          Already have an account?
+          {% trans "Already have an account?" %}
           <a
             href="{% url 'login' %}"
             class="text-mint hover:text-mint-light font-medium transition-colors duration-300"
           >
-            Sign in here
+            {% trans "Sign in here" %}
           </a>
         </p>
       </div>
@@ -301,20 +305,20 @@
     <!-- Trust Indicators -->
     <div class="mt-8 text-center">
       <p class="text-sm text-mint-light/60 mb-4">
-        Join 500+ farmers in Cameroon
+        {% trans "Join 500+ farmers in Cameroon" %}
       </p>
       <div class="flex items-center justify-center space-x-6">
         <div class="text-center">
           <div class="text-2xl font-bold text-mint">500+</div>
-          <div class="text-xs text-mint-light/60">Active Farms</div>
+          <div class="text-xs text-mint-light/60">{% trans "Active Farms" %}</div>
         </div>
         <div class="text-center">
           <div class="text-2xl font-bold text-mint">15%</div>
-          <div class="text-xs text-mint-light/60">Yield Increase</div>
+          <div class="text-xs text-mint-light/60">{% trans "Yield Increase" %}</div>
         </div>
         <div class="text-center">
           <div class="text-2xl font-bold text-mint">98%</div>
-          <div class="text-xs text-mint-light/60">Success Rate</div>
+          <div class="text-xs text-mint-light/60">{% trans "Success Rate" %}</div>
         </div>
       </div>
     </div>
@@ -327,14 +331,91 @@ document.addEventListener('DOMContentLoaded', function() {
   const fieldErrors = document.getElementById('field-errors');
   const errorList = document.getElementById('error-list');
   
+  // Password toggle functionality
+  window.togglePassword = function(fieldId) {
+    const field = document.getElementById(fieldId);
+    const eyeIcon = document.getElementById(fieldId + '-eye');
+    
+    if (field.type === 'password') {
+      field.type = 'text';
+      eyeIcon.setAttribute('data-lucide', 'eye-off');
+    } else {
+      field.type = 'password';
+      eyeIcon.setAttribute('data-lucide', 'eye');
+    }
+    lucide.createIcons();
+  };
+  
+  // Form submission with loading state
+  const submitBtn = document.getElementById('register-submit-btn');
+  const spinner = document.getElementById('register-spinner');
+  const btnText = submitBtn.querySelector('span');
+  const btnIcon = submitBtn.querySelector('i[data-lucide="user-plus"]');
+  
+  form.addEventListener('submit', function() {
+    // Show loading state
+    submitBtn.disabled = true;
+    spinner.classList.remove('hidden');
+    btnText.textContent = 'Creating Account...';
+    btnIcon.style.display = 'none';
+  });
+  
+  // Email validation feedback
+  const emailField = document.getElementById('email');
+  emailField.addEventListener('blur', function() {
+    const email = this.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (email && !emailRegex.test(email)) {
+      this.classList.add('border-red-400');
+      this.classList.remove('border-white/10');
+    } else {
+      this.classList.remove('border-red-400');
+      this.classList.add('border-white/10');
+    }
+  });
+  
+  // Password strength indicator
+  const passwordField = document.getElementById('password');
+  const confirmPasswordField = document.getElementById('confirm_password');
+  
+  passwordField.addEventListener('input', function() {
+    const password = this.value;
+    let strength = 0;
+    
+    if (password.length >= 8) strength++;
+    if (/[a-z]/.test(password)) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/\d/.test(password)) strength++;
+    if (/[^a-zA-Z\d]/.test(password)) strength++;
+    
+    // Update password field border based on strength
+    this.classList.remove('border-red-400', 'border-yellow-400', 'border-green-400');
+    if (strength <= 2) {
+      this.classList.add('border-red-400');
+    } else if (strength <= 3) {
+      this.classList.add('border-yellow-400');
+    } else {
+      this.classList.add('border-green-400');
+    }
+  });
+  
+  // Real-time password match validation
+  confirmPasswordField.addEventListener('input', function() {
+    const password = passwordField.value;
+    const confirmPassword = this.value;
+    
+    if (confirmPassword && password !== confirmPassword) {
+      this.classList.add('border-red-400');
+      this.classList.remove('border-white/10');
+    } else {
+      this.classList.remove('border-red-400');
+      this.classList.add('border-white/10');
+    }
+  });
+  
   // Real-time validation
   const validators = {
-    username: (value) => {
-      if (!value.trim()) return 'Username is required';
-      if (value.length < 3) return 'Username must be at least 3 characters long';
-      if (!/^[a-zA-Z0-9_]+$/.test(value)) return 'Username can only contain letters, numbers, and underscores';
-      return null;
-    },
     email: (value) => {
       if (!value.trim()) return 'Email is required';
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid email address';
