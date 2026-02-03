@@ -260,29 +260,5 @@ msgstr "Aucune carte de crédit requise • Annulez à tout moment • Accès co
 msgid "Data-driven agricultural intelligence platform for Cameroonian farmers."
 msgstr "Plateforme d'intelligence agricole basée sur les données pour les agriculteurs camerounais."
 
-msgid "Pricing"
-msgstr "Tarification"
-
-msgid "About Us"
-msgstr "À Propos"
-
-msgid "Contact"
-msgstr "Contact"
-
-msgid "Blog"
-msgstr "Blog"
-
-msgid "Legal"
-msgstr "Légal"
-
-msgid "Privacy Policy"
-msgstr "Politique de Confidentialité"
-
-msgid "Terms of Service"
-msgstr "Conditions d'Utilisation"
-
-msgid "Cookie Policy"
-msgstr "Politique de Cookies"
-
 msgid "© 2024 SmartFarm Cameroon. All rights reserved."
 msgstr "© 2024 SmartFarm Cameroun. Tous droits réservés."

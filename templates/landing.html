@@ -117,13 +117,16 @@
             </a>
           </div>
 
-          <!-- Mobile Menu Button -->
-          <button
-            class="md:hidden text-gray-300 hover:text-white"
-            onclick="toggleMobileMenu()"
-          >
-            <i data-lucide="menu" class="w-6 h-6"></i>
-          </button>
+          <!-- Mobile Language Switcher & Menu Button -->
+          <div class="md:hidden flex items-center space-x-3">
+            {% include 'partials/language_switcher.html' with switcher_id='mobile' %}
+            <button
+              class="text-gray-300 hover:text-white"
+              onclick="toggleMobileMenu()"
+            >
+              <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -133,7 +136,6 @@
         class="hidden md:hidden bg-black/95 backdrop-blur-md border-b border-gray-800"
       >
         <div class="px-6 py-4 space-y-3">
-          {% include 'partials/language_switcher.html' with switcher_id='mobile' %}
           <a
             href="#features"
             class="block text-gray-300 hover:text-white transition-colors"

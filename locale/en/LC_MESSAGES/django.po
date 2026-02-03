@@ -1,0 +1,243 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "SmartFarm"
+msgstr "SmartFarm"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Features"
+msgstr "Features"
+
+msgid "Pricing"
+msgstr "Pricing"
+
+msgid "About"
+msgstr "About"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Register"
+msgstr "Register"
+
+msgid "Transform Your Farming"
+msgstr "Transform Your Farming"
+
+msgid "Transform your farming with precision analytics, real-time insights, and AI-powered recommendations tailored for Cameroonian agriculture."
+msgstr "Transform your farming with precision analytics, real-time insights, and AI-powered recommendations tailored for Cameroonian agriculture."
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Yield Increase"
+msgstr "Yield Increase"
+
+msgid "Average ROI"
+msgstr "Average ROI"
+
+msgid "Farms Analyzed"
+msgstr "Farms Analyzed"
+
+msgid "Start Free Trial"
+msgstr "Start Free Trial"
+
+msgid "See How It Works"
+msgstr "See How It Works"
+
+msgid "No credit card required • 14-day free trial • Cancel anytime"
+msgstr "No credit card required • 14-day free trial • Cancel anytime"
+
+msgid "SCIENTIFIC METHODOLOGY"
+msgstr "SCIENTIFIC METHODOLOGY"
+
+msgid "Data-Driven Agricultural Intelligence"
+msgstr "Data-Driven Agricultural Intelligence"
+
+msgid "Our systematic approach combines advanced machine learning algorithms with agricultural science to deliver actionable insights that maximize crop yields while minimizing environmental impact."
+msgstr "Our systematic approach combines advanced machine learning algorithms with agricultural science to deliver actionable insights that maximize crop yields while minimizing environmental impact."
+
+msgid "Real-Time Data Processing Pipeline"
+msgstr "Real-Time Data Processing Pipeline"
+
+msgid "Data Collection"
+msgstr "Data Collection"
+
+msgid "Multi-source agricultural data gathering"
+msgstr "Multi-source agricultural data gathering"
+
+msgid "Satellite Imagery"
+msgstr "Satellite Imagery"
+
+msgid "Weather Stations"
+msgstr "Weather Stations"
+
+msgid "Soil Sensors"
+msgstr "Soil Sensors"
+
+msgid "Data Processing"
+msgstr "Data Processing"
+
+msgid "Real-time data normalization & cleansing"
+msgstr "Real-time data normalization & cleansing"
+
+msgid "Quality Control"
+msgstr "Quality Control"
+
+msgid "Data Validation"
+msgstr "Data Validation"
+
+msgid "Normalization"
+msgstr "Normalization"
+
+msgid "Predictive Modeling"
+msgstr "Predictive Modeling"
+
+msgid "ML algorithms for pattern recognition"
+msgstr "ML algorithms for pattern recognition"
+
+msgid "Neural Networks"
+msgstr "Neural Networks"
+
+msgid "Random Forest"
+msgstr "Random Forest"
+
+msgid "Time Series"
+msgstr "Time Series"
+
+msgid "Optimization"
+msgstr "Optimization"
+
+msgid "Resource allocation algorithms"
+msgstr "Resource allocation algorithms"
+
+msgid "Linear Programming"
+msgstr "Linear Programming"
+
+msgid "Genetic Algorithms"
+msgstr "Genetic Algorithms"
+
+msgid "Multi-Objective"
+msgstr "Multi-Objective"
+
+msgid "Actionable Insights"
+msgstr "Actionable Insights"
+
+msgid "Real-time recommendations"
+msgstr "Real-time recommendations"
+
+msgid "Alerts"
+msgstr "Alerts"
+
+msgid "Recommendations"
+msgstr "Recommendations"
+
+msgid "Forecasts"
+msgstr "Forecasts"
+
+msgid "Algorithmic"
+msgstr "Algorithmic"
+
+msgid "Decision Support"
+msgstr "Decision Support"
+
+msgid "Our machine learning models process historical and real-time data to generate precise recommendations for optimal agricultural outcomes."
+msgstr "Our machine learning models process historical and real-time data to generate precise recommendations for optimal agricultural outcomes."
+
+msgid "Predictive Yield Modeling"
+msgstr "Predictive Yield Modeling"
+
+msgid "Accuracy: 94.7%"
+msgstr "Accuracy: 94.7%"
+
+msgid "Model Confidence"
+msgstr "Model Confidence"
+
+msgid "High"
+msgstr "High"
+
+msgid "ML algorithms analyze 15+ variables to forecast crop yields with industry-leading accuracy."
+msgstr "ML algorithms analyze 15+ variables to forecast crop yields with industry-leading accuracy."
+
+msgid "Resource Optimization"
+msgstr "Resource Optimization"
+
+msgid "Efficiency: +42%"
+msgstr "Efficiency: +42%"
+
+msgid "Linear programming models optimize water, fertilizer, and labor allocation for maximum ROI."
+msgstr "Linear programming models optimize water, fertilizer, and labor allocation for maximum ROI."
+
+msgid "Optimization Score"
+msgstr "Optimization Score"
+
+msgid "Risk Assessment"
+msgstr "Risk Assessment"
+
+msgid "Early Detection: 7 days"
+msgstr "Early Detection: 7 days"
+
+msgid "Identifies pest, disease, and weather risks with 7-day advance warning and mitigation strategies."
+msgstr "Identifies pest, disease, and weather risks with 7-day advance warning and mitigation strategies."
+
+msgid "Risk Coverage"
+msgstr "Risk Coverage"
+
+msgid "Start Your"
+msgstr "Start Your"
+
+msgid "14-Day Free Trial"
+msgstr "14-Day Free Trial"
+
+msgid "Transform your farming with data-driven insights and personalized recommendations."
+msgstr "Transform your farming with data-driven insights and personalized recommendations."
+
+msgid "No credit card required • Cancel anytime • Full access to all features"
+msgstr "No credit card required • Cancel anytime • Full access to all features"
+
+msgid "Data-driven agricultural intelligence platform for Cameroonian farmers."
+msgstr "Data-driven agricultural intelligence platform for Cameroonian farmers."
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Legal"
+msgstr "Legal"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+msgid "Cookie Policy"
+msgstr "Cookie Policy"
+
+msgid "© 2024 SmartFarm Cameroon. All rights reserved."
+msgstr "© 2024 SmartFarm Cameroon. All rights reserved."
