@@ -1,0 +1,328 @@
+{% extends "layouts/app_layout.html" %}
+{% load i18n %}
+
+{% block app_content %}
+<div class="space-y-6">
+    <!-- Header with Actions -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <div class="flex items-center space-x-3 mb-2">
+                <h1 class="text-3xl font-bold text-white">{{ farm.farm_name }}</h1>
+                <span class="text-sm text-mint bg-mint/20 px-3 py-1 rounded-full">
+                    {{ farm.get_farm_type_display|title }}
+                </span>
+            </div>
+            <div class="flex flex-wrap gap-4 text-sm text-mint-light/70">
+                <span class="flex items-center">
+                    <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i>
+                    {{ farm.village_town|default:"Location not set" }}, {{ farm.get_region_display|default:"Cameroon" }}
+                </span>
+                <span class="flex items-center">
+                    <i data-lucide="sprout" class="w-4 h-4 mr-1"></i>
+                    {{ farm.get_primary_crop_display|default:"Maize" }} {% trans "Farming" %}
+                </span>
+                <span class="flex items-center">
+                    <i data-lucide="maximize-2" class="w-4 h-4 mr-1"></i>
+                    {{ farm.get_farm_size_category_display|default:"Size not specified" }}
+                </span>
+            </div>
+        </div>
+        <div class="mt-4 sm:mt-0 flex space-x-3">
+            {% if farm.id != request.session.current_farm_id %}
+                <a href="{% url 'switch_farm' farm.id %}" class="bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-xl px-4 py-2 font-medium transition-all duration-300 inline-flex items-center space-x-2">
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <span>{% trans "Switch to This Farm" %}</span>
+                </a>
+            {% endif %}
+            <a href="{% url 'export_farm_csv' farm.id %}" class="bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-xl px-4 py-2 font-medium transition-all duration-300 inline-flex items-center space-x-2">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>{% trans "Export CSV" %}</span>
+            </a>
+            <a href="{% url 'farm_list' %}" class="bg-black/20 border border-white/10 hover:bg-black/30 text-white/70 rounded-xl px-4 py-2 font-medium transition-all duration-300 inline-flex items-center space-x-2">
+                <i data-lucide="list" class="w-4 h-4"></i>
+                <span>{% trans "All Farms" %}</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                    <i data-lucide="award" class="w-6 h-6 text-green-400"></i>
+                </div>
+                <span class="text-xs text-green-400 bg-green-500/20 px-2 py-1 rounded">{{ farm.get_experience_level_display|default:"Beginner" }}</span>
+            </div>
+            <h3 class="text-white font-semibold mb-1">{% trans "Experience" %}</h3>
+            <p class="text-2xl font-bold text-white">{{ farm.farming_years|default:"0" }} {% trans "years" %}</p>
+            <p class="text-xs text-mint-light/60">{% trans "Farming experience" %}</p>
+        </div>
+        
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                    <i data-lucide="wheat" class="w-6 h-6 text-yellow-400"></i>
+                </div>
+                {% if farm.selected_maize_variety %}
+                    <span class="text-xs text-yellow-400 bg-yellow-500/20 px-2 py-1 rounded">{% trans "Selected" %}</span>
+                {% endif %}
+            </div>
+            <h3 class="text-white font-semibold mb-1">{% trans "Maize Variety" %}</h3>
+            <p class="text-lg font-bold text-white">{{ farm.selected_maize_variety.name|default:"{% trans 'Not selected' %}" }}</p>
+            <p class="text-xs text-mint-light/60">{{ farm.selected_maize_variety.maturity_period|default:"" }}</p>
+        </div>
+        
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                    <i data-lucide="mountain" class="w-6 h-6 text-orange-400"></i>
+                </div>
+                <span class="text-xs text-orange-400 bg-orange-500/20 px-2 py-1 rounded">{{ farm.get_soil_fertility_display|default:"Medium" }}</span>
+            </div>
+            <h3 class="text-white font-semibold mb-1">{% trans "Soil Type" %}</h3>
+            <p class="text-2xl font-bold text-white">{{ farm.get_soil_type_display|default:"Not tested" }}</p>
+            <p class="text-xs text-mint-light/60">pH: {{ farm.ph_level|default:"N/A" }}</p>
+        </div>
+        
+        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                    <i data-lucide="droplets" class="w-6 h-6 text-blue-400"></i>
+                </div>
+                <span class="text-xs text-blue-400 bg-blue-500/20 px-2 py-1 rounded">{{ farm.get_irrigation_method_display|default:"None" }}</span>
+            </div>
+            <h3 class="text-white font-semibold mb-1">{% trans "Water Source" %}</h3>
+            <p class="text-2xl font-bold text-white">{{ farm.get_water_source_display|default:"Rain-fed" }}</p>
+            <p class="text-xs text-mint-light/60">{% trans "Primary water source" %}</p>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column - Main Info -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Location Information -->
+            <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center">
+                    <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-mint"></i>
+                    {% trans "Location Information" %}
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-sm text-mint-light/60 mb-1">{% trans "Region" %}</p>
+                        <p class="text-white font-medium">{{ farm.get_region_display|default:"Not specified" }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-mint-light/60 mb-1">{% trans "Division/Department" %}</p>
+                        <p class="text-white font-medium">{{ farm.division|default:"Not specified" }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-mint-light/60 mb-1">{% trans "Subdivision/District" %}</p>
+                        <p class="text-white font-medium">{{ farm.subdivision|default:"Not specified" }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-mint-light/60 mb-1">{% trans "Village/Town" %}</p>
+                        <p class="text-white font-medium">{{ farm.village_town|default:"Not specified" }}</p>
+                    </div>
+                    {% if farm.gps_coordinates %}
+                        <div class="md:col-span-2">
+                            <p class="text-sm text-mint-light/60 mb-1">{% trans "GPS Coordinates" %}</p>
+                            <p class="text-white font-medium font-mono">{{ farm.gps_coordinates }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Farming Practices -->
+            <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center">
+                    <i data-lucide="settings" class="w-5 h-5 mr-2 text-mint"></i>
+                    {% trans "Farming Practices" %}
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-mint-light/60 mb-2">{% trans "Farming Methods" %}</p>
+                        <p class="text-white">{{ farm.farming_methods|default:"Not specified" }}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full {% if farm.fertilizer_usage %}bg-green-400{% else %}bg-red-400{% endif %}"></div>
+                            <span class="text-white text-sm">{% trans "Uses Fertilizers" %}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full {% if farm.pesticide_usage %}bg-green-400{% else %}bg-red-400{% endif %}"></div>
+                            <span class="text-white text-sm">{% trans "Uses Pesticides" %}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full {% if farm.organic_farming %}bg-green-400{% else %}bg-gray-400{% endif %}"></div>
+                            <span class="text-white text-sm">{% trans "Organic Farming" %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipment & Resources -->
+            <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center">
+                    <i data-lucide="tool" class="w-5 h-5 mr-2 text-mint"></i>
+                    {% trans "Equipment & Resources" %}
+                </h2>
+                <div class="space-y-4">
+                    {% if farm.available_equipment %}
+                        <div>
+                            <p class="text-sm text-mint-light/60 mb-2">{% trans "Available Equipment" %}</p>
+                            <div class="flex flex-wrap gap-2">
+                                {% for equipment in farm.get_equipment_display %}
+                                    <span class="bg-forest-mid/30 text-mint px-3 py-1 rounded-full text-sm">{{ equipment }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    {% if farm.equipment_details %}
+                        <div>
+                            <p class="text-sm text-mint-light/60 mb-2">{% trans "Equipment Details" %}</p>
+                            <p class="text-white">{{ farm.equipment_details }}</p>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-mint-light/60 mb-1">{% trans "Labor Source" %}</p>
+                            <p class="text-white font-medium">{{ farm.labor_source|default:"Not specified" }}</p>
+                        </div>
+                        {% if farm.labor_count %}
+                            <div>
+                                <p class="text-sm text-mint-light/60 mb-1">{% trans "Number of Workers" %}</p>
+                                <p class="text-white font-medium">{{ farm.labor_count }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals & Challenges -->
+            <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center">
+                    <i data-lucide="target" class="w-5 h-5 mr-2 text-mint"></i>
+                    {% trans "Goals & Challenges" %}
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-mint-light/60 mb-2">{% trans "Farming Goals" %}</p>
+                        <p class="text-white">{{ farm.farming_goals|default:"Not specified" }}</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-sm text-mint-light/60 mb-2">{% trans "Main Challenges" %}</p>
+                        <p class="text-white">{{ farm.main_challenges|default:"Not specified" }}</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-sm text-mint-light/60 mb-2">{% trans "Market Access" %}</p>
+                        <p class="text-white">{{ farm.market_access|default:"Not specified" }}</p>
+                    </div>
+                    
+                    {% if farm.expected_yield %}
+                        <div>
+                            <p class="text-sm text-mint-light/60 mb-1">{% trans "Expected Yield" %}</p>
+                            <p class="text-white font-medium">{{ farm.expected_yield }} {% trans "tons per hectare" %}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column - Weather & Progress -->
+        <div class="space-y-6">
+            <!-- Weather Widget -->
+            {% if weather %}
+                <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+                    <h2 class="text-lg font-semibold text-white mb-4 flex items-center">
+                        <i data-lucide="cloud" class="w-5 h-5 mr-2 text-mint"></i>
+                        {% trans "Current Weather" %}
+                    </h2>
+                    <div class="text-center">
+                        <p class="text-3xl font-bold text-white mb-2">{{ weather.temperature|floatformat:1 }}°C</p>
+                        <p class="text-mint-light/70 mb-4">{{ weather.condition|default:"Clear" }}</p>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="text-mint-light/60">{% trans "Humidity" %}</p>
+                                <p class="text-white">{{ weather.humidity|default:"N/A" }}%</p>
+                            </div>
+                            <div>
+                                <p class="text-mint-light/60">{% trans "Wind" %}</p>
+                                <p class="text-white">{{ weather.wind_speed|default:"N/A" }} km/h</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Profile Completion -->
+            <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+                <h2 class="text-lg font-semibold text-white mb-4 flex items-center">
+                    <i data-lucide="check-circle" class="w-5 h-5 mr-2 text-mint"></i>
+                    {% trans "Profile Completion" %}
+                </h2>
+                <div class="space-y-4">
+                    <div class="text-center">
+                        <p class="text-3xl font-bold text-mint mb-2">{{ completion_percentage }}%</p>
+                        <div class="w-full bg-black/30 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-mint to-forest-light h-2 rounded-full transition-all duration-300" style="width: {{ completion_percentage }}%"></div>
+                        </div>
+                    </div>
+                    
+                    {% if completion_percentage < 100 %}
+                        <p class="text-sm text-mint-light/70 text-center">
+                            {% trans "Complete your farm profile to get personalized recommendations" %}
+                        </p>
+                        <a href="{% url 'onboarding' %}" class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-4 py-2 font-medium transition-all duration-300 text-center block">
+                            {% trans "Complete Profile" %}
+                        </a>
+                    {% else %}
+                        <p class="text-sm text-green-400 text-center">
+                            {% trans "Profile is complete!" %}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            {% if farm.additional_notes or farm.phone_number %}
+                <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+                    <h2 class="text-lg font-semibold text-white mb-4 flex items-center">
+                        <i data-lucide="info" class="w-5 h-5 mr-2 text-mint"></i>
+                        {% trans "Additional Information" %}
+                    </h2>
+                    <div class="space-y-3">
+                        {% if farm.phone_number %}
+                            <div>
+                                <p class="text-sm text-mint-light/60 mb-1">{% trans "Contact Number" %}</p>
+                                <p class="text-white font-medium">{{ farm.phone_number }}</p>
+                            </div>
+                        {% endif %}
+                        {% if farm.additional_notes %}
+                            <div>
+                                <p class="text-sm text-mint-light/60 mb-2">{% trans "Additional Notes" %}</p>
+                                <p class="text-white">{{ farm.additional_notes }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+</script>
+{% endblock %}

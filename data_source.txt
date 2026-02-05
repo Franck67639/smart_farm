@@ -1,0 +1,312 @@
+================================================================================
+SOURCE DE DONNÉES D'INTÉGRATION SMARTFARM - COLLECTE DE DONNÉES COMPLÈTE
+================================================================================
+
+Ce document décrit toutes les données collectées lors du processus d'intégration SmartFarm.
+L'intégration se compose de 8 étapes collectant des informations complètes sur l'exploitation et l'agriculteur.
+
+================================================================================
+ÉTAPE 1 : ÉCRAN D'ACCUEIL
+================================================================================
+- Aucune collecte de données - Introduction aux fonctionnalités SmartFarm
+- Aperçu des fonctionnalités : Informations Météo, Intelligence Localisation, Optimisation Rendement
+
+================================================================================
+ÉTAPE 2 : INFORMATIONS DE BASE DE L'EXPLOITATION
+================================================================================
+CHAMPS OBLIGATOIRES :
+- farm_name : Nom de l'exploitation (texte, max 200 caractères)
+  Exemple : "Green Valley Farm"
+  
+- farm_type : Type d'opération agricole (choix)
+  Options : smallholder (petit exploitant), commercial (commercial), subsistence (subsistance), mixed (mixte)
+  
+- farm_size_category : Taille de l'exploitation (choix)
+  Options : less_than_1, 1_to_5, 5_to_10, 10_to_50, more_than_50
+  Plages : < 1 hectare, 1-5 hectares, 5-10 hectares, 10-50 hectares, > 50 hectares
+  
+- primary_crop : Culture principale (choix)
+  Options : maize (maïs), cassava (manioc), beans (haricots), rice (riz), vegetables (légumes), mixed (cultures mixtes), other (autre)
+  
+- farming_years : Années d'expérience agricole (entier, 0-50)
+  Validation : Obligatoire, doit être > 0
+
+CHAMPS OPTIONNELS :
+- selected_maize_variety : Variété de maïs sélectionnée (clé étrangère vers le modèle MaizeVariety)
+  Lie vers : Table MaizeVariety avec détails des variétés
+
+================================================================================
+ÉTAPE 3 : INFORMATIONS DE LOCALISATION
+================================================================================
+CHAMPS OBLIGATOIRES :
+- region : Région du Cameroun (choix)
+  Options : northwest (Nord-Ouest), southwest (Sud-Ouest), west (Ouest), littoral (Littoral), center (Centre), east (Est), adamawa (Adamaoua), far_north (Extrême-Nord), north (Nord), south (Sud)
+  
+- village_town : Village ou nom de ville (texte, max 100 caractères)
+  Exemple : "Bamenda City"
+
+CHAMPS OPTIONNELS :
+- division : Division/Département (texte, max 100 caractères)
+  Exemple : "Mezam"
+  
+- subdivision : Subdivision/District (texte, max 100 caractères)
+  Exemple : "Bamenda"
+  
+- gps_coordinates : Coordonnées GPS (texte, max 100 caractères)
+  Format : "latitude,longitude" ou stocké comme JSON {lat: '', lng: ''}
+  Exemple : "4.0483,9.7043"
+
+FONCTIONNALITÉS DE DÉTECTION AUTOMATIQUE :
+- Détection de localisation utilisant l'API de géolocalisation du navigateur
+- Géocodage inverse pour remplir automatiquement les champs d'adresse
+- Résolution d'adresse à partir des coordonnées
+
+================================================================================
+ÉTAPE 4 : INFORMATIONS SUR LE SOL
+================================================================================
+CHAMPS OBLIGATOIRES :
+- soil_type : Type de sol (choix)
+  Options : sandy (sableux), clay (argileux), loamy (limoneux), silty (limoneux fin), peaty (tourbeux), chalky (crayeux), unknown (inconnu)
+  
+- soil_fertility : Niveau de fertilité du sol (choix)
+  Options : low (faible), medium (moyen), high (élevé), very_high (très élevé), unknown (inconnu)
+
+CHAMPS OPTIONNELS :
+- ph_level : Niveau de pH du sol (float, plage 4.0-9.0)
+  Par défaut : 6.5 (optimal pour le maïs)
+  Interface : Curseur avec retour en temps réel
+  
+- soil_test_done : Si des tests de sol ont été effectués (booléen)
+  Par défaut : false
+  
+- last_soil_test_date : Date du dernier test de sol (date)
+  Conditionnel : Requis si soil_test_done est true
+
+================================================================================
+ÉTAPE 5 : EAU ET IRRIGATION
+================================================================================
+CHAMPS OBLIGATOIRES :
+- water_source : Source d'eau principale (choix)
+  Options : rain_fed (pluvial), well (puits), borehole (forage), river (rivière), lake (lac), municipal (municipal), mixed (mixte)
+  
+- irrigation_method : Méthode d'irrigation utilisée (choix)
+  Options : none (aucune), drip (goutte-à-goutte), sprinkler (aspersion), flood (inondation), manual (manuel), other (autre)
+
+CHAMPS OPTIONNELS :
+- water_availability : Description de la disponibilité de l'eau (texte, max 100 caractères)
+  Exemple : "Disponible toute l'année", "Disponibilité saisonnière"
+  
+- irrigation_equipment : Description des équipements d'irrigation (texte)
+  Description libre des infrastructures d'irrigation disponibles
+
+================================================================================
+ÉTAPE 6 : ÉQUIPEMENT ET RESSOURCES AGRICOLES
+================================================================================
+SÉLECTION D'ÉQUIPEMENT (Choix Multiples - Tableau JSON) :
+- available_equipment : Liste des équipements disponibles (champ JSON)
+  Options : tractor (tracteur), plow (charrue), harrow (herse), planter (planteur), harvester (moissonneuse), sprayer (pulvérisateur), irrigation_pump (pompe d'irrigation), thresher (batteuse), none (aucun), other (autre)
+  Interface : Sélection par cases à cocher pour plusieurs éléments
+
+CHAMPS OPTIONNELS :
+- equipment_details : Description supplémentaire des équipements (texte)
+  Description libre d'équipements ou machines supplémentaires
+  
+- labor_source : Source de main d'œuvre (texte, max 100 caractères)
+  Options : family (familiale), hired (salariée), mixed (mixte), community (communautaire), mechanized (mécanisée)
+  
+- labor_count : Nombre de travailleurs réguliers (entier)
+  Validation : Optionnel, doit être >= 0
+
+================================================================================
+ÉTAPE 7 : PRATIQUES ET EXPÉRIENCE AGRICOLES
+================================================================================
+CHAMPS OBLIGATOIRES :
+- experience_level : Niveau d'expérience agricole (choix)
+  Options : beginner (débutant), intermediate (intermédiaire), advanced (avancé), expert (expert)
+  Définitions :
+    - Débutant : Moins de 2 ans
+    - Intermédiaire : 2-5 ans
+    - Avancé : 5-10 ans
+    - Expert : Plus de 10 ans
+  
+- farming_methods : Description des méthodes agricoles (texte)
+  Description libre requise
+  Exemple : "Agriculture traditionnelle, pratiques biologiques, utilisation d'équipements modernes"
+
+SÉLECTION DE PRATIQUES (Champs Booléens) :
+- fertilizer_usage : Utilise des engrais (booléen, par défaut : true)
+- pesticide_usage : Utilise des pesticides (booléen, par défaut : true)
+- organic_farming : Pratique l'agriculture biologique (booléen, par défaut : false)
+
+================================================================================
+ÉTAPE 8 : OBJECTIFS ET DÉFIS
+================================================================================
+CHAMPS OBLIGATOIRES :
+- farming_goals : Objectifs agricoles (texte, obligatoire)
+  Description libre des objectifs de l'agriculteur
+  
+- main_challenges : Principaux défis agricoles (texte, obligatoire)
+  Description libre des obstacles et difficultés
+  
+- market_access : Description de l'accès au marché (texte, obligatoire)
+  Comment l'agriculteur accède aux marchés pour ses produits
+
+CHAMPS OPTIONNELS :
+- expected_yield : Rendement attendu par hectare (float, tonnes)
+  Attentes de rendement cibles
+  
+- additional_notes : Informations supplémentaires (texte)
+  Détails supplémentaires que l'agriculteur souhaite fournir
+  
+- phone_number : Numéro de contact alternatif (texte, max 20 caractères)
+  Informations de contact secondaires
+
+================================================================================
+DONNÉS SUPPLÉMENTAIRES COLLECTÉES
+================================================================================
+
+INFORMATIONS SUR LES VARIÉTÉS DE MAÏS (Données Liées) :
+Lorsque sélectionnées, lie vers le modèle MaizeVariety contenant :
+- variety_id : Identifiant unique
+- name : Nom de la variété (ex : "Maïs Blanc Amélioré")
+- code : Code de variété (ex : "MZ001")
+- description : Brève description
+- maturity_period : Précoce/Moyen/Tardif (60-120 jours)
+- expected_yield : Rendement attendu en tonnes/hectare
+- drought_tolerance : Booléen (true/false)
+- disease_resistance : Booléen (true/false)
+- recommended_region : Régions de plantation recommandées
+- image : Image de la variété (optionnel)
+
+DONNÉES DE COMPTE UTILISATEUR (Liées) :
+- user_id : Clé étrangère vers le modèle User
+- email : Email utilisateur (identifiant principal)
+- full_name : Nom complet de l'utilisateur
+- phone : Numéro de téléphone principal
+- is_verified : Statut de vérification du compte
+- created_at : Date de création du compte
+
+MÉTADONNÉES :
+- id : Clé primaire UUID pour l'enregistrement de l'exploitation
+- is_completed : Statut d'achèvement de l'intégration (booléen)
+- completion_date : Date/heure quand l'intégration a été achevée
+- created_at : Horodatage de création d'enregistrement
+- updated_at : Dernière mise à jour de l'horodatage
+
+================================================================================
+RÈGLES DE VALIDATION DES DONNÉES
+================================================================================
+
+VALIDATION CÔTÉ CLIENT (JavaScript) :
+- Validation des champs obligatoires avant progression d'étape
+- Validation du format d'email
+- Validation de plage numérique (farming_years, ph_level, labor_count)
+- Validation du format des coordonnées GPS
+- Retour en temps réel de la description du pH
+
+VALIDATION CÔTÉ SERVEUR (Modèles Django) :
+- Contraintes de longueur de champ
+- Validation des champs de choix
+- Validation des relations de clé étrangère
+- Application des champs obligatoires
+- Validation du type de données
+
+================================================================================
+STRUCTURE DE STOCKAGE DES DONNÉES
+================================================================================
+
+TABLE PRINCIPALE : FarmDetails
+- Contient toutes les données d'intégration dans un modèle unique complet
+- Relation un-à-un avec le modèle User
+- Champ JSON pour le stockage de liste d'équipements
+- Clé primaire UUID pour la sécurité
+
+TABLES LIÉES :
+- User : Informations de compte et authentification
+- MaizeVariety : Options et détails des variétés de maïs
+- WeatherData : Informations météo liées à la localisation de l'exploitation
+
+================================================================================
+ARCHITECTURE DE FLUX DE DONNÉES
+================================================================================
+
+1. COLLECTE FRONTEND (Alpine.js) :
+   - Assistant multi-étapes avec suivi de progression
+   - Validation et gestion d'erreurs en temps réel
+   - Stockage local pour la persistance de progression
+   - Intégration de l'API de géolocalisation
+
+2. POINTS D'ACCÈS API :
+   - POST /onboarding/save-step/ - Sauvegarder les données d'étape individuelle
+   - POST /onboarding/complete/ - Finaliser le processus d'intégration
+   - GET /api/geocode/reverse/ - Service de géocodage inverse
+
+3. TRAITEMENT BACKEND (Vues Django) :
+   - Validation des données étape par étape
+   - Création et mise à jour d'instances de modèle
+   - Suivi de progression et statut d'achèvement
+   - Gestion d'erreurs et retour utilisateur
+
+4. PERSISTANCE DES DONNÉES :
+   - Stockage de base de données PostgreSQL
+   - Intégrité transactionnelle des données
+   - Piste d'audit via horodatages
+
+================================================================================
+CONSIDÉRATIONS DE SÉCURITÉ
+================================================================================
+
+- Protection CSRF sur toutes les soumissions de formulaire
+- Assainissement des entrées texte
+- Validation des plages de coordonnées
+- Limitation de débit sur les points d'accès API
+- Stockage sécurisé des informations personnelles
+- Considérations de conformité RGPD pour les données d'agriculteurs
+
+================================================================================
+RÉSUMÉ FORMAT D'EXPORTATION
+================================================================================
+
+L'ensemble de données d'intégration complet inclut :
+- 53 champs de données au total
+- 20 champs obligatoires
+- 33 champs optionnels
+- 8 champs basés sur des choix avec options prédéfinies
+- 3 champs booléens de pratique
+- 1 champ de tableau JSON pour l'équipement
+- 4 relations de clé étrangère
+- 5 champs d'horodatage/métadonnées
+
+Cette collecte de données complète permet :
+- Recommandations agricoles personnalisées
+- Intégration météo localisée
+- Modèles de prédiction de rendement
+- Recommandations d'équipement
+- Analyse d'accès au marché
+- Stratégies d'optimisation de rendement
+- Priorisation du support et des interventions
+
+================================================================================
+POTENTIEL D'UTILISATION DES DONNÉES
+================================================================================
+
+Applications Principales :
+1. Tableau de Bord de Gestion d'Exploitation
+2. Intégration et Alertes Météo
+3. Modèles de Prédiction de Rendement
+4. Recommandations d'Équipement
+5. Services de Connexion Marché
+6. Personnalisation de Contenu Éducatif
+7. Priorisation de Tickets de Support
+8. Recherche et Analytiques
+
+Applications Secondaires :
+1. Support à la Prise de Décision Politique
+2. Planification Agricole
+3. Optimisation de Chaîne d'Approvisionnement
+4. Évaluation de Risque d'Assurance
+5. Intégration de Services Financiers
+
+================================================================================
+FIN DE LA DOCUMENTATION DE SOURCE DE DONNÉES
+================================================================================

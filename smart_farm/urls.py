@@ -43,9 +43,12 @@ urlpatterns += i18n_patterns(
     path('dashboard/', views.dashboard_view, name='dashboard'),
     
     # Farm Management
+    path('farms/', views.farm_list_view, name='farm_list'),
+    path('farm/<uuid:farm_id>/', views.farm_detail_view, name='farm_detail'),
     path('farm/switch/<uuid:farm_id>/', views.switch_farm, name='switch_farm'),
     path('farm/add/', views.add_new_farm, name='add_new_farm'),
     path('farm/delete/<uuid:farm_id>/', views.delete_farm, name='delete_farm'),
+    path('farm/export/<uuid:farm_id>/csv/', views.export_farm_csv, name='export_farm_csv'),
     
     # Geocoding Services
     path('api/geocode/reverse/', views_geocoding.reverse_geocode, name='reverse_geocode'),

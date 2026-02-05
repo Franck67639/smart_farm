@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-from django.http import JsonResponse
+import csv
+from django.http import HttpResponse, JsonResponse, Http404
 from django.contrib import messages
 from django.db import transaction
 from django.utils import timezone
@@ -307,34 +308,131 @@ def delete_farm(request, farm_id):
     except FarmDetails.DoesNotExist:
         messages.error(request, 'Farm not found')
     
-    return redirect('dashboard')
+    return redirect('farm_list')
+
+@login_required
+def farm_list_view(request):
+    """Display all user's farms"""
+    farms = FarmDetails.objects.filter(user=request.user).order_by('-created_at')
+    current_farm_id = request.session.get('current_farm_id')
+    
+    context = {
+        'farms': farms,
+        'current_farm_id': current_farm_id,
+        'total_farms': farms.count(),
+    }
+    return render(request, 'farm/farm_list.html', context)
+
+@login_required
+def farm_detail_view(request, farm_id):
+    """Display detailed information about a specific farm"""
+    try:
+        farm = FarmDetails.objects.get(id=farm_id, user=request.user)
+        
+        # Get weather data for this farm
+        weather_data = {}
+        weather_forecasts = []
+        weather_alerts = []
+        
+        # Try to get weather data if location is available
+        if farm.gps_coordinates:
+            try:
+                from .weather_service import WeatherService
+                weather_service = WeatherService()
+                
+                # Parse coordinates
+                if ',' in farm.gps_coordinates:
+                    lat, lng = map(float, farm.gps_coordinates.split(','))
+                else:
+                    # Fallback to region-based weather
+                    lat, lng = 3.8480, 11.5021  # Cameroon center
+                
+                weather_data = weather_service.get_current_weather(lat, lng)
+                weather_forecasts = weather_service.get_forecast(lat, lng, days=5)
+                weather_alerts = weather_service.get_weather_alerts(lat, lng)
+                
+            except Exception as e:
+                print(f"Weather service error: {e}")
+                weather_data = {}
+                weather_forecasts = []
+                weather_alerts = []
+        
+        context = {
+            'farm': farm,
+            'weather': weather_data,
+            'forecasts': weather_forecasts,
+            'alerts': weather_alerts,
+            'alerts_count': len([a for a in weather_alerts if not getattr(a, 'acknowledged', False)]),
+            'completion_percentage': farm.completion_percentage(),
+        }
+        return render(request, 'farm/farm_detail.html', context)
+        
+    except FarmDetails.DoesNotExist:
+        messages.error(request, 'Farm not found')
+        return redirect('farm_list')
 
 @login_required
 def onboarding_step_view(request):
     """Handle onboarding steps"""
-    # Get or create farm details with defaults for required fields
-    farm_details, created = FarmDetails.objects.get_or_create(
-        user=request.user,
-        defaults={
-            'farm_name': f"{request.user.full_name or request.user.email}'s Farm",
-            'farm_type': 'smallholder',
-            'farm_size_category': '1_to_5',
-            'primary_crop': 'maize',
-            'farming_years': 1,  # Required field with default
-            'region': 'center',  # Required field with default
-            'division': '',
-            'subdivision': '',
-            'village_town': '',
-            'soil_type': 'loamy',
-            'soil_fertility': 'medium',
-            'water_source': 'rain_fed',
-            'irrigation_method': 'none',
-            'experience_level': 'beginner',
-            'fertilizer_usage': True,
-            'pesticide_usage': True,
-            'organic_farming': False,
-        }
-    )
+    # Check if this is adding a new farm
+    is_adding_new_farm = request.session.get('adding_new_farm', False)
+    
+    if is_adding_new_farm:
+        # Create a new farm with defaults for adding another farm
+        farm_details = FarmDetails.objects.create(
+            user=request.user,
+            farm_name=f"{request.user.full_name or request.user.email}'s Farm",
+            farm_type='smallholder',
+            farm_size_category='1_to_5',
+            primary_crop='maize',
+            farming_years=1,  # Required field with default
+            region='center',  # Required field with default
+            division='',
+            subdivision='',
+            village_town='',
+            soil_type='loamy',
+            soil_fertility='medium',
+            water_source='rain_fed',
+            irrigation_method='none',
+            experience_level='beginner',
+            fertilizer_usage=True,
+            pesticide_usage=True,
+            organic_farming=False,
+        )
+    else:
+        # Get the user's current farm or create a new one if none exists
+        current_farm_id = request.session.get('current_farm_id')
+        if current_farm_id:
+            try:
+                farm_details = FarmDetails.objects.get(id=current_farm_id, user=request.user)
+            except FarmDetails.DoesNotExist:
+                # If current farm ID is invalid, get the latest farm
+                farm_details = FarmDetails.objects.filter(user=request.user).latest('created_at')
+        else:
+            # Get the latest farm or create a new one
+            try:
+                farm_details = FarmDetails.objects.filter(user=request.user).latest('created_at')
+            except FarmDetails.DoesNotExist:
+                farm_details = FarmDetails.objects.create(
+                    user=request.user,
+                    farm_name=f"{request.user.full_name or request.user.email}'s Farm",
+                    farm_type='smallholder',
+                    farm_size_category='1_to_5',
+                    primary_crop='maize',
+                    farming_years=1,  # Required field with default
+                    region='center',  # Required field with default
+                    division='',
+                    subdivision='',
+                    village_town='',
+                    soil_type='loamy',
+                    soil_fertility='medium',
+                    water_source='rain_fed',
+                    irrigation_method='none',
+                    experience_level='beginner',
+                    fertilizer_usage=True,
+                    pesticide_usage=True,
+                    organic_farming=False,
+                )
     
     # Get maize varieties for step 1 (or any step where you want to show them)
     maize_varieties = MaizeVariety.objects.filter(is_active=True)
@@ -345,6 +443,7 @@ def onboarding_step_view(request):
         'farm_details': farm_details,
         'maize_varieties': maize_varieties,
         'current_time': datetime.now().strftime('%I:%M %p'),
+        'is_adding_new_farm': is_adding_new_farm,
     }
     
     return render(request, 'partials/_onboarding.html', context)
@@ -368,15 +467,62 @@ def save_onboarding_step_view(request):
         data = json.loads(request.body)
         step = data.get('step')
         
-        # Get or create farm details
-        farm_details, created = FarmDetails.objects.get_or_create(user=request.user)
+        # Check if this is adding a new farm
+        is_adding_new_farm = request.session.get('adding_new_farm', False)
+        
+        if is_adding_new_farm:
+            # Create new farm with required defaults for first step
+            if step == 1:
+                farm_details = FarmDetails.objects.create(
+                    user=request.user,
+                    farm_name=data.get('farmName', f"{request.user.full_name or request.user.email}'s Farm"),
+                    farm_type=data.get('farmType', 'smallholder'),
+                    farm_size_category=data.get('farmSizeCategory', '1_to_5'),
+                    primary_crop=data.get('primaryCrop', 'maize'),
+                    farming_years=1,  # Required field with default
+                    region='center',  # Required field with default
+                    village_town='',  # Required field with default
+                    soil_type='loamy',
+                    soil_fertility='medium',
+                    water_source='rain_fed',
+                    irrigation_method='none',
+                    experience_level='beginner',
+                    fertilizer_usage=True,
+                    pesticide_usage=True,
+                    organic_farming=False,
+                )
+            else:
+                # For subsequent steps, get the existing farm
+                farm_details = FarmDetails.objects.filter(user=request.user).latest('created_at')
+        else:
+            # Get or create existing farm details
+            farm_details, created = FarmDetails.objects.get_or_create(
+                user=request.user,
+                defaults={
+                    'farm_name': f"{request.user.full_name or request.user.email}'s Farm",
+                    'farm_type': 'smallholder',
+                    'farm_size_category': '1_to_5',
+                    'primary_crop': 'maize',
+                    'farming_years': 1,  # Required field with default
+                    'region': 'center',  # Required field with default
+                    'village_town': '',  # Required field with default
+                    'soil_type': 'loamy',
+                    'soil_fertility': 'medium',
+                    'water_source': 'rain_fed',
+                    'irrigation_method': 'none',
+                    'experience_level': 'beginner',
+                    'fertilizer_usage': True,
+                    'pesticide_usage': True,
+                    'organic_farming': False,
+                }
+            )
         
         # Update farm details based on step
         if step == 1:  # Basic farm information
-            farm_details.farm_name = data.get('farmName')
-            farm_details.farm_type = data.get('farmType')
-            farm_details.farm_size_category = data.get('farmSizeCategory')
-            farm_details.primary_crop = data.get('primaryCrop')
+            farm_details.farm_name = data.get('farmName', farm_details.farm_name)
+            farm_details.farm_type = data.get('farmType', farm_details.farm_type)
+            farm_details.farm_size_category = data.get('farmSizeCategory') or data.get('farmSize', farm_details.farm_size_category)
+            farm_details.primary_crop = data.get('primaryCrop', farm_details.primary_crop)
             
             # Convert farming_years to integer with default
             farming_years = data.get('farmingYears', 1)
@@ -395,48 +541,70 @@ def save_onboarding_step_view(request):
                     pass
             
         elif step == 2:  # Location information
-            farm_details.region = data.get('region')
-            farm_details.division = data.get('division')
-            farm_details.subdivision = data.get('subdivision')
-            farm_details.village_town = data.get('villageTown')
-            farm_details.gps_coordinates = data.get('gpsCoordinates')
+            farm_details.region = data.get('region', farm_details.region)
+            farm_details.division = data.get('division', farm_details.division)
+            farm_details.subdivision = data.get('subdivision', farm_details.subdivision)
+            farm_details.village_town = data.get('villageTown', farm_details.village_town)
+            farm_details.gps_coordinates = data.get('gpsCoordinates', farm_details.gps_coordinates)
             
         elif step == 3:  # Soil information
-            farm_details.soil_type = data.get('soilType')
-            farm_details.soil_fertility = data.get('soilFertility')
-            farm_details.ph_level = data.get('soilPh')
+            farm_details.soil_type = data.get('soilType', farm_details.soil_type)
+            farm_details.soil_fertility = data.get('soilFertility', farm_details.soil_fertility)
+            farm_details.ph_level = data.get('soilPh') or data.get('phLevel', farm_details.ph_level)
             farm_details.soil_test_done = data.get('soilTestDone', False)
             
+            # Handle last_soil_test_date properly - convert empty string to None
+            last_soil_test_date = data.get('lastSoilTestDate', '')
+            if last_soil_test_date and last_soil_test_date.strip():
+                try:
+                    farm_details.last_soil_test_date = last_soil_test_date
+                except ValueError:
+                    # If date format is invalid, keep existing value or set to None
+                    farm_details.last_soil_test_date = None
+            else:
+                farm_details.last_soil_test_date = None
+            
         elif step == 4:  # Water and irrigation
-            farm_details.water_source = data.get('waterSource')
-            farm_details.irrigation_method = data.get('irrigationMethod')
-            farm_details.water_availability = data.get('waterAvailability')
+            farm_details.water_source = data.get('waterSource', farm_details.water_source)
+            farm_details.irrigation_method = data.get('irrigationMethod', farm_details.irrigation_method)
+            farm_details.water_availability = data.get('waterAvailability', farm_details.water_availability)
             farm_details.irrigation_equipment = data.get('irrigationEquipment', '')
             
         elif step == 5:  # Equipment and resources
             farm_details.available_equipment = data.get('availableEquipment', [])
             farm_details.equipment_details = data.get('equipmentDetails', '')
-            farm_details.labor_source = data.get('laborSource')
+            farm_details.labor_source = data.get('laborSource', farm_details.labor_source)
             
             # Convert labor_count to integer with default
             labor_count = data.get('laborCount', 1)
             try:
-                farm_details.labor_count = int(labor_count) if labor_count else 1
+                farm_details.labor_count = int(labor_count) if labor_count else None
             except (ValueError, TypeError):
-                farm_details.labor_count = 1
+                farm_details.labor_count = None
             
         elif step == 6:  # Farming practices
-            farm_details.experience_level = data.get('experienceLevel')
-            farm_details.farming_methods = data.get('farmingMethods')
+            farm_details.experience_level = data.get('experienceLevel', farm_details.experience_level)
+            farm_details.farming_methods = data.get('farmingMethods', farm_details.farming_methods)
             farm_details.fertilizer_usage = data.get('fertilizerUsage', True)
             farm_details.pesticide_usage = data.get('pesticideUsage', True)
             farm_details.organic_farming = data.get('organicFarming', False)
             
         elif step == 7:  # Goals and challenges
-            farm_details.farming_goals = data.get('farmingGoals')
-            farm_details.main_challenges = data.get('mainChallenges')
-            farm_details.expected_yield = data.get('expectedYield')
-            farm_details.market_access = data.get('marketAccess')
+            farm_details.farming_goals = data.get('farmingGoals', '')
+            farm_details.main_challenges = data.get('mainChallenges', '')
+            
+            # Handle expected_yield properly - convert empty string to None
+            expected_yield = data.get('expectedYield', '')
+            if expected_yield and expected_yield.strip():
+                try:
+                    farm_details.expected_yield = float(expected_yield)
+                except (ValueError, TypeError):
+                    # If conversion fails, keep existing value or set to None
+                    farm_details.expected_yield = None
+            else:
+                farm_details.expected_yield = None
+                
+            farm_details.market_access = data.get('marketAccess', '')
             
             # Mark as completed if this is the final step
             farm_details.mark_completed()
@@ -464,8 +632,25 @@ def complete_onboarding_view(request):
         is_adding_new_farm = request.session.get('adding_new_farm', False)
         
         if is_adding_new_farm:
-            # Create new farm
-            farm_details = FarmDetails.objects.create(user=request.user)
+            # Create new farm with required defaults
+            farm_details = FarmDetails.objects.create(
+                user=request.user,
+                farm_name=data.get('farmName', f"{request.user.full_name or request.user.email}'s Farm"),
+                farm_type=data.get('farmType', 'smallholder'),
+                farm_size_category=data.get('farmSizeCategory') or data.get('farmSize', '1_to_5'),
+                primary_crop=data.get('primaryCrop', 'maize'),
+                farming_years=1,  # Required field with default
+                region=data.get('region', 'center'),  # Required field with default
+                village_town=data.get('villageTown', ''),  # Required field with default
+                soil_type=data.get('soilType', 'loamy'),
+                soil_fertility=data.get('soilFertility', 'medium'),
+                water_source=data.get('waterSource', 'rain_fed'),
+                irrigation_method=data.get('irrigationMethod', 'none'),
+                experience_level=data.get('experienceLevel', 'beginner'),
+                fertilizer_usage=True,
+                pesticide_usage=True,
+                organic_farming=False,
+            )
             
             # Clear the session flag
             del request.session['adding_new_farm']
@@ -473,81 +658,120 @@ def complete_onboarding_view(request):
             # Update existing farm that was created during onboarding
             farm_details = FarmDetails.objects.filter(user=request.user).first()
             if not farm_details:
-                farm_details = FarmDetails.objects.create(user=request.user)
+                farm_details = FarmDetails.objects.create(
+                    user=request.user,
+                    farm_name=data.get('farmName', f"{request.user.full_name or request.user.email}'s Farm"),
+                    farm_type=data.get('farmType', 'smallholder'),
+                    farm_size_category=data.get('farmSizeCategory') or data.get('farmSize', '1_to_5'),
+                    primary_crop=data.get('primaryCrop', 'maize'),
+                    farming_years=1,  # Required field with default
+                    region=data.get('region', 'center'),  # Required field with default
+                    village_town=data.get('villageTown', ''),  # Required field with default
+                    soil_type=data.get('soilType', 'loamy'),
+                    soil_fertility=data.get('soilFertility', 'medium'),
+                    water_source=data.get('waterSource', 'rain_fed'),
+                    irrigation_method=data.get('irrigationMethod', 'none'),
+                    experience_level=data.get('experienceLevel', 'beginner'),
+                    fertilizer_usage=True,
+                    pesticide_usage=True,
+                    organic_farming=False,
+                )
         
-        # Update all fields from session data
-        onboarding_data = request.session.get('onboarding_data', {})
-        if onboarding_data:
-            # Basic farm information
-            farm_details.farm_name = onboarding_data.get('farmName', farm_details.farm_name)
-            farm_details.farm_type = onboarding_data.get('farmType', farm_details.farm_type)
-            farm_details.farm_size_category = onboarding_data.get('farmSizeCategory', farm_details.farm_size_category)
-            farm_details.primary_crop = onboarding_data.get('primaryCrop', farm_details.primary_crop)
-            
-            # Handle farming_years conversion
-            farming_years = onboarding_data.get('farmingYears', 1)
+        # Update fields from request data (prioritize request data over session data)
+        # Basic farm information
+        farm_details.farm_name = data.get('farmName', farm_details.farm_name)
+        farm_details.farm_type = data.get('farmType', farm_details.farm_type)
+        farm_details.farm_size_category = data.get('farmSizeCategory') or data.get('farmSize', farm_details.farm_size_category)
+        farm_details.primary_crop = data.get('primaryCrop', farm_details.primary_crop)
+        
+        # Handle farming_years conversion
+        farming_years = data.get('farmingYears', farm_details.farming_years)
+        try:
+            farm_details.farming_years = int(farming_years) if farming_years else 1
+        except (ValueError, TypeError):
+            farm_details.farming_years = 1
+        
+        # Location information
+        farm_details.region = data.get('region', farm_details.region)
+        farm_details.division = data.get('division', farm_details.division)
+        farm_details.subdivision = data.get('subdivision', farm_details.subdivision)
+        farm_details.village_town = data.get('villageTown', farm_details.village_town)
+        
+        # Handle GPS coordinates
+        gps_coords = data.get('gpsCoordinates', {})
+        if isinstance(gps_coords, dict) and gps_coords.get('lat') and gps_coords.get('lng'):
+            farm_details.gps_coordinates = f"{gps_coords['lat']}, {gps_coords['lng']}"
+        elif isinstance(gps_coords, str):
+            farm_details.gps_coordinates = gps_coords
+        
+        # Soil information
+        farm_details.soil_type = data.get('soilType', farm_details.soil_type)
+        farm_details.soil_fertility = data.get('soilFertility', farm_details.soil_fertility)
+        farm_details.ph_level = data.get('soilPh') or data.get('phLevel', farm_details.ph_level)
+        farm_details.soil_test_done = data.get('soilTestDone', False)
+        
+        # Handle last_soil_test_date properly - convert empty string to None
+        last_soil_test_date = data.get('lastSoilTestDate', '')
+        if last_soil_test_date and last_soil_test_date.strip():
             try:
-                farm_details.farming_years = int(farming_years) if farming_years else 1
-            except (ValueError, TypeError):
-                farm_details.farming_years = 1
-            
-            # Location information
-            farm_details.region = onboarding_data.get('region', farm_details.region)
-            farm_details.division = onboarding_data.get('division', farm_details.division)
-            farm_details.subdivision = onboarding_data.get('subdivision', farm_details.subdivision)
-            farm_details.village_town = onboarding_data.get('villageTown', farm_details.village_town)
-            
-            # Handle GPS coordinates
-            gps_coords = onboarding_data.get('gpsCoordinates', {})
-            if gps_coords and gps_coords.get('lat') and gps_coords.get('lng'):
-                farm_details.gps_coordinates = f"{gps_coords['lat']}, {gps_coords['lng']}"
-            
-            # Soil information
-            farm_details.soil_type = onboarding_data.get('soilType', farm_details.soil_type)
-            farm_details.soil_fertility = onboarding_data.get('soilFertility', farm_details.soil_fertility)
-            farm_details.ph_level = onboarding_data.get('soilPh', farm_details.ph_level)
-            farm_details.soil_test_done = onboarding_data.get('soilTestDone', False)
-            
-            # Water and irrigation
-            farm_details.water_source = onboarding_data.get('waterSource', farm_details.water_source)
-            farm_details.irrigation_method = onboarding_data.get('irrigationMethod', farm_details.irrigation_method)
-            farm_details.water_availability = onboarding_data.get('waterAvailability', farm_details.water_availability)
-            farm_details.irrigation_equipment = onboarding_data.get('irrigationEquipment', '')
-            
-            # Equipment and resources
-            farm_details.available_equipment = onboarding_data.get('availableEquipment', [])
-            farm_details.equipment_details = onboarding_data.get('equipmentDetails', '')
-            farm_details.labor_source = onboarding_data.get('laborSource', farm_details.labor_source)
-            
-            # Handle labor_count conversion
-            labor_count = onboarding_data.get('laborCount', 1)
+                farm_details.last_soil_test_date = last_soil_test_date
+            except ValueError:
+                # If date format is invalid, keep existing value or set to None
+                farm_details.last_soil_test_date = None
+        else:
+            farm_details.last_soil_test_date = None
+        
+        # Water and irrigation
+        farm_details.water_source = data.get('waterSource', farm_details.water_source)
+        farm_details.irrigation_method = data.get('irrigationMethod', farm_details.irrigation_method)
+        farm_details.water_availability = data.get('waterAvailability', farm_details.water_availability)
+        farm_details.irrigation_equipment = data.get('irrigationEquipment', '')
+        
+        # Equipment and resources
+        farm_details.available_equipment = data.get('availableEquipment', [])
+        farm_details.equipment_details = data.get('equipmentDetails', '')
+        farm_details.labor_source = data.get('laborSource', farm_details.labor_source)
+        
+        # Handle labor_count conversion
+        labor_count = data.get('laborCount', farm_details.labor_count)
+        try:
+            farm_details.labor_count = int(labor_count) if labor_count else None
+        except (ValueError, TypeError):
+            farm_details.labor_count = None
+        
+        # Farming practices
+        farm_details.experience_level = data.get('experienceLevel', farm_details.experience_level)
+        farm_details.farming_methods = data.get('farmingMethods', farm_details.farming_methods)
+        farm_details.fertilizer_usage = data.get('fertilizerUsage', True)
+        farm_details.pesticide_usage = data.get('pesticideUsage', True)
+        farm_details.organic_farming = data.get('organicFarming', False)
+        
+        # Goals and challenges
+        farm_details.farming_goals = data.get('farmingGoals', '')
+        farm_details.main_challenges = data.get('mainChallenges', '')
+        
+        # Handle expected_yield properly - convert empty string to None
+        expected_yield = data.get('expectedYield', '')
+        if expected_yield and expected_yield.strip():
             try:
-                farm_details.labor_count = int(labor_count) if labor_count else 1
+                farm_details.expected_yield = float(expected_yield)
             except (ValueError, TypeError):
-                farm_details.labor_count = 1
+                # If conversion fails, keep existing value or set to None
+                farm_details.expected_yield = None
+        else:
+            farm_details.expected_yield = None
             
-            # Farming practices
-            farm_details.experience_level = onboarding_data.get('experienceLevel', farm_details.experience_level)
-            farm_details.farming_methods = onboarding_data.get('farmingMethods', farm_details.farming_methods)
-            farm_details.fertilizer_usage = onboarding_data.get('fertilizerUsage', True)
-            farm_details.pesticide_usage = onboarding_data.get('pesticideUsage', True)
-            farm_details.organic_farming = onboarding_data.get('organicFarming', False)
-            
-            # Goals and challenges
-            farm_details.farming_goals = onboarding_data.get('farmingGoals', '')
-            farm_details.main_challenges = onboarding_data.get('mainChallenges', '')
-            farm_details.expected_yield = onboarding_data.get('expectedYield', '')
-            farm_details.market_access = onboarding_data.get('marketAccess', '')
-            
-            # Maize variety
-            selected_variety = onboarding_data.get('selectedMaizeVariety')
-            if selected_variety:
-                try:
-                    from smart_farm.models import MaizeVariety
-                    variety = MaizeVariety.objects.get(id=selected_variety, is_active=True)
-                    farm_details.selected_maize_variety = variety
-                except MaizeVariety.DoesNotExist:
-                    pass
+        farm_details.market_access = data.get('marketAccess', '')
+        
+        # Maize variety
+        selected_variety = data.get('maizeVariety') or data.get('selectedMaizeVariety')
+        if selected_variety:
+            try:
+                from smart_farm.models import MaizeVariety
+                variety = MaizeVariety.objects.get(id=selected_variety, is_active=True)
+                farm_details.selected_maize_variety = variety
+            except MaizeVariety.DoesNotExist:
+                pass
         
         # Final fields from completion request
         farm_details.additional_notes = data.get('additionalNotes', '')
@@ -646,3 +870,111 @@ def reverse_geocode_view(request):
             'address': f"{lat}, {lng}",
             'error': str(e)
         })
+
+@login_required
+def export_farm_csv(request, farm_id):
+    """Export farm details as CSV"""
+    try:
+        farm = FarmDetails.objects.get(id=farm_id, user=request.user)
+        
+        # Create the HttpResponse object with the appropriate CSV header
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="{farm.farm_name}_data_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv"'
+        
+        # Create a CSV writer
+        writer = csv.writer(response)
+        
+        # Write header row
+        header = [
+            'Farm Name',
+            'Farm Type', 
+            'Farm Size Category',
+            'Primary Crop',
+            'Farming Years',
+            'Region',
+            'Division',
+            'Subdivision', 
+            'Village/Town',
+            'GPS Coordinates',
+            'Soil Type',
+            'Soil Fertility',
+            'pH Level',
+            'Soil Test Done',
+            'Last Soil Test Date',
+            'Water Source',
+            'Irrigation Method',
+            'Water Availability',
+            'Irrigation Equipment',
+            'Available Equipment',
+            'Equipment Details',
+            'Labor Source',
+            'Labor Count',
+            'Experience Level',
+            'Farming Methods',
+            'Fertilizer Usage',
+            'Pesticide Usage',
+            'Organic Farming',
+            'Selected Maize Variety',
+            'Farming Goals',
+            'Main Challenges',
+            'Expected Yield',
+            'Market Access',
+            'Additional Notes',
+            'Phone Number',
+            'Created Date',
+            'Completion Date',
+            'Profile Completion %'
+        ]
+        writer.writerow(header)
+        
+        # Write data row
+        data_row = [
+            farm.farm_name or '',
+            farm.get_farm_type_display() or '',
+            farm.get_farm_size_category_display() or '',
+            farm.get_primary_crop_display() or '',
+            farm.farming_years or '',
+            farm.get_region_display() or '',
+            farm.division or '',
+            farm.subdivision or '',
+            farm.village_town or '',
+            farm.gps_coordinates or '',
+            farm.get_soil_type_display() or '',
+            farm.get_soil_fertility_display() or '',
+            farm.ph_level or '',
+            'Yes' if farm.soil_test_done else 'No',
+            farm.last_soil_test_date.strftime('%Y-%m-%d') if farm.last_soil_test_date else '',
+            farm.get_water_source_display() or '',
+            farm.get_irrigation_method_display() or '',
+            farm.water_availability or '',
+            farm.irrigation_equipment or '',
+            ', '.join(farm.get_equipment_display()) if farm.available_equipment else '',
+            farm.equipment_details or '',
+            farm.labor_source or '',
+            farm.labor_count or '',
+            farm.get_experience_level_display() or '',
+            farm.farming_methods or '',
+            'Yes' if farm.fertilizer_usage else 'No',
+            'Yes' if farm.pesticide_usage else 'No',
+            'Yes' if farm.organic_farming else 'No',
+            farm.selected_maize_variety.name if farm.selected_maize_variety else '',
+            farm.farming_goals or '',
+            farm.main_challenges or '',
+            farm.expected_yield or '',
+            farm.market_access or '',
+            farm.additional_notes or '',
+            farm.phone_number or '',
+            farm.created_at.strftime('%Y-%m-%d %H:%M:%S') if farm.created_at else '',
+            farm.completion_date.strftime('%Y-%m-%d %H:%M:%S') if farm.completion_date else '',
+            f"{farm.completion_percentage()}%" if hasattr(farm, 'completion_percentage') else '0%'
+        ]
+        writer.writerow(data_row)
+        
+        return response
+        
+    except FarmDetails.DoesNotExist:
+        messages.error(request, 'Farm not found')
+        return redirect('farm_list')
+    except Exception as e:
+        messages.error(request, f'Error exporting farm data: {str(e)}')
+        return redirect('farm_detail', farm_id=farm_id)

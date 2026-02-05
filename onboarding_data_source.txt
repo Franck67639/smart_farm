@@ -1,0 +1,309 @@
+================================================================================
+SMARTFARM ONBOARDING DATA SOURCE - COMPLETE DATA COLLECTION
+================================================================================
+
+This document outlines all data collected during the SmartFarm onboarding process.
+The onboarding consists of 8 steps collecting comprehensive farm and farmer information.
+
+================================================================================
+STEP 1: WELCOME SCREEN
+================================================================================
+- No data collection - Introduction to SmartFarm features
+- Features preview: Weather Insights, Location Intelligence, Yield Optimization
+
+================================================================================
+STEP 2: BASIC FARM INFORMATION
+================================================================================
+REQUIRED FIELDS:
+- farm_name: Farm name (text, max 200 chars)
+  Example: "Green Valley Farm"
+  
+- farm_type: Type of farming operation (choices)
+  Options: smallholder, commercial, subsistence, mixed
+  
+- farm_size_category: Size of farm (choices)
+  Options: less_than_1, 1_to_5, 5_to_10, 10_to_50, more_than_50
+  Ranges: < 1 hectare, 1-5 hectares, 5-10 hectares, 10-50 hectares, > 50 hectares
+  
+- primary_crop: Main crop grown (choices)
+  Options: maize, cassava, beans, rice, vegetables, mixed, other
+  
+- farming_years: Years of farming experience (integer, 0-50)
+  Validation: Required, must be > 0
+
+- selected_maize_variety: Selected maize variety (foreign key to MaizeVariety model)
+  Links to: MaizeVariety table with variety details
+
+================================================================================
+STEP 3: LOCATION INFORMATION
+================================================================================
+REQUIRED FIELDS:
+- region: Cameroon region (choices)
+  Options: northwest, southwest, west, littoral, center, east, adamawa, far_north, north, south
+  
+- village_town: Village or town name (text, max 100 chars)
+  Example: "Bamenda City"
+
+OPTIONAL FIELDS:
+- division: Division/Department (text, max 100 chars)
+  Example: "Mezam"
+  
+- subdivision: Subdivision/District (text, max 100 chars)
+  Example: "Bamenda"
+  
+- gps_coordinates: GPS coordinates (text, max 100 chars)
+  Format: "latitude,longitude" or stored as JSON {lat: '', lng: ''}
+  Example: "4.0483,9.7043"
+
+AUTO-DETECTED FEATURES:
+- Location detection using browser geolocation API
+- Reverse geocoding to auto-populate address fields
+- Address resolution from coordinates
+
+================================================================================
+STEP 4: SOIL INFORMATION
+================================================================================
+REQUIRED FIELDS:
+- soil_type: Type of soil (choices)
+  Options: sandy, clay, loamy, silty, peaty, chalky, unknown
+  
+- soil_fertility: Soil fertility level (choices)
+  Options: low, medium, high, very_high, unknown
+
+- ph_level: Soil pH level (float, 4.0-9.0 range)
+  Default: 6.5 (optimal for maize)
+  UI: Slider control with real-time feedback
+  
+- soil_test_done: Whether soil testing has been done (boolean)
+  Default: false
+  
+- last_soil_test_date: Date of last soil test (date)
+  Conditional: Required if soil_test_done is true
+
+================================================================================
+STEP 5: WATER AND IRRIGATION
+================================================================================
+REQUIRED FIELDS:
+- water_source: Main water source (choices)
+  Options: rain_fed, well, borehole, river, lake, municipal, mixed
+  
+- irrigation_method: Irrigation method used (choices)
+  Options: none, drip, sprinkler, flood, manual, other
+
+OPTIONAL FIELDS:
+- water_availability: Water availability description (text, max 100 chars)
+  Example: "Available year-round", "Seasonal availability"
+  
+- irrigation_equipment: Description of irrigation equipment (text)
+  Free-form description of available irrigation infrastructure
+
+================================================================================
+STEP 6: FARM EQUIPMENT AND RESOURCES
+================================================================================
+EQUIPMENT SELECTION (Multiple Choice - JSON Array):
+- available_equipment: List of available equipment (JSON field)
+  Options: tractor, plow, harrow, planter, harvester, sprayer, irrigation_pump, thresher, none, other
+  UI: Checkbox selection for multiple items
+
+OPTIONAL FIELDS:
+- equipment_details: Additional equipment description (text)
+  Free-form description of additional machinery or equipment
+  
+- labor_source: Source of labor (text, max 100 chars)
+  Options: family, hired, mixed, community, mechanized
+  
+- labor_count: Number of regular workers (integer)
+  Validation: Optional, must be >= 0
+
+================================================================================
+STEP 7: FARMING PRACTICES AND EXPERIENCE
+================================================================================
+REQUIRED FIELDS:
+- experience_level: Farming experience level (choices)
+  Options: beginner, intermediate, advanced, expert
+  Definitions:
+    - Beginner: Less than 2 years
+    - Intermediate: 2-5 years
+    - Advanced: 5-10 years
+    - Expert: More than 10 years
+  
+- farming_methods: Description of farming methods (text)
+  Required free-form description
+  Example: "Traditional farming, organic practices, use of modern equipment"
+
+PRACTICE SELECTION (Boolean Fields):
+- fertilizer_usage: Uses fertilizers (boolean, default: true)
+- pesticide_usage: Uses pesticides (boolean, default: true)
+- organic_farming: Practices organic farming (boolean, default: false)
+
+================================================================================
+STEP 8: GOALS AND CHALLENGES
+================================================================================
+REQUIRED FIELDS:
+- farming_goals: Farming goals (text, required)
+  Free-form description of farmer's objectives
+  
+- main_challenges: Main farming challenges (text, required)
+  Free-form description of obstacles and difficulties
+  
+- market_access: Market access description (text, required)
+  How farmer accesses markets for produce
+
+OPTIONAL FIELDS:
+- expected_yield: Expected yield per hectare (float, tons)
+  Target yield expectations
+  
+- additional_notes: Additional information (text)
+  Any extra details farmer wants to provide
+  
+- phone_number: Alternative contact number (text, max 20 chars)
+  Secondary contact information
+
+================================================================================
+ADDITIONAL DATA COLLECTED
+================================================================================
+
+MAIZE VARIETY INFORMATION (Linked Data):
+When selected, links to MaizeVariety model containing:
+- variety_id: Unique identifier
+- name: Variety name (e.g., "Improved White Maize")
+- code: Variety code (e.g., "MZ001")
+- description: Brief description
+- maturity_period: Early/Medium/Late (60-120 days)
+- expected_yield: Expected yield in tons/hectare
+- drought_tolerance: Boolean (true/false)
+- disease_resistance: Boolean (true/false)
+- recommended_region: Recommended planting regions
+- image: Variety image (optional)
+
+USER ACCOUNT DATA (Linked):
+- user_id: Foreign key to User model
+- email: User email (primary identifier)
+- full_name: User full name
+- phone: Primary phone number
+- is_verified: Account verification status
+- created_at: Account creation date
+
+METADATA:
+- id: UUID primary key for farm record
+- is_completed: Onboarding completion status (boolean)
+- completion_date: Date/time when onboarding was completed
+- created_at: Record creation timestamp
+- updated_at: Last update timestamp
+
+================================================================================
+DATA VALIDATION RULES
+================================================================================
+
+CLIENT-SIDE VALIDATION (JavaScript):
+- Required field validation before step progression
+- Email format validation
+- Numeric range validation (farming_years, ph_level, labor_count)
+- GPS coordinate format validation
+- Real-time pH level description feedback
+
+SERVER-SIDE VALIDATION (Django Models):
+- Field length constraints
+- Choice field validation
+- Foreign key relationship validation
+- Required field enforcement
+- Data type validation
+
+================================================================================
+DATA STORAGE STRUCTURE
+================================================================================
+
+PRIMARY TABLE: FarmDetails
+- Contains all onboarding data in a single comprehensive model
+- One-to-one relationship with User model
+- JSON field for equipment list storage
+- UUID primary key for security
+
+RELATED TABLES:
+- User: Account information and authentication
+- MaizeVariety: Maize variety options and details
+- WeatherData: Weather information linked to farm location
+
+================================================================================
+DATA FLOW ARCHITECTURE
+================================================================================
+
+1. FRONTEND COLLECTION (Alpine.js):
+   - Multi-step wizard with progress tracking
+   - Real-time validation and error handling
+   - Local storage for progress persistence
+   - Geolocation API integration
+
+2. API ENDPOINTS:
+   - POST /onboarding/save-step/ - Save individual step data
+   - POST /onboarding/complete/ - Finalize onboarding process
+   - GET /api/geocode/reverse/ - Reverse geocoding service
+
+3. BACKEND PROCESSING (Django Views):
+   - Step-by-step data validation
+   - Model instance creation and updates
+   - Progress tracking and completion status
+   - Error handling and user feedback
+
+4. DATA PERSISTENCE:
+   - PostgreSQL database storage
+   - Transactional data integrity
+   - Audit trail via timestamps
+
+================================================================================
+SECURITY CONSIDERATIONS
+================================================================================
+
+- CSRF protection on all form submissions
+- Sanitization of text inputs
+- Validation of coordinate ranges
+- Rate limiting on API endpoints
+- Secure storage of personal information
+- GDPR compliance considerations for farmer data
+
+================================================================================
+EXPORT FORMAT SUMMARY
+================================================================================
+
+The complete onboarding dataset includes:
+- 53 total data fields
+- 20 required fields
+- 33 optional fields
+- 8 choice-based fields with predefined options
+- 3 boolean practice fields
+- 1 JSON array field for equipment
+- 4 foreign key relationships
+- 5 timestamp/metadata fields
+
+This comprehensive data collection enables:
+- Personalized farming recommendations
+- Location-specific weather integration
+- Equipment and resource planning
+- Market access analysis
+- Yield optimization strategies
+- Targeted support and interventions
+
+================================================================================
+DATA USAGE POTENTIAL
+================================================================================
+
+Primary Applications:
+1. Farm Management Dashboard
+2. Weather Integration and Alerts
+3. Yield Prediction Models
+4. Equipment Recommendations
+5. Market Connection Services
+6. Educational Content Personalization
+7. Support Ticket Prioritization
+8. Research and Analytics
+
+Secondary Applications:
+1. Policy Making Support
+2. Agricultural Planning
+3. Supply Chain Optimization
+4. Insurance Risk Assessment
+5. Financial Services Integration
+
+================================================================================
+END OF DATA SOURCE DOCUMENTATION
+================================================================================

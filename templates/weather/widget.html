@@ -1,8 +1,19 @@
-<!-- Weather Widget Component -->
+<!-- Enhanced Weather Widget Component -->
 <div class="backdrop-blur-xl bg-black/30 border border-white/10 rounded-xl p-6" x-data="weatherWidget()">
-    <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-white">Weather</h3>
-        <div class="flex items-center space-x-2">
+    <!-- Location Header -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h3 class="text-xl font-semibold text-white mb-1">
+                {% if field.farm.village_town %}{{ field.farm.village_town }}, {% endif %}
+                {% if field.farm.region %}{{ field.farm.region }}, {% endif %}Cameroun
+            </h3>
+            <div class="flex items-center text-sm text-mint-light/70">
+                <span class="mr-2">{% now "H:i" %}</span>
+                <span>•</span>
+                <span class="ml-2">Mis à jour il y a quelques minutes</span>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
             {% if alerts_count > 0 %}
             <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ alerts_count }} alerts</span>
             {% endif %}
@@ -15,67 +26,95 @@
     </div>
     
     {% if weather %}
-    <div class="space-y-4">
-        <!-- Current Weather -->
-        <div class="flex items-center justify-between">
-            <div>
-                <div class="text-3xl font-bold text-white">{{ weather.temperature_avg|floatformat:1 }}°C</div>
-                <div class="text-sm text-mint-light/80">{{ weather.weather_condition }}</div>
-                <div class="text-xs text-mint-light/60 mt-1">
-                    {{ weather.farm.farm_name }} • {{ weather.date|date:"M d" }}
+    <div class="space-y-6">
+        <!-- Current Weather Main Display -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Left: Current Conditions -->
+            <div class="flex items-center space-x-4">
+                <div class="text-center">
+                    <div class="text-6xl font-light text-white mb-2">{{ weather.temperature_avg|floatformat:0 }}°</div>
+                    <div class="text-lg text-white/90">{{ weather.weather_condition }}</div>
+                </div>
+                <div class="text-sm text-mint-light/70">
+                    <div>Max. {{ weather.temperature_max|floatformat:0 }}°</div>
+                    <div>Min. {{ weather.temperature_min|floatformat:0 }}°</div>
                 </div>
             </div>
-            <div class="text-right space-y-1">
-                <div class="flex items-center justify-end space-x-2 text-sm text-mint-light/80">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
-                    </svg>
-                    <span>{{ weather.humidity|floatformat:0 }}%</span>
+            
+            <!-- Right: Today's Summary -->
+            <div class="text-center md:text-right">
+                <div class="text-white font-medium mb-1">Aujourd'hui</div>
+                <div class="text-mint-light/80">{{ weather.weather_condition }}</div>
+                <div class="text-2xl font-light text-white">{{ weather.temperature_max|floatformat:0 }}°</div>
+                <div class="text-sm text-mint-light/70">{{ weather.temperature_min|floatformat:0 }}°</div>
+            </div>
+        </div>
+        
+        <!-- Extended Forecast -->
+        <div class="border-t border-white/10 pt-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                {% for forecast in forecasts|slice:":7" %}
+                <div class="text-center">
+                    <div class="text-xs text-mint-light/70 mb-1">{{ forecast.forecast_date|date:"D" }}</div>
+                    <div class="text-sm font-medium text-white">{{ forecast.max_temp_c|floatformat:0 }}°</div>
+                    <div class="text-xs text-mint-light/50">{{ forecast.min_temp_c|floatformat:0 }}°</div>
+                    {% if forecast.daily_chance_of_rain > 30 %}
+                    <div class="text-xs text-blue-400">{{ forecast.daily_chance_of_rain|floatformat:0 }}%</div>
+                    {% endif %}
                 </div>
-                <div class="flex items-center justify-end space-x-2 text-sm text-mint-light/80">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                    <span>{{ weather.wind_speed|floatformat:1 }} km/h</span>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Hourly Forecast -->
+        <div class="border-t border-white/10 pt-4">
+            <h4 class="text-sm font-medium text-white mb-3">Heure par heure</h4>
+            <div class="flex space-x-4 overflow-x-auto pb-2">
+                {% for hour in hourly_forecast|slice:":12" %}
+                <div class="flex-shrink-0 text-center">
+                    <div class="text-xs text-mint-light/60">{{ hour.time|time:"H:i" }}</div>
+                    <div class="text-sm font-medium text-white">{{ hour.temperature|floatformat:0 }}°</div>
+                    <div class="text-xs text-blue-400">{{ hour.chance_of_rain|floatformat:0 }}%</div>
                 </div>
-                {% if weather.rainfall > 0 %}
-                <div class="flex items-center justify-end space-x-2 text-sm text-blue-400">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
-                    </svg>
-                    <span>{{ weather.rainfall|floatformat:1 }} mm</span>
-                </div>
-                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Detailed Metrics -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-white/10 pt-4">
+            <div class="text-center">
+                <div class="text-xs text-mint-light/60 mb-1">Visibilité</div>
+                <div class="text-sm font-medium text-white">{{ weather.visibility|default:"10"|floatformat:1 }} km</div>
+                <div class="text-xs text-mint-light/50">Bonne</div>
+            </div>
+            <div class="text-center">
+                <div class="text-xs text-mint-light/60 mb-1">Pression</div>
+                <div class="text-sm font-medium text-white">{{ weather.pressure|default:"1013"|floatformat:0 }} hPa</div>
+                <div class="text-xs text-mint-light/50">Stable</div>
+            </div>
+            <div class="text-center">
+                <div class="text-xs text-mint-light/60 mb-1">Humidité</div>
+                <div class="text-sm font-medium text-white">{{ weather.humidity|floatformat:0 }}%</div>
+                <div class="text-xs text-mint-light/50">Humide</div>
+            </div>
+            <div class="text-center">
+                <div class="text-xs text-mint-light/60 mb-1">Vent</div>
+                <div class="text-sm font-medium text-white">{{ weather.wind_speed|floatformat:1 }} km/h</div>
+                <div class="text-xs text-mint-light/50">Léger</div>
             </div>
         </div>
         
         <!-- Weather Alerts -->
         {% if alerts_count > 0 %}
-        <div class="bg-red-500/20 border border-red-400/30 rounded-lg p-3">
+        <div class="bg-red-500/20 border border-red-400/30 rounded-lg p-4">
             <div class="flex items-center space-x-2">
-                <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                 </svg>
-                <span class="text-sm text-red-300">Weather alerts active</span>
+                <span class="text-sm text-red-300">{{ alerts_count }} alertes météo actives</span>
             </div>
         </div>
         {% endif %}
-        
-        <!-- Quick Forecast -->
-        <div class="grid grid-cols-3 gap-2 pt-2 border-t border-white/10">
-            {% for forecast in forecasts|slice:":3" %}
-            <div class="text-center">
-                <div class="text-xs text-mint-light/60">{{ forecast.forecast_date|date:"D" }}</div>
-                <div class="text-sm font-medium text-white">{{ forecast.max_temp_c|floatformat:0 }}°</div>
-                <div class="text-xs text-mint-light/40">{{ forecast.min_temp_c|floatformat:0 }}°</div>
-                {% if forecast.daily_chance_of_rain > 30 %}
-                <svg class="w-3 h-3 text-blue-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
-                </svg>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
     </div>
     {% else %}
     <!-- No Weather Data -->

@@ -86,176 +86,25 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- Weather and Farming Insights (2 columns) -->
-    <div class="lg:col-span-2 space-y-8">
-        <!-- Weather Widget -->
-        <div id="weather-container">
-            {% if primary_field %}
-                {% with field=primary_field %}
-                    {% include "weather/widget.html" %}
-                {% endwith %}
-            {% else %}
-                {% include "weather/widget_empty.html" %}
-            {% endif %}
-        </div>
-        
-        <!-- Farming Actions -->
-        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
-            <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
-                <i data-lucide="activity" class="w-5 h-5 mr-2 text-mint"></i>
-                {% trans "Quick Farming Actions" %}
-            </h3>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button class="bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl p-4 transition-all duration-300 text-center group">
-                    <i data-lucide="droplets" class="w-6 h-6 mx-auto mb-2 text-mint group-hover:scale-110 transition-transform"></i>
-                    <span class="text-xs text-white font-medium">{% trans "Irrigation" %}</span>
-                </button>
-                
-                <button class="bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl p-4 transition-all duration-300 text-center group">
-                    <i data-lucide="flask-conical" class="w-6 h-6 mx-auto mb-2 text-mint group-hover:scale-110 transition-transform"></i>
-                    <span class="text-xs text-white font-medium">{% trans "Fertilize" %}</span>
-                </button>
-                
-                <button class="bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl p-4 transition-all duration-300 text-center group">
-                    <i data-lucide="bug" class="w-6 h-6 mx-auto mb-2 text-mint group-hover:scale-110 transition-transform"></i>
-                    <span class="text-xs text-white font-medium">{% trans "Pest Control" %}</span>
-                </button>
-                
-                <button class="bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl p-4 transition-all duration-300 text-center group">
-                    <i data-lucide="camera" class="w-6 h-6 mx-auto mb-2 text-mint group-hover:scale-110 transition-transform"></i>
-                    <span class="text-xs text-white font-medium">{% trans "Log Activity" %}</span>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Maize Farming Tips -->
-        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
-            <h3 class="text-lg font-semibold text-white mb-6 flex items-center">
-                <i data-lucide="lightbulb" class="w-5 h-5 mr-2 text-mint"></i>
-                {% trans "Maize Farming Tips" %}
-            </h3>
-            
-            <div class="space-y-4">
-                <div class="flex items-start space-x-3">
-                    <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                        <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
-                    </div>
-                    <div>
-                        <p class="text-sm text-white font-medium">{% trans "Optimal Planting Time" %}</p>
-                        <p class="text-xs text-mint-light/60">{% trans "Based on current weather patterns, plant within the next 7-10 days for best yield" %}</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start space-x-3">
-                    <div class="w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                        <i data-lucide="alert-triangle" class="w-4 h-4 text-yellow-400"></i>
-                    </div>
-                    <div>
-                        <p class="text-sm text-white font-medium">{% trans "Pest Alert" %}</p>
-                        <p class="text-xs text-mint-light/60">{% trans "High risk of armyworms in your region. Monitor crops closely." %}</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start space-x-3">
-                    <div class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                        <i data-lucide="info" class="w-4 h-4 text-blue-400"></i>
-                    </div>
-                    <div>
-                        <p class="text-sm text-white font-medium">{% trans "Fertilizer Recommendation" %}</p>
-                        <p class="text-xs text-mint-light/60">{% trans "Your soil pH suggests adding nitrogen-rich fertilizer in 2 weeks." %}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Weather Widget -->
+    <div id="weather-container">
+        {% if primary_field %}
+            {% with field=primary_field %}
+                {% include "weather/widget.html" %}
+            {% endwith %}
+        {% else %}
+            {% include "weather/widget_empty.html" %}
+        {% endif %}
     </div>
     
-    <!-- Right Column - Quick Stats & Equipment -->
-    <div class="space-y-6">
-        <!-- Equipment Status -->
-        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
-            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
-                <i data-lucide="settings" class="w-5 h-5 mr-2 text-mint"></i>
-                {% trans "Equipment Status" %}
-            </h3>
-            
-            <div class="space-y-3">
-                {% if farm_details.available_equipment %}
-                    {% for equipment in farm_details.available_equipment %}
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-mint-light/70">{{ equipment|title }}</span>
-                        <span class="w-2 h-2 bg-green-400 rounded-full"></span>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                    <p class="text-sm text-mint-light/60">{% trans "No equipment registered" %}</p>
-                {% endif %}
-            </div>
-            
-            <button class="w-full mt-4 bg-black/20 border border-white/10 hover:border-mint/50 hover:bg-black/30 rounded-xl px-4 py-2 text-sm text-mint transition-all duration-300">
-                {% trans "Manage Equipment" %}
-            </button>
-        </div>
-        
-        <!-- Labor Information -->
-        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
-            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
-                <i data-lucide="users" class="w-5 h-5 mr-2 text-mint"></i>
-                {% trans "Labor Information" %}
-            </h3>
-            
-            <div class="space-y-3">
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-mint-light/70">{% trans "Labor Source" %}</span>
-                    <span class="text-sm text-white font-medium">{{ farm_details.get_labor_source_display|default:"{% trans 'Not specified' %}" }}</span>
-                </div>
-                
-                {% if farm_details.labor_count %}
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-mint-light/70">{% trans "Workers" %}</span>
-                    <span class="text-sm text-white font-medium">{{ farm_details.labor_count }}</span>
-                </div>
-                {% endif %}
-                
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-mint-light/70">{% trans "Farming Methods" %}</span>
-                    <span class="text-sm text-white font-medium">
-                        {% if farm_details.organic_farming %}{% trans "Organic" %}{% else %}{% trans "Conventional" %}{% endif %}
-                    </span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Quick Stats -->
-        <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
-            <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
-                <i data-lucide="bar-chart-3" class="w-5 h-5 mr-2 text-mint"></i>
-                {% trans "This Season" %}
-            </h3>
-            
-            <div class="space-y-4">
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="text-xs text-mint-light/70">{% trans "Expected Yield" %}</span>
-                        <span class="text-xs text-white font-medium">{{ farm_details.expected_yield|default:"{% trans 'TBD' %}" }} {% trans "tons/ha" %}</span>
-                    </div>
-                </div>
-                
-                <div>
-                    <div class="flex justify-between mb-1">
-                        <span class="text-xs text-mint-light/70">{% trans "Market Access" %}</span>
-                        <span class="text-xs text-white font-medium">{{ farm_details.market_access|default:"{% trans 'Not specified' %}" }}</span>
-                    </div>
-                </div>
-                
-                <div class="pt-3 border-t border-white/10">
-                    <button class="w-full bg-gradient-to-r from-forest-mid to-forest-light hover:brightness-110 text-white rounded-xl px-4 py-2 text-sm font-medium transition-all duration-300">
-                        {% trans "View Detailed Reports" %}
-                    </button>
-                </div>
-            </div>
-        </div>
+    <!-- Additional content can be added here -->
+    <div class="backdrop-blur-xl bg-black/40 border border-white/10 rounded-2xl shadow-xl p-6">
+        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+            <i data-lucide="info" class="w-5 h-5 mr-2 text-mint"></i>
+            {% trans "Farm Summary" %}
+        </h3>
+        <p class="text-sm text-mint-light/70">{% trans "Your farm dashboard has been simplified for better focus on key metrics and weather information." %}</p>
     </div>
 </div>
 {% endblock %}
