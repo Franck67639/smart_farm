@@ -31,7 +31,7 @@ def login_view(request):
         return redirect('dashboard')
 
     if request.method == 'POST':
-        email = request.POST.get('username')  # form field name stays the same but we treat it as email
+        email = request.POST.get('email')  # Get email directly
         password = request.POST.get('password')
         remember = request.POST.get('remember')
 
@@ -132,7 +132,6 @@ def create_user_account(request):
         with transaction.atomic():
             email = request.POST.get('email').strip()
             user = User.objects.create_user(
-                username=email,  # Django still expects username parameter
                 email=email,
                 password=request.POST.get('password'),
                 full_name=request.POST.get('full_name').strip(),

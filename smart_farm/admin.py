@@ -100,10 +100,10 @@ try:
             
             fieldsets = (
                 (None, {
-                    'fields': ('username', 'email', 'password')
+                    'fields': ('email', 'password')
                 }),
                 ('Personal info', {
-                    'fields': ('first_name', 'last_name', 'full_name', 'phone')
+                    'fields': ('full_name', 'phone')
                 }),
                 ('Permissions', {
                     'fields': ('is_active', 'is_staff', 'is_superuser', 'is_verified', 'groups', 'user_permissions')
@@ -116,7 +116,7 @@ try:
             add_fieldsets = (
                 (None, {
                     'classes': ('wide',),
-                    'fields': ('email', 'username', 'full_name', 'phone', 'password1', 'password2'),
+                    'fields': ('email', 'full_name', 'phone', 'password1', 'password2'),
                 }),
             )
 except:

@@ -20,7 +20,7 @@
                 <i data-lucide="user" class="w-5 h-5 text-mint"></i>
             </div>
             <div>
-                <p class="text-sm font-medium text-white">{{ user.full_name|default:user.username }}</p>
+                <p class="text-sm font-medium text-white">{{ user.full_name|default:user.email }}</p>
                 <p class="text-xs text-mint-light/70">{{ farm_details.farm_name|default:"Farm Owner" }}</p>
             </div>
         </div>

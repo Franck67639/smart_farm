@@ -33,17 +33,17 @@
                 
                 <!-- Email Field -->
                 <div>
-                    <label for="username" class="block text-sm font-medium text-mint-light/80 mb-2">
+                    <label for="email" class="block text-sm font-medium text-mint-light/80 mb-2">
                         {% trans "Email Address" %}
                     </label>
                     <div class="relative group">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="mail" class="w-5 h-5 text-mint-light/50 group-focus-within:text-mint transition-colors"></i>
+                            <i data-lucide="mail" class="h-5 w-5 text-mint-light/40 group-focus-within:text-mint transition-colors"></i>
                         </div>
                         <input 
                             type="email" 
-                            id="username"
-                            name="username"
+                            id="email"
+                            name="email"
                             placeholder="{% trans 'Enter your email address' %}"
                             required
                             autocomplete="email"
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Email validation feedback
-    const emailField = document.getElementById('username');
+    const emailField = document.getElementById('email');
     emailField.addEventListener('blur', function() {
         const email = this.value.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
