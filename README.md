@@ -322,7 +322,7 @@ We welcome contributions to SmartFarm! Here's how you can help:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is still in developpement process not yet acquired a license
 
 ---
 
@@ -360,19 +360,19 @@ If you find SmartFarm useful or have questions:
 
 ## 🚀 Future Roadmap
 
-### **Short Term** (3-6 months)
+### **Short Term** 
 - [ ] Mobile app development (React Native)
 - [ ] Advanced analytics dashboard
 - [ ] Push notifications for weather alerts
 - [ ] Offline PWA functionality
 
-### **Medium Term** (6-12 months)
+### **Medium Term** 
 - [ ] Integration with local weather stations
 - [ ] Machine learning model improvements
 - [ ] Multi-crop support beyond maize
 - [ ] Market integration and price tracking
 
-### **Long Term** (1+ years)
+### **Long Term**
 - [ ] IoT sensor integration
 - [ ] Drone imagery analysis
 - [ ] Supply chain management
